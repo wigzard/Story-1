@@ -7,7 +7,8 @@ import org.junit.runner.RunWith;
  */
 @RunWith(org.junit.runners.Suite.class)
 @org.junit.runners.Suite.SuiteClasses({
-        CreatingMapTest.class
+        LoadingMapTest.class,
+        LoadingPlayerTest.class
 })
 public class DbDataSuite {
 }

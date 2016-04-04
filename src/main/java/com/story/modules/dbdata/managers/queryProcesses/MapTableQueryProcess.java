@@ -1,7 +1,7 @@
 package com.story.modules.dbdata.managers.queryProcesses;
 
 import com.story.modules.dbWorker.DefaultQueryProcess;
-import com.story.modules.dbdata.view.Map;
+import com.story.modules.dbdata.view.map.Map;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

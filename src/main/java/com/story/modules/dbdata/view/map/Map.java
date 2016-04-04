@@ -1,4 +1,6 @@
-package com.story.modules.dbdata.view;
+package com.story.modules.dbdata.view.map;
+
+import com.story.modules.dbdata.view.IMapData;
 
 import java.util.ArrayList;
 
@@ -85,12 +87,22 @@ public class Map implements IMapData {
         return otherTilePositions;
     }
 
-    public void setOtherTilePositions(ArrayList<TilePosition> otherTilePositions) {
-        this.otherTilePositions = otherTilePositions;
+    public Tile getTile(int tileId){
+        if (this.allTiles == null){
+            return null;
+        }
+
+        for (Tile t: this.allTiles) {
+            if (t.getId() == tileId) {
+                return t;
+            }
+        }
+
+        return null;
     }
 
-    public ArrayList<Tile> getTiles() {
-        return allTiles;
+    public void setOtherTilePositions(ArrayList<TilePosition> otherTilePositions) {
+        this.otherTilePositions = otherTilePositions;
     }
 
     public void setTiles(ArrayList<Tile> allTiles) {

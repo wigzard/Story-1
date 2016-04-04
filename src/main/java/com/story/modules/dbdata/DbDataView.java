@@ -6,9 +6,9 @@ import com.story.modules.dbdata.managers.IManager;
 import com.story.modules.dbdata.managers.MapManager;
 import com.story.modules.dbdata.managers.OtherObjectsManager;
 import com.story.modules.dbdata.managers.PlayerManager;
-import com.story.modules.dbdata.view.Map;
-import com.story.modules.dbdata.view.OtherObject;
-import com.story.modules.dbdata.view.Player;
+import com.story.modules.dbdata.view.map.Map;
+import com.story.modules.dbdata.view.other.OtherObject;
+import com.story.modules.dbdata.view.player.Player;
 
 import java.util.HashMap;
 
@@ -36,12 +36,12 @@ public class DbDataView implements IViewFacade {
     }
 
     @Override
-    public Player getPlayer() {
+    public Player getPlayer(int id) {
         if (!this.containsElement(Managers.PLAYER)){
-            this.managers.put(Managers.PLAYER, new PlayerManager());
+            this.managers.put(Managers.PLAYER, new PlayerManager(this.queryExecutor));
         }
 
-        return (Player) (this.managers.get(Managers.PLAYER).getData(0));
+        return (Player) (this.managers.get(Managers.PLAYER).getData(id));
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.story.modules.dbdata.view;
+package com.story.modules.dbdata.view.map;
 
 /**
  * Created by alex on 31.03.16.

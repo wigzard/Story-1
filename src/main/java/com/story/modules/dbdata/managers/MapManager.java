@@ -5,9 +5,9 @@ import com.story.modules.dbdata.managers.queryProcesses.MapTableQueryProcess;
 import com.story.modules.dbdata.managers.queryProcesses.PositionTableProcess;
 import com.story.modules.dbdata.managers.queryProcesses.TilesTableProcess;
 import com.story.modules.dbdata.view.IMapData;
-import com.story.modules.dbdata.view.Map;
-import com.story.modules.dbdata.view.Tile;
-import com.story.modules.dbdata.view.TilePosition;
+import com.story.modules.dbdata.view.map.Map;
+import com.story.modules.dbdata.view.map.Tile;
+import com.story.modules.dbdata.view.map.TilePosition;
 
 import java.util.ArrayList;
 

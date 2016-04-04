@@ -1,7 +1,7 @@
 package com.story.modules.dbdata.managers;
 
 import com.story.modules.dbdata.view.IMapData;
-import com.story.modules.dbdata.view.OtherObject;
+import com.story.modules.dbdata.view.other.OtherObject;
 
 /**
  * Created by alex on 29.03.16.

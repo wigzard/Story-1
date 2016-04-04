@@ -1,7 +1,9 @@
+package com.story;
+
+
 import com.story.modules.dbdata.DbDataView;
 import com.story.modules.dbdata.IViewFacade;
-import com.story.modules.dbdata.view.Map;
-
+import com.story.modules.dbdata.view.player.Player;
 
 /**
  * Created by alex on 29.03.16.
@@ -9,7 +11,8 @@ import com.story.modules.dbdata.view.Map;
 public class Main {
     public static void main(String [] args){
         IViewFacade facade = new DbDataView("data.sqlite");
-        Map map = facade.getMap(2);
+        Player p = facade.getPlayer(1);
+
         System.out.print("main");
     }
 }
