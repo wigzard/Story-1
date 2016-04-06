@@ -9,38 +9,12 @@ import java.util.ArrayList;
  */
 public class Map implements IMapData {
     private int id;
-    private int width;
-    private int height;
-    private int defaultTileId;
-    private int tilesWidth;
-    private int tilesHeight;
     private String description;
     private String name;
-    private ArrayList<TilePosition> otherTilePositions;
-    private ArrayList<Tile> allTiles;
+    private String pathToTMX;
 
     public Map(int id){
         this.id = id;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
     }
 
     public String getDescription() {
@@ -51,30 +25,6 @@ public class Map implements IMapData {
         this.description = description;
     }
 
-    public int getDefaultTileId() {
-        return defaultTileId;
-    }
-
-    public void setDefaultTileId(int defaultTileId) {
-        this.defaultTileId = defaultTileId;
-    }
-
-    public int getTilesWidth() {
-        return tilesWidth;
-    }
-
-    public void setTilesWidth(int tilesWidth) {
-        this.tilesWidth = tilesWidth;
-    }
-
-    public int getTilesHeight() {
-        return tilesHeight;
-    }
-
-    public void setTilesHeight(int tilesHeight) {
-        this.tilesHeight = tilesHeight;
-    }
-
     public String getName() {
         return name;
     }
@@ -83,29 +33,15 @@ public class Map implements IMapData {
         this.name = name;
     }
 
-    public ArrayList<TilePosition> getOtherTilePositions() {
-        return otherTilePositions;
+    public String getPathToTMX() {
+        return pathToTMX;
     }
 
-    public Tile getTile(int tileId){
-        if (this.allTiles == null){
-            return null;
-        }
-
-        for (Tile t: this.allTiles) {
-            if (t.getId() == tileId) {
-                return t;
-            }
-        }
-
-        return null;
+    public void setPathToTMX(String pathToTMX) {
+        this.pathToTMX = pathToTMX;
     }
 
-    public void setOtherTilePositions(ArrayList<TilePosition> otherTilePositions) {
-        this.otherTilePositions = otherTilePositions;
-    }
-
-    public void setTiles(ArrayList<Tile> allTiles) {
-        this.allTiles = allTiles;
+    public int getId() {
+        return id;
     }
 }

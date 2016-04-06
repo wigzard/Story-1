@@ -2,4 +2,6 @@
 /.idea/*
 /.gradle/*
 /build/*
+/data.sqlite
+/testDB.sqlite
 =======

@@ -23,17 +23,31 @@ public class LoadingMapTest {
     }
 
     /**
-     * Check only base information about map without tiles
+     * Check only base information about map
      */
     @Test
     public void checkBaseData(){
         Map tempMap = this.facade.getMap(1);
 
         assertEquals(tempMap.getId(), 1);
-        assertEquals(tempMap.getOtherTilePositions().size(), 4);
         assertNotNull(tempMap.getName());
-        assertNotEquals(tempMap.getDefaultTileId(), 0);
-        assertNotEquals(tempMap.getHeight(), 0);
-        assertNotEquals(tempMap.getWidth(), 0);
+        assertNotNull(tempMap.getPathToTMX());
+    }
+
+    @Test
+    public void manyObjects(){
+        Map m1 = this.facade.getMap(1);
+        Map m2 = this.facade.getMap(2);
+        Map m3 = this.facade.getMap(4);
+        Map m4 = this.facade.getMap(7);
+        Map m5 = this.facade.getMap(5);
+        Map m6 = this.facade.getMap(3);
+
+        assertNotNull(m1);
+        assertNotNull(m2);
+        assertNull(m3);
+        assertNull(m4);
+        assertNull(m5);
+        assertNotNull(m6);
     }
 }

@@ -1,7 +1,7 @@
 package com.story.modules.dbdata.managers.queryProcesses;
 
 import com.story.modules.dbWorker.DefaultQueryProcess;
-import com.story.modules.dbdata.view.player.Player;
+import com.story.modules.dbdata.view.player.Person;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,19 +10,19 @@ import java.sql.SQLException;
  * Created by alex on 03.04.16.
  */
 public class PlayerTableProcess extends DefaultQueryProcess {
-    public static final String TableName = "PersonaDescription";
+    public static final String TableName = "Person";
     public static final String IdField = "Id";
-    public static final String TitleField = "Title";
-    public static final String MovePictureSetIdField = "MovePictureSetId";
-    public static final String FacePictureSetIdField = "FacePictureSetId";
+    public static final String NameField = "Name";
+    public static final String PathPersonPictureSetField = "PathPersonPictureSet";
+    public static final String PathFacePictureSetField = "PathFacePictureSet";
 
-    private Player player;
+    private Person player;
 
     public PlayerTableProcess(String query) {
         super(query);
     }
 
-    public Player getPlayer(){
+    public Person getPlayer(){
         return this.player;
     }
 
@@ -35,8 +35,10 @@ public class PlayerTableProcess extends DefaultQueryProcess {
             }
 
             if (resultSet.next()) {
-                this.player = new Player(resultSet.getInt(IdField));
-                this.player.setTitle(resultSet.getString(TitleField));
+                this.player = new Person(resultSet.getInt(IdField));
+                this.player.setName(resultSet.getString(NameField));
+                this.player.setPathFacePictureSet(resultSet.getString(PathFacePictureSetField));
+                this.player.setPathPersonPictureSet(resultSet.getString(PathPersonPictureSetField));
             }
         } catch (SQLException e) {
             e.printStackTrace();
