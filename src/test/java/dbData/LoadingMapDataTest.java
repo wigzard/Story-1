@@ -2,7 +2,7 @@ package dbData;
 
 import com.story.modules.dbdata.DbDataView;
 import com.story.modules.dbdata.IViewFacade;
-import com.story.modules.dbdata.view.map.Map;
+import com.story.modules.dbdata.view.MapData;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -10,10 +10,10 @@ import static org.junit.Assert.*;
 /**
  * Created by alex on 29.03.16.
  */
-public class LoadingMapTest {
+public class LoadingMapDataTest {
     private IViewFacade facade;
 
-    public LoadingMapTest(){
+    public LoadingMapDataTest(){
         this.facade = new DbDataView("testDB.sqlite");
     }
 
@@ -27,21 +27,21 @@ public class LoadingMapTest {
      */
     @Test
     public void checkBaseData(){
-        Map tempMap = this.facade.getMap(1);
+        MapData tempMapData = this.facade.getMap(1);
 
-        assertEquals(tempMap.getId(), 1);
-        assertNotNull(tempMap.getName());
-        assertNotNull(tempMap.getPathToTMX());
+        assertEquals(tempMapData.getId(), 1);
+        assertNotNull(tempMapData.getName());
+        assertNotNull(tempMapData.getPathToTMX());
     }
 
     @Test
     public void manyObjects(){
-        Map m1 = this.facade.getMap(1);
-        Map m2 = this.facade.getMap(2);
-        Map m3 = this.facade.getMap(4);
-        Map m4 = this.facade.getMap(7);
-        Map m5 = this.facade.getMap(5);
-        Map m6 = this.facade.getMap(3);
+        MapData m1 = this.facade.getMap(1);
+        MapData m2 = this.facade.getMap(2);
+        MapData m3 = this.facade.getMap(4);
+        MapData m4 = this.facade.getMap(7);
+        MapData m5 = this.facade.getMap(5);
+        MapData m6 = this.facade.getMap(3);
 
         assertNotNull(m1);
         assertNotNull(m2);

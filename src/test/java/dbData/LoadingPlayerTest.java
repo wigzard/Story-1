@@ -2,9 +2,7 @@ package dbData;
 
 import com.story.modules.dbdata.DbDataView;
 import com.story.modules.dbdata.IViewFacade;
-import com.story.modules.dbdata.view.player.Person;
-import com.story.modules.pictureWorker.FacePictureSet;
-import com.story.modules.pictureWorker.MoveDirectionPictureSet;
+import com.story.modules.dbdata.view.PersonData;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -28,8 +26,9 @@ public class LoadingPlayerTest {
 
     @Test
     public void checkBaseData(){
-        Person p = this.facade.getPlayer(3);
+        PersonData p = this.facade.getPlayer(3);
 
+        assertNotNull(p);
         assertEquals(p.getId(), 3);
         assertEquals(p.getName(), "Normal name");
         assertEquals(p.getPathPersonPictureSet(), "resources/person.tmx");
@@ -38,11 +37,11 @@ public class LoadingPlayerTest {
 
     @Test
     public void createManyObject(){
-        Person p1 = this.facade.getPlayer(1);
-        Person p2 = this.facade.getPlayer(5);
-        Person p3 = this.facade.getPlayer(3);
-        Person p4 = this.facade.getPlayer(2);
-        Person p5 = this.facade.getPlayer(4);
+        PersonData p1 = this.facade.getPlayer(1);
+        PersonData p2 = this.facade.getPlayer(5);
+        PersonData p3 = this.facade.getPlayer(3);
+        PersonData p4 = this.facade.getPlayer(2);
+        PersonData p5 = this.facade.getPlayer(4);
 
         assertNotNull(p1);
         assertNull(p2);

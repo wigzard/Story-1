@@ -1,7 +1,7 @@
 package com.story.modules.dbdata.managers.queryProcesses;
 
 import com.story.modules.dbWorker.DefaultQueryProcess;
-import com.story.modules.dbdata.view.player.Person;
+import com.story.modules.dbdata.view.PersonData;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,13 +16,13 @@ public class PlayerTableProcess extends DefaultQueryProcess {
     public static final String PathPersonPictureSetField = "PathPersonPictureSet";
     public static final String PathFacePictureSetField = "PathFacePictureSet";
 
-    private Person player;
+    private PersonData player;
 
     public PlayerTableProcess(String query) {
         super(query);
     }
 
-    public Person getPlayer(){
+    public PersonData getPlayer(){
         return this.player;
     }
 
@@ -35,7 +35,7 @@ public class PlayerTableProcess extends DefaultQueryProcess {
             }
 
             if (resultSet.next()) {
-                this.player = new Person(resultSet.getInt(IdField));
+                this.player = new PersonData(resultSet.getInt(IdField));
                 this.player.setName(resultSet.getString(NameField));
                 this.player.setPathFacePictureSet(resultSet.getString(PathFacePictureSetField));
                 this.player.setPathPersonPictureSet(resultSet.getString(PathPersonPictureSetField));

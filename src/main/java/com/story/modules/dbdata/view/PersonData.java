@@ -1,19 +1,15 @@
-package com.story.modules.dbdata.view.player;
-
-import com.story.modules.dbdata.view.IMapData;
-import com.story.modules.pictureWorker.FacePictureSet;
-import com.story.modules.pictureWorker.MoveDirectionPictureSet;
+package com.story.modules.dbdata.view;
 
 /**
  * Created by alex on 29.03.16.
  */
-public class Person implements IMapData {
+public class PersonData implements IMapData {
     private int id;
     private String name;
     private String pathPersonPictureSet;
     private String pathFacePictureSet;
 
-    public Person(int id) {
+    public PersonData(int id) {
         this.id = id;
     }
 

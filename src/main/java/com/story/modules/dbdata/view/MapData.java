@@ -1,19 +1,15 @@
-package com.story.modules.dbdata.view.map;
-
-import com.story.modules.dbdata.view.IMapData;
-
-import java.util.ArrayList;
+package com.story.modules.dbdata.view;
 
 /**
  * Created by alex on 29.03.16.
  */
-public class Map implements IMapData {
+public class MapData implements IMapData {
     private int id;
     private String description;
     private String name;
     private String pathToTMX;
 
-    public Map(int id){
+    public MapData(int id){
         this.id = id;
     }
 
