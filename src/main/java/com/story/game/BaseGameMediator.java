@@ -28,8 +28,7 @@ public class BaseGameMediator implements IGameMediator {
 
     @Override
     public void render(GameContainer gc, Graphics g) {
-        Point playerCoordinates = this.getPlayerCoordinates();
-
+        //Move map to central object
         if (this.frameStorage.hasNextFrameOfCentralObject()){
             mapHandler.setCenterObject(this.frameStorage.getNextFrameOfCentralObject().getPosition());
         }
@@ -38,6 +37,7 @@ public class BaseGameMediator implements IGameMediator {
                 this.mapHandler.getMapPosition().x,
                 this.mapHandler.getMapPosition().y);
 
+        Point playerCoordinates = this.getPlayerCoordinates();
         this.playerHandler.getMoveAnimation().draw(playerCoordinates.x, playerCoordinates.y);
     }
 
@@ -45,13 +45,20 @@ public class BaseGameMediator implements IGameMediator {
     public void update(GameContainer gc, int delta) {
         this.keysHandler.run(gc.getInput());
 
-        this.playerHandler.getMoveAnimation().update(delta);
+        //If count of frames for central object > 0, then enable animate
+        if (this.frameStorage.hasNextFrameOfCentralObject()) {
+            this.playerHandler.getMoveAnimation().update(delta);
+        }
+        else {
+            this.playerHandler.getMoveAnimation().setCurrentFrame(0);
+        }
     }
 
     @Override
     public void init(GameContainer gc) throws SlickException {
         this.mapHandler.init();
         this.playerHandler.init();
+
         this.frameStorage = new QueueFrameStorage();
         Point mapCoordinates = Converter.ObjectPositionToMapPosition(
                 this.playerHandler.getCurrentPosition(),
@@ -89,6 +96,7 @@ public class BaseGameMediator implements IGameMediator {
                     return;
                 }
 
+                playerHandler.setCurrentDirection(PlayerHandler.Direction.LEFT);
                 playerHandler.move(PlayerHandler.Direction.LEFT);
                 frameStorage.addCentralObjectFrames(mapHandler.buildFrames(startPoint, endPoint));
             }
@@ -105,6 +113,7 @@ public class BaseGameMediator implements IGameMediator {
                     return;
                 }
 
+                playerHandler.setCurrentDirection(PlayerHandler.Direction.RIGHT);
                 playerHandler.move(PlayerHandler.Direction.RIGHT);
                 frameStorage.addCentralObjectFrames(mapHandler.buildFrames(startPoint, endPoint));
             }
@@ -121,6 +130,7 @@ public class BaseGameMediator implements IGameMediator {
                     return;
                 }
 
+                playerHandler.setCurrentDirection(PlayerHandler.Direction.UP);
                 playerHandler.move(PlayerHandler.Direction.UP);
                 frameStorage.addCentralObjectFrames(mapHandler.buildFrames(startPoint, endPoint));
             }
@@ -137,6 +147,7 @@ public class BaseGameMediator implements IGameMediator {
                     return;
                 }
 
+                playerHandler.setCurrentDirection(PlayerHandler.Direction.DOWN);
                 playerHandler.move(PlayerHandler.Direction.DOWN);
                 frameStorage.addCentralObjectFrames(mapHandler.buildFrames(startPoint, endPoint));
             }

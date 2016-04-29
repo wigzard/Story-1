@@ -1,12 +1,11 @@
 package com.story.core.baseHandlers;
 
-import com.story.core.frames.IFrameBuilder;
 import com.story.modules.dbdata.view.PersonDescriptor;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
 
 import java.awt.*;
+import java.util.HashMap;
 
 /**
  * Created by alex on 09.04.16.
@@ -14,14 +13,15 @@ import java.awt.*;
 public abstract class PlayerHandler{
     public enum Direction{UP, LEFT, DOWN, RIGHT}
 
-    protected PersonDescriptor playerData = null;
+    protected PersonDescriptor playerDescriptor = null;
     protected Point currentPosition = null;
-    protected SpriteSheet playerSheet = null;
-    protected Animation moveAnimation = null;
+    protected HashMap<Direction, Animation> moveAnimation = null;
+    protected Direction curreDirection;
 
     public PlayerHandler(PersonDescriptor person) throws SlickException {
-        this.playerData = person;
+        this.playerDescriptor = person;
         this.currentPosition = new Point(0, 0);
+        this.curreDirection = Direction.DOWN;
     }
 
     public Point getCurrentPosition(){
@@ -29,9 +29,10 @@ public abstract class PlayerHandler{
     }
 
     public Animation getMoveAnimation(){
-        return this.moveAnimation;
+        return this.moveAnimation.get(this.curreDirection);
     }
 
     public abstract void move(Direction d);
     public abstract void init() throws SlickException;
+    public abstract void setCurrentDirection(Direction d);
 }
