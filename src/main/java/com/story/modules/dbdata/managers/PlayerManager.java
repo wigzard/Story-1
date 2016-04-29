@@ -2,7 +2,7 @@ package com.story.modules.dbdata.managers;
 
 import com.story.modules.dbWorker.IQueryExecutor;
 import com.story.modules.dbdata.managers.queryProcesses.PlayerTableProcess;
-import com.story.modules.dbdata.view.PersonData;
+import com.story.modules.dbdata.view.PersonDescriptor;
 
 /**
  * Created by alex on 29.03.16.
@@ -15,8 +15,8 @@ public class PlayerManager implements IManager {
     }
 
     @Override
-    public PersonData getData(int id) {
-        PersonData p = this.getPerson(id);
+    public PersonDescriptor getData(int id) {
+        PersonDescriptor p = this.getPerson(id);
         if (p == null){
             return null;
         }
@@ -24,7 +24,7 @@ public class PlayerManager implements IManager {
         return p;
     }
 
-    private PersonData getPerson(int id){
+    private PersonDescriptor getPerson(int id){
         String query = "SELECT *  FROM "
                 + PlayerTableProcess.TableName + " WHERE " + PlayerTableProcess.IdField
                 + "=" + id;

@@ -3,13 +3,13 @@ package com.story.modules.dbdata.view;
 /**
  * Created by alex on 29.03.16.
  */
-public class PersonData implements IMapData {
+public class PersonDescriptor implements IMapData {
     private int id;
     private String name;
     private String pathPersonPictureSet;
     private String pathFacePictureSet;
 
-    public PersonData(int id) {
+    public PersonDescriptor(int id) {
         this.id = id;
     }
 

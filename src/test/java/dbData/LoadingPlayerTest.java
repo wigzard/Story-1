@@ -2,7 +2,7 @@ package dbData;
 
 import com.story.modules.dbdata.DbDataView;
 import com.story.modules.dbdata.IViewFacade;
-import com.story.modules.dbdata.view.PersonData;
+import com.story.modules.dbdata.view.PersonDescriptor;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -26,7 +26,7 @@ public class LoadingPlayerTest {
 
     @Test
     public void checkBaseData(){
-        PersonData p = this.facade.getPlayer(3);
+        PersonDescriptor p = this.facade.getPlayer(3);
 
         assertNotNull(p);
         assertEquals(p.getId(), 3);
@@ -37,11 +37,11 @@ public class LoadingPlayerTest {
 
     @Test
     public void createManyObject(){
-        PersonData p1 = this.facade.getPlayer(1);
-        PersonData p2 = this.facade.getPlayer(5);
-        PersonData p3 = this.facade.getPlayer(3);
-        PersonData p4 = this.facade.getPlayer(2);
-        PersonData p5 = this.facade.getPlayer(4);
+        PersonDescriptor p1 = this.facade.getPlayer(1);
+        PersonDescriptor p2 = this.facade.getPlayer(5);
+        PersonDescriptor p3 = this.facade.getPlayer(3);
+        PersonDescriptor p4 = this.facade.getPlayer(2);
+        PersonDescriptor p5 = this.facade.getPlayer(4);
 
         assertNotNull(p1);
         assertNull(p2);

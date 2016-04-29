@@ -1,6 +1,7 @@
 package com.story.core.baseHandlers;
 
-import com.story.modules.dbdata.view.MapData;
+import com.story.core.frames.IFrameBuilder;
+import com.story.modules.dbdata.view.MapDescriptor;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -9,23 +10,23 @@ import java.awt.*;
 /**
  * Created by alex on 09.04.16.
  */
-public abstract class MapHandler implements IHandler{
+public abstract class MapHandler implements IFrameBuilder{
     public static final String BackgroundLayerName = "Background";
     public static final String ObjectsLayerName = "Objects";
     public static final String BorderLayerName = "Border";
     public static final String MarginPropertyName = "count";
 
-    protected MapData mapData = null;
+    protected MapDescriptor mapDescriptor = null;
     protected TiledMap tiledMap = null;
     protected Point mapPosition = null;
 
-    public MapHandler(MapData map){
-        this.mapData = map;
+    public MapHandler(MapDescriptor map){
+        this.mapDescriptor = map;
         this.mapPosition = new Point(0, 0);
     }
 
-    public MapHandler(MapData map, Point objectPosition){
-        this.mapData = map;
+    public MapHandler(MapDescriptor map, Point objectPosition){
+        this.mapDescriptor = map;
         this.mapPosition = new Point(objectPosition.x, objectPosition.y);
     }
 
@@ -38,6 +39,7 @@ public abstract class MapHandler implements IHandler{
     }
 
     public abstract boolean isCanMove(Point object);
-    public abstract void setCoordinates(Point centerObject);
+    public abstract void setCenterObject(Point centerObject);
     public abstract int getMargin();
+    public abstract void init() throws SlickException;
 }

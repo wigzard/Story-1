@@ -6,4 +6,6 @@ package com.story.core;
 public class GlobalVar {
     public static int Width = 0;
     public static int Height = 0;
+    public static final int maxFPS = 60;
+    public static final String dbName = "data.sqlite";
 }

@@ -2,7 +2,7 @@ package dbData;
 
 import com.story.modules.dbdata.DbDataView;
 import com.story.modules.dbdata.IViewFacade;
-import com.story.modules.dbdata.view.MapData;
+import com.story.modules.dbdata.view.MapDescriptor;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -27,21 +27,21 @@ public class LoadingMapDataTest {
      */
     @Test
     public void checkBaseData(){
-        MapData tempMapData = this.facade.getMap(1);
+        MapDescriptor tempMapDescriptor = this.facade.getMap(1);
 
-        assertEquals(tempMapData.getId(), 1);
-        assertNotNull(tempMapData.getName());
-        assertNotNull(tempMapData.getPathToTMX());
+        assertEquals(tempMapDescriptor.getId(), 1);
+        assertNotNull(tempMapDescriptor.getName());
+        assertNotNull(tempMapDescriptor.getPathToTMX());
     }
 
     @Test
     public void manyObjects(){
-        MapData m1 = this.facade.getMap(1);
-        MapData m2 = this.facade.getMap(2);
-        MapData m3 = this.facade.getMap(4);
-        MapData m4 = this.facade.getMap(7);
-        MapData m5 = this.facade.getMap(5);
-        MapData m6 = this.facade.getMap(3);
+        MapDescriptor m1 = this.facade.getMap(1);
+        MapDescriptor m2 = this.facade.getMap(2);
+        MapDescriptor m3 = this.facade.getMap(4);
+        MapDescriptor m4 = this.facade.getMap(7);
+        MapDescriptor m5 = this.facade.getMap(5);
+        MapDescriptor m6 = this.facade.getMap(3);
 
         assertNotNull(m1);
         assertNotNull(m2);

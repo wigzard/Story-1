@@ -1,7 +1,7 @@
 package com.story.modules.dbdata.managers.queryProcesses;
 
 import com.story.modules.dbWorker.DefaultQueryProcess;
-import com.story.modules.dbdata.view.MapData;
+import com.story.modules.dbdata.view.MapDescriptor;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,29 +16,29 @@ public class MapTableQueryProcess extends DefaultQueryProcess{
     private static final String NameField = "Name";
     private static final String PathToFileField = "PathToFile";
 
-    private MapData mapData;
+    private MapDescriptor mapDescriptor;
 
     public MapTableQueryProcess(String query) {
         super(query);
     }
 
-    public MapData getData(){
-        return mapData;
+    public MapDescriptor getData(){
+        return mapDescriptor;
     }
 
     @Override
     public void processData(ResultSet resultSet) {
         try {
             if ((resultSet == null) || (!resultSet.isBeforeFirst())){
-                mapData = null;
+                mapDescriptor = null;
                 return;
             }
 
             if (resultSet.next()) {
-                mapData = new MapData(resultSet.getInt(IdField));
-                mapData.setName(resultSet.getString(NameField));
-                mapData.setDescription(resultSet.getString(DescriptionField));
-                mapData.setPathToTMX(resultSet.getString(PathToFileField));
+                mapDescriptor = new MapDescriptor(resultSet.getInt(IdField));
+                mapDescriptor.setName(resultSet.getString(NameField));
+                mapDescriptor.setDescription(resultSet.getString(DescriptionField));
+                mapDescriptor.setPathToTMX(resultSet.getString(PathToFileField));
             }
         } catch (SQLException e) {
             e.printStackTrace();

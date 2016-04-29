@@ -1,37 +1,39 @@
 package com.story.core.baseHandlers;
 
+import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.KeyListener;
 
 import java.util.HashMap;
 
 /**
  * Created by alex on 16.04.16.
  */
-public class KeyEventHandler {
-    private HashMap<Integer, Callback> keysEvent;
+public class KeyEventHandler{
+    private HashMap<Integer, KeyHandler> keysEventMap;
 
     public KeyEventHandler(){
-        this.keysEvent = new HashMap<>();
+        this.keysEventMap = new HashMap<>();
     }
 
-    public void registerCallback(int keyCode, Callback callback){
-        this.keysEvent.put(keyCode, callback);
+    public void addHandler(int keyCode, KeyHandler handler){
+        this.keysEventMap.put(keyCode, handler);
     }
 
     public void run(Input input){
-        if (this.keysEvent.size() == 0){
+        if (this.keysEventMap.size() == 0){
             return;
         }
 
-        for (Integer key : this.keysEvent.keySet()){
-            if (input.isKeyPressed(key)){
-                this.keysEvent.get(key).execute();
-                return;
+        for (Integer key : this.keysEventMap.keySet()){
+            if (input.isKeyDown(key)){
+                this.keysEventMap.get(key).execute();
+                //return;
             }
         }
     }
 
-    public interface Callback{
+    public interface KeyHandler{
         void execute();
     }
 }

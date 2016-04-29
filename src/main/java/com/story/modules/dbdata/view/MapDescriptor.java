@@ -3,13 +3,13 @@ package com.story.modules.dbdata.view;
 /**
  * Created by alex on 29.03.16.
  */
-public class MapData implements IMapData {
+public class MapDescriptor implements IMapData {
     private int id;
     private String description;
     private String name;
     private String pathToTMX;
 
-    public MapData(int id){
+    public MapDescriptor(int id){
         this.id = id;
     }
 

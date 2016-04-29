@@ -23,25 +23,17 @@ public final class Game extends BasicGame {
 
     @Override
     public void init(GameContainer gameContainer) throws SlickException {
-        this.mediator.init();
+        this.mediator.init(gameContainer);
     }
 
     @Override
     public void update(GameContainer gc, int i) throws SlickException {
-        this.mediator.executeKeyEvent(gc.getInput());
+        this.mediator.update(gc, i);
     }
 
     @Override
     public void render(GameContainer gc, Graphics graphics) throws SlickException {
-        MapHandler handler = this.mediator.getMapHandler();
-        Point playerCoordinates = this.mediator.getPlayerCoordinates();
-
-        handler.getTiledMap().render(handler.getMapPosition().x * handler.getTiledMap().getTileWidth(),
-                handler.getMapPosition().y * handler.getTiledMap().getTileHeight());
-        graphics.fillRect(playerCoordinates.x,
-                playerCoordinates.y,
-                handler.getTiledMap().getTileWidth(),
-                handler.getTiledMap().getTileHeight());
+        this.mediator.render(gc, graphics);
     }
 
     public static Game getInstance(String title, IGameMediator mediator){
