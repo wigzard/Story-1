@@ -1,16 +1,15 @@
 package com.story.game.handlers;
 
 import com.story.core.baseHandlers.PlayerHandler;
-import com.story.core.frames.CentralObject;
+import com.story.game.factories.GameObjectsAnimationFactory;
+import com.story.modules.animations.AnimationTemplate;
+import com.story.modules.animations.AnimationDescriptor;
 import com.story.modules.dbdata.view.PersonDescriptor;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-import java.awt.*;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * Created by alex on 16.04.16.
@@ -42,11 +41,6 @@ public class BasePlayerHandler extends PlayerHandler {
     public void init() throws SlickException {
         Image i = new Image(this.playerDescriptor.getPathPersonPictureSet());
 
-        Animation down = new Animation(false);
-        down.addFrame(i.getSubImage(32, 0, 32, 32), 100);
-        down.addFrame(i.getSubImage(0, 0, 32, 32), 100);
-        down.addFrame(i.getSubImage(64, 0, 32, 32), 100);
-
         Animation left = new Animation(false);
         left.addFrame(i.getSubImage(32, 32, 32, 32), 100);
         left.addFrame(i.getSubImage(0, 32, 32, 32), 100);
@@ -63,10 +57,12 @@ public class BasePlayerHandler extends PlayerHandler {
         right.addFrame(i.getSubImage(64, 64, 32, 32), 100);
 
         this.moveAnimation = new HashMap<>();
-        this.moveAnimation.put(Direction.DOWN, down);
         this.moveAnimation.put(Direction.LEFT, left);
         this.moveAnimation.put(Direction.RIGHT, right);
         this.moveAnimation.put(Direction.UP, up);
+
+        this.moveAnimation.put(Direction.DOWN,
+                GameObjectsAnimationFactory.createPlayerAnimation(this.playerDescriptor));
     }
 
     @Override

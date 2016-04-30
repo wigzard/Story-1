@@ -84,13 +84,13 @@ public class BaseMapHandler extends MapHandler {
 
         Queue<CentralObject> framesQueue = new LinkedList<>();
 
-        int speed = 5;
-        int stepX = start.x - end.x == 0? 0 : (end.x - start.x) / speed;
-        int stepY = start.y - end.y == 0? 0 : (end.y - start.y) / speed;
+        int steps = 5;
+        int stepX = start.x - end.x == 0? 0 : (end.x - start.x) / steps;
+        int stepY = start.y - end.y == 0? 0 : (end.y - start.y) / steps;
 
-        for (int i = 0; i < speed; i++){
-            framesQueue.add(new CentralObject(new Point(((start.x + stepX * (i + 2))),
-                    (start.y + stepY * (i + 2)))));
+        for (int i = 0; i < steps; i++){
+            framesQueue.add(new CentralObject(new Point(((start.x + stepX * (i + 1))),
+                    (start.y + stepY * (i + 1)))));
         }
         framesQueue.add(new CentralObject(end));
 

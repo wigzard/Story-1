@@ -6,7 +6,7 @@ import com.story.core.IGameMediator;
 import com.story.core.baseHandlers.*;
 import com.story.core.frames.CentralObject;
 import com.story.core.frames.IFrameStorage;
-import com.story.game.frameFactory.QueueFrameStorage;
+import com.story.game.frames.QueueFrameStorage;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 
