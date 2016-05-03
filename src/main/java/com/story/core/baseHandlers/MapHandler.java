@@ -1,7 +1,7 @@
 package com.story.core.baseHandlers;
 
 import com.story.core.frames.IFrameBuilder;
-import com.story.modules.dbdata.view.MapDescriptor;
+import com.story.modules.dbdata.descriptor.MapDescriptor;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 

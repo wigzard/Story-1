@@ -1,6 +1,6 @@
 package com.story.core.baseHandlers;
 
-import com.story.modules.dbdata.view.PersonDescriptor;
+import com.story.modules.dbdata.descriptor.PersonDescriptor;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
 

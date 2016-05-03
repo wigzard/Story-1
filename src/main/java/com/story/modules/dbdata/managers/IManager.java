@@ -1,10 +1,13 @@
 package com.story.modules.dbdata.managers;
 
-import com.story.modules.dbdata.view.IMapData;
+import com.story.modules.dbdata.descriptor.DBTableDescriptor;
+
+import java.util.List;
 
 /**
  * Created by alex on 29.03.16.
  */
 public interface IManager {
-    IMapData getData(int id);
+    DBTableDescriptor getData(int id);
+    List<DBTableDescriptor> getData(int[] ids);
 }

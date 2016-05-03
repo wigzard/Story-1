@@ -1,10 +1,8 @@
 package com.story.game.handlers;
 
 import com.story.core.baseHandlers.PlayerHandler;
-import com.story.game.factories.GameObjectsAnimationFactory;
-import com.story.modules.animations.AnimationTemplate;
-import com.story.modules.animations.AnimationDescriptor;
-import com.story.modules.dbdata.view.PersonDescriptor;
+import com.story.game.factories.AnimationFactory;
+import com.story.modules.dbdata.descriptor.PersonDescriptor;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -39,9 +37,9 @@ public class BasePlayerHandler extends PlayerHandler {
 
     @Override
     public void init() throws SlickException {
-        Image i = new Image(this.playerDescriptor.getPathPersonPictureSet());
+        //Image i = new Image(this.playerDescriptor.getPathPersonPictureSet());
 
-        Animation left = new Animation(false);
+        /*Animation left = new Animation(false);
         left.addFrame(i.getSubImage(32, 32, 32, 32), 100);
         left.addFrame(i.getSubImage(0, 32, 32, 32), 100);
         left.addFrame(i.getSubImage(64, 32, 32, 32), 100);
@@ -59,10 +57,18 @@ public class BasePlayerHandler extends PlayerHandler {
         this.moveAnimation = new HashMap<>();
         this.moveAnimation.put(Direction.LEFT, left);
         this.moveAnimation.put(Direction.RIGHT, right);
-        this.moveAnimation.put(Direction.UP, up);
+        this.moveAnimation.put(Direction.UP, up);*/
+
+        this.moveAnimation = new HashMap<>();
 
         this.moveAnimation.put(Direction.DOWN,
-                GameObjectsAnimationFactory.createPlayerAnimation(this.playerDescriptor));
+                AnimationFactory.createPlayerAnimation(Direction.DOWN, this.playerDescriptor));
+        this.moveAnimation.put(Direction.LEFT,
+                AnimationFactory.createPlayerAnimation(Direction.LEFT, this.playerDescriptor));
+        this.moveAnimation.put(Direction.RIGHT,
+                AnimationFactory.createPlayerAnimation(Direction.RIGHT, this.playerDescriptor));
+        this.moveAnimation.put(Direction.UP,
+                AnimationFactory.createPlayerAnimation(Direction.UP, this.playerDescriptor));
     }
 
     @Override

@@ -1,8 +1,8 @@
 package dbData;
 
-import com.story.modules.dbdata.DbDataView;
-import com.story.modules.dbdata.IViewFacade;
-import com.story.modules.dbdata.view.PersonDescriptor;
+import com.story.modules.dbdata.DBFacade;
+import com.story.core.descriptor.IDescriptorFacade;
+import com.story.modules.dbdata.descriptor.PersonDescriptor;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -13,10 +13,10 @@ import static org.junit.Assert.assertNull;
  * Created by alex on 04.04.16.
  */
 public class LoadingPlayerTest {
-    private IViewFacade facade;
+    private IDescriptorFacade facade;
 
     public LoadingPlayerTest(){
-        this.facade = new DbDataView("testDB.sqlite");
+        this.facade = new DBFacade("testDB.sqlite");
     }
 
     @Test

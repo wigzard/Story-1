@@ -1,8 +1,8 @@
 package dbData;
 
-import com.story.modules.dbdata.DbDataView;
-import com.story.modules.dbdata.IViewFacade;
-import com.story.modules.dbdata.view.MapDescriptor;
+import com.story.modules.dbdata.DBFacade;
+import com.story.core.descriptor.IDescriptorFacade;
+import com.story.modules.dbdata.descriptor.MapDescriptor;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -11,10 +11,10 @@ import static org.junit.Assert.*;
  * Created by alex on 29.03.16.
  */
 public class LoadingMapDataTest {
-    private IViewFacade facade;
+    private IDescriptorFacade facade;
 
     public LoadingMapDataTest(){
-        this.facade = new DbDataView("testDB.sqlite");
+        this.facade = new DBFacade("testDB.sqlite");
     }
 
     @Test

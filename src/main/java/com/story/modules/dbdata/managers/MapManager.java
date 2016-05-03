@@ -1,9 +1,11 @@
 package com.story.modules.dbdata.managers;
 
 import com.story.modules.dbWorker.IQueryExecutor;
-import com.story.modules.dbdata.managers.queryProcesses.MapTableQueryProcess;
-import com.story.modules.dbdata.view.IMapData;
-import com.story.modules.dbdata.view.MapDescriptor;
+import com.story.modules.dbdata.descriptor.DBTableDescriptor;
+import com.story.modules.dbdata.managers.queryProcesses.MapTableProcess;
+import com.story.modules.dbdata.descriptor.MapDescriptor;
+
+import java.util.List;
 
 /**
  * Created by alex on 29.03.16.
@@ -16,10 +18,13 @@ public class MapManager implements IManager {
     }
 
     @Override
-    public IMapData getData(int id) {
-        MapDescriptor resultMapDescriptor = this.getMap(id);
+    public DBTableDescriptor getData(int id) {
+        return this.getMap(id);
+    }
 
-        return resultMapDescriptor;
+    @Override
+    public List<DBTableDescriptor> getData(int[] ids) {
+        return null;
     }
 
     /**
@@ -29,8 +34,8 @@ public class MapManager implements IManager {
      */
     private MapDescriptor getMap(int mapId){
         String query = "SELECT * FROM " +
-                MapTableQueryProcess.TableName + " WHERE " + MapTableQueryProcess.IdField + "=" + mapId;
-        MapTableQueryProcess mapProcess = new MapTableQueryProcess(query);
+                MapDescriptor.DBTableName + " WHERE " + MapDescriptor.DBFieldId + "=" + mapId;
+        MapTableProcess mapProcess = new MapTableProcess(query);
         this.executor.selectExecute(mapProcess);
         return mapProcess.getData();
     }

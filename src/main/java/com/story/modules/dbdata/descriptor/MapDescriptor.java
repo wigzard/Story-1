@@ -1,16 +1,21 @@
-package com.story.modules.dbdata.view;
+package com.story.modules.dbdata.descriptor;
 
 /**
  * Created by alex on 29.03.16.
  */
-public class MapDescriptor implements IMapData {
-    private int id;
+public class MapDescriptor extends DBTableDescriptor {
+    public static final String DBTableName = "Maps";
+    public static final String DBFieldId = "Id";
+    public static final String DBFieldDescription = "Description";
+    public static final String DBFieldName = "Name";
+    public static final String DBFieldPathToFile = "PathToFile";
+
     private String description;
     private String name;
     private String pathToTMX;
 
-    public MapDescriptor(int id){
-        this.id = id;
+    public MapDescriptor(int id) {
+        super(id);
     }
 
     public String getDescription() {
@@ -35,9 +40,5 @@ public class MapDescriptor implements IMapData {
 
     public void setPathToTMX(String pathToTMX) {
         this.pathToTMX = pathToTMX;
-    }
-
-    public int getId() {
-        return id;
     }
 }

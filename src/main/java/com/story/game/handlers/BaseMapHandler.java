@@ -1,10 +1,9 @@
 package com.story.game.handlers;
 
 import com.story.core.Converter;
-import com.story.core.GlobalVar;
 import com.story.core.baseHandlers.MapHandler;
 import com.story.core.frames.CentralObject;
-import com.story.modules.dbdata.view.MapDescriptor;
+import com.story.modules.dbdata.descriptor.MapDescriptor;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
