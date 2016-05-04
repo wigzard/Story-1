@@ -62,6 +62,10 @@ public class PersonManager implements IManager {
      * @return set of pictures
      */
     private ArrayList<PictureObjectDescriptor> getPictureObject(PersonPictureDescriptor ppd){
+        if (ppd == null){
+            return null;
+        }
+
         PictureObjectManager poManager = new PictureObjectManager(this.executor);
 
         ArrayList<PictureObjectDescriptor> descriptors = new ArrayList<>();

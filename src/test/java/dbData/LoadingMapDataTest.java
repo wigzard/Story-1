@@ -41,10 +41,10 @@ public class LoadingMapDataTest {
         MapDescriptor m3 = this.facade.getMap(4);
         MapDescriptor m4 = this.facade.getMap(7);
         MapDescriptor m5 = this.facade.getMap(5);
-        MapDescriptor m6 = this.facade.getMap(3);
+        MapDescriptor m6 = this.facade.getMap(1);
 
         assertNotNull(m1);
-        assertNotNull(m2);
+        assertNull(m2);
         assertNull(m3);
         assertNull(m4);
         assertNull(m5);

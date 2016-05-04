@@ -29,7 +29,7 @@ class PersonPictureManager implements IManager {
     }
 
     private PersonPictureDescriptor getDescriptor(int id){
-        String query = "SELECT *  FROM '"
+        String query = "SELECT * FROM '"
                 + PersonPictureDescriptor.DBTableName + "' WHERE " + PersonPictureDescriptor.DBFieldId
                 + "=" + id;
 
