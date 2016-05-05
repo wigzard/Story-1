@@ -1,13 +1,10 @@
 package com.story;
 
-import com.story.game.BaseGameMediator;
 import com.story.core.Game;
 import com.story.core.GlobalVar;
 import com.story.core.IGameMediator;
-import com.story.game.handlers.BaseMapHandler;
-import com.story.game.handlers.BasePlayerHandler;
-import com.story.modules.dbdata.DBFacade;
-import com.story.core.descriptor.IDescriptorFacade;
+import com.story.game.mediators.BaseGameMediator;
+import com.story.game.mediators.GameplayMediator;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
@@ -20,9 +17,7 @@ public class Main {
         {
             GlobalVar.Width = 800;
             GlobalVar.Height = 600;
-            IDescriptorFacade dataFacade = new DBFacade(GlobalVar.dbName);
-            IGameMediator mediator = new BaseGameMediator(new BaseMapHandler(dataFacade.getMap(1)),
-                    new BasePlayerHandler(dataFacade.getPlayer(1)));
+            IGameMediator mediator = new BaseGameMediator(new GameplayMediator());
 
             AppGameContainer appgc;
             appgc = new AppGameContainer(Game.getInstance("Test", mediator));

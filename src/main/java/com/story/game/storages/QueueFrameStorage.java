@@ -1,4 +1,4 @@
-package com.story.game.frames;
+package com.story.game.storages;
 
 import com.story.core.frames.CentralObject;
 import com.story.core.frames.IFrameStorage;

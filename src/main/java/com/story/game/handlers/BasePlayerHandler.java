@@ -37,30 +37,7 @@ public class BasePlayerHandler extends PlayerHandler {
 
     @Override
     public void init() throws SlickException {
-        //Image i = new Image(this.playerDescriptor.getPathPersonPictureSet());
-
-        /*Animation left = new Animation(false);
-        left.addFrame(i.getSubImage(32, 32, 32, 32), 100);
-        left.addFrame(i.getSubImage(0, 32, 32, 32), 100);
-        left.addFrame(i.getSubImage(64, 32, 32, 32), 100);
-
-        Animation up = new Animation(false);
-        up.addFrame(i.getSubImage(32, 96, 32, 32), 100);
-        up.addFrame(i.getSubImage(0, 96, 32, 32), 100);
-        up.addFrame(i.getSubImage(64, 96, 32, 32), 100);
-
-        Animation right = new Animation(false);
-        right.addFrame(i.getSubImage(32, 64, 32, 32), 100);
-        right.addFrame(i.getSubImage(0, 64, 32, 32), 100);
-        right.addFrame(i.getSubImage(64, 64, 32, 32), 100);
-
         this.moveAnimation = new HashMap<>();
-        this.moveAnimation.put(Direction.LEFT, left);
-        this.moveAnimation.put(Direction.RIGHT, right);
-        this.moveAnimation.put(Direction.UP, up);*/
-
-        this.moveAnimation = new HashMap<>();
-
         this.moveAnimation.put(Direction.DOWN,
                 AnimationFactory.createPlayerAnimation(Direction.DOWN, this.playerDescriptor));
         this.moveAnimation.put(Direction.LEFT,
