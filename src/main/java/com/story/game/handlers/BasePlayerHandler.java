@@ -1,12 +1,13 @@
 package com.story.game.handlers;
 
-import com.story.core.baseHandlers.PlayerHandler;
+import com.story.core.coreHandlers.MapHandler;
+import com.story.core.coreHandlers.PlayerHandler;
+import com.story.core.frames.IFrameStorage;
 import com.story.game.factories.AnimationFactory;
 import com.story.modules.dbdata.descriptor.PersonDescriptor;
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import java.awt.*;
 import java.util.HashMap;
 
 /**
@@ -17,22 +18,43 @@ public class BasePlayerHandler extends PlayerHandler {
         super(person);
     }
 
-    @Override
-    public void move(Direction d) {
+    private Point move(Direction d, Point p) {
         switch (d){
             case DOWN:
-                this.currentPosition.y++;
+                p.y++;
                 break;
             case UP:
-                this.currentPosition.y--;
+                p.y--;
                 break;
             case RIGHT:
-                this.currentPosition.x++;
+                p.x++;
                 break;
             case LEFT:
-                this.currentPosition.x--;
+                p.x--;
                 break;
         }
+        return p;
+    }
+
+    /**
+     * Move the player
+     * @param d direction of move
+     * @param mapHandler map handler
+     * @param frameStorage frame storage
+     */
+    @Override
+    public void move(Direction d, MapHandler mapHandler, IFrameStorage frameStorage) {
+        Point startPoint = this.getCurrentPosition();
+        Point endPoint = this.move(d, this.getCurrentPosition());
+
+        if ((!mapHandler.isCanMove(endPoint))
+                || (frameStorage.hasNextFrameOfCentralObject())){
+            return;
+        }
+
+        this.setCurrentDirection(d);
+        this.currentPosition = this.move(d, this.currentPosition);
+        frameStorage.addCentralObjectFrames(mapHandler.buildFrames(startPoint, endPoint));
     }
 
     @Override

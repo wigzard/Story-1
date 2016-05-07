@@ -1,7 +1,7 @@
 package com.story.game.handlers;
 
-import com.story.core.Converter;
-import com.story.core.baseHandlers.MapHandler;
+import com.story.modules.global.Converter;
+import com.story.core.coreHandlers.MapHandler;
 import com.story.core.frames.CentralObject;
 import com.story.modules.dbdata.descriptor.MapDescriptor;
 import org.newdawn.slick.SlickException;
@@ -83,7 +83,7 @@ public class BaseMapHandler extends MapHandler {
 
         Queue<CentralObject> framesQueue = new LinkedList<>();
 
-        int steps = 5;
+        int steps = 6;
         int stepX = start.x - end.x == 0? 0 : (end.x - start.x) / steps;
         int stepY = start.y - end.y == 0? 0 : (end.y - start.y) / steps;
 

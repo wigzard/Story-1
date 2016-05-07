@@ -1,7 +1,7 @@
 package com.story.game.factories;
 
-import com.story.core.Converter;
-import com.story.core.baseHandlers.PlayerHandler;
+import com.story.modules.global.Converter;
+import com.story.core.coreHandlers.PlayerHandler;
 import com.story.modules.animations.AnimationDescriptor;
 import com.story.modules.animations.TemplateFactory;
 import com.story.modules.dbdata.descriptor.PersonDescriptor;

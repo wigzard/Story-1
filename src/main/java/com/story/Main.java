@@ -1,10 +1,10 @@
 package com.story;
 
 import com.story.core.Game;
-import com.story.core.GlobalVar;
 import com.story.core.IGameMediator;
+import com.story.game.managers.GameplayManager;
 import com.story.game.mediators.BaseGameMediator;
-import com.story.game.mediators.GameplayMediator;
+import com.story.modules.global.GlobalVar;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
@@ -17,7 +17,8 @@ public class Main {
         {
             GlobalVar.Width = 800;
             GlobalVar.Height = 600;
-            IGameMediator mediator = new BaseGameMediator(new GameplayMediator());
+            GameplayManager manager = new GameplayManager();
+            IGameMediator mediator = new BaseGameMediator(manager.getGameplaymediator());
 
             AppGameContainer appgc;
             appgc = new AppGameContainer(Game.getInstance("Test", mediator));

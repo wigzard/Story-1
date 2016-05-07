@@ -1,5 +1,6 @@
-package com.story.core.baseHandlers;
+package com.story.core.coreHandlers;
 
+import com.story.core.frames.IFrameStorage;
 import com.story.modules.dbdata.descriptor.PersonDescriptor;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
@@ -32,7 +33,7 @@ public abstract class PlayerHandler{
         return this.moveAnimation.get(this.curreDirection);
     }
 
-    public abstract void move(Direction d);
+    public abstract void move(Direction d, MapHandler mapHandler, IFrameStorage frameStorage);
     public abstract void init() throws SlickException;
     public abstract void setCurrentDirection(Direction d);
 }

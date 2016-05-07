@@ -1,15 +1,13 @@
 package com.story.game.mediators;
 
-import com.story.core.Converter;
-import com.story.core.GlobalVar;
 import com.story.core.IGameMediator;
-import com.story.core.baseHandlers.*;
 import com.story.core.frames.CentralObject;
-import com.story.core.frames.IFrameStorage;
 import com.story.game.storages.ProxyScope;
-import com.story.game.storages.QueueFrameStorage;
-import org.newdawn.slick.*;
+import com.story.modules.global.Converter;
+import com.story.modules.global.GlobalVar;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 import java.awt.*;
 
@@ -19,7 +17,6 @@ import java.awt.*;
 public class BaseGameMediator implements IGameMediator {
     private IGameplaymediator gameplayMediator = null;
     private ProxyScope.ScopeStorage systemObjectStorage = null;
-    private KeyEventHandler keysHandler = null;
 
     public BaseGameMediator(IGameplaymediator gpMediator) throws SlickException {
         this.gameplayMediator = gpMediator;
@@ -45,7 +42,7 @@ public class BaseGameMediator implements IGameMediator {
 
     @Override
     public void update(GameContainer gc, int delta) {
-        this.keysHandler.run(gc.getInput());
+        this.gameplayMediator.ExecuteAction(gc.getInput());
 
         //If count of storage for central object > 0, then enable animate
         if (this.systemObjectStorage.getFrameStorage().hasNextFrameOfCentralObject()) {
@@ -67,9 +64,6 @@ public class BaseGameMediator implements IGameMediator {
                 this.systemObjectStorage.getMapHandler().getTiledMap().getTileHeight(),
                 this.systemObjectStorage.getMapHandler().getMargin());
         this.systemObjectStorage.getFrameStorage().addCentralObjectFrame(new CentralObject(mapCoordinates));
-
-        this.keysHandler = new KeyEventHandler();
-        initKeysEvent();
     }
 
     private Point getPlayerCoordinates() {
@@ -83,83 +77,5 @@ public class BaseGameMediator implements IGameMediator {
         p.y = this.systemObjectStorage.getMapHandler().getTiledMap().getTileHeight() + countTileOfHeight;
 
         return p;
-    }
-
-    private void initKeysEvent(){
-        this.keysHandler.addHandler(Input.KEY_LEFT, new KeyEventHandler.KeyHandler() {
-            @Override
-            public void execute() {
-                Point startPoint = systemObjectStorage.getPlayerHandler().getCurrentPosition();
-                Point endPoint = systemObjectStorage.getPlayerHandler().getCurrentPosition();
-                endPoint.x--;
-
-                if ((!systemObjectStorage.getMapHandler().isCanMove(endPoint))
-                        || (systemObjectStorage.getFrameStorage().hasNextFrameOfCentralObject())){
-                    return;
-                }
-
-                systemObjectStorage.getPlayerHandler().setCurrentDirection(PlayerHandler.Direction.LEFT);
-                systemObjectStorage.getPlayerHandler().move(PlayerHandler.Direction.LEFT);
-                systemObjectStorage.getFrameStorage().addCentralObjectFrames(systemObjectStorage.getMapHandler().
-                        buildFrames(startPoint, endPoint));
-            }
-        });
-
-        this.keysHandler.addHandler(Input.KEY_RIGHT, new KeyEventHandler.KeyHandler() {
-            @Override
-            public void execute() {
-                Point startPoint = systemObjectStorage.getPlayerHandler().getCurrentPosition();
-                Point endPoint = systemObjectStorage.getPlayerHandler().getCurrentPosition();
-                endPoint.x++;
-
-                if ((!systemObjectStorage.getMapHandler().isCanMove(endPoint))
-                        || (systemObjectStorage.getFrameStorage().hasNextFrameOfCentralObject())){
-                    return;
-                }
-
-                systemObjectStorage.getPlayerHandler().setCurrentDirection(PlayerHandler.Direction.RIGHT);
-                systemObjectStorage.getPlayerHandler().move(PlayerHandler.Direction.RIGHT);
-                systemObjectStorage.getFrameStorage().addCentralObjectFrames(systemObjectStorage.getMapHandler()
-                        .buildFrames(startPoint, endPoint));
-            }
-        });
-
-        this.keysHandler.addHandler(Input.KEY_UP, new KeyEventHandler.KeyHandler() {
-            @Override
-            public void execute() {
-                Point startPoint = systemObjectStorage.getPlayerHandler().getCurrentPosition();
-                Point endPoint = systemObjectStorage.getPlayerHandler().getCurrentPosition();
-                endPoint.y--;
-
-                if ((!systemObjectStorage.getMapHandler().isCanMove(endPoint))
-                        || (systemObjectStorage.getFrameStorage().hasNextFrameOfCentralObject())){
-                    return;
-                }
-
-                systemObjectStorage.getPlayerHandler().setCurrentDirection(PlayerHandler.Direction.UP);
-                systemObjectStorage.getPlayerHandler().move(PlayerHandler.Direction.UP);
-                systemObjectStorage.getFrameStorage().addCentralObjectFrames(systemObjectStorage.getMapHandler()
-                        .buildFrames(startPoint, endPoint));
-            }
-        });
-
-        this.keysHandler.addHandler(Input.KEY_DOWN, new KeyEventHandler.KeyHandler() {
-            @Override
-            public void execute() {
-                Point startPoint = systemObjectStorage.getPlayerHandler().getCurrentPosition();
-                Point endPoint = systemObjectStorage.getPlayerHandler().getCurrentPosition();
-                endPoint.y++;
-
-                if ((!systemObjectStorage.getMapHandler().isCanMove(endPoint))
-                        || (systemObjectStorage.getFrameStorage().hasNextFrameOfCentralObject())){
-                    return;
-                }
-
-                systemObjectStorage.getPlayerHandler().setCurrentDirection(PlayerHandler.Direction.DOWN);
-                systemObjectStorage.getPlayerHandler().move(PlayerHandler.Direction.DOWN);
-                systemObjectStorage.getFrameStorage().addCentralObjectFrames(systemObjectStorage.getMapHandler()
-                        .buildFrames(startPoint, endPoint));
-            }
-        });
     }
 }

@@ -1,12 +1,9 @@
 package com.story.core;
 
-import com.story.core.baseHandlers.MapHandler;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-
-import java.awt.*;
 
 /**
  * Created by alex on 09.04.16.

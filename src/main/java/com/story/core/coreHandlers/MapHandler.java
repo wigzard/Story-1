@@ -1,4 +1,4 @@
-package com.story.core.baseHandlers;
+package com.story.core.coreHandlers;
 
 import com.story.core.frames.IFrameBuilder;
 import com.story.modules.dbdata.descriptor.MapDescriptor;

@@ -1,4 +1,4 @@
-package com.story.core;
+package com.story.modules.global;
 
 /**
  * Created by alex on 17.04.16.

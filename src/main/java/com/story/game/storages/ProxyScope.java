@@ -1,7 +1,7 @@
 package com.story.game.storages;
 
-import com.story.core.baseHandlers.MapHandler;
-import com.story.core.baseHandlers.PlayerHandler;
+import com.story.core.coreHandlers.MapHandler;
+import com.story.core.coreHandlers.PlayerHandler;
 import com.story.core.customException.LoadSystemObjectException;
 import com.story.core.descriptor.IDescriptorFacade;
 import com.story.core.frames.IFrameStorage;
