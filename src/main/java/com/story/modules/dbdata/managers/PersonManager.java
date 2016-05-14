@@ -6,6 +6,7 @@ import com.story.modules.dbdata.descriptor.PersonPictureDescriptor;
 import com.story.modules.dbdata.descriptor.PictureObjectDescriptor;
 import com.story.modules.dbdata.managers.queryProcesses.PersonTableProcess;
 import com.story.modules.dbdata.descriptor.PersonDescriptor;
+import com.story.modules.global.Converter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,17 +34,47 @@ public class PersonManager implements IManager {
 
     @Override
     public List<DBTableDescriptor> getData(int[] ids) {
-        return null;
+        return this.getPersonDescriptors(ids);
+    }
+
+    /**
+     * Create a list of {@link PersonDescriptor} instances
+     * @param ids database record ids
+     */
+    private List<DBTableDescriptor> getPersonDescriptors(int[] ids){
+        String query = "SELECT * FROM "
+                + PersonDescriptor.DBTableName + " WHERE " + PersonDescriptor.DBFieldId
+                + " IN(" + Converter.NumbersToString(ids) + ")";
+
+        PersonTableProcess process = new PersonTableProcess(query);
+        this.executor.selectExecute(process);
+        List<DBTableDescriptor> personDescriptors = process.getPersonDescriptors();
+
+        if ((personDescriptors == null) || (personDescriptors.size() == 0)){
+            return null;
+        }
+
+        for (DBTableDescriptor descriptor: personDescriptors) {
+            ((PersonDescriptor)descriptor).setPictureDescriptors(
+                    this.getPictureObject(
+                            this.getPictureDescriptor(
+                                    ((PersonDescriptor)descriptor).getPictureDescriptorId())));
+        }
+
+        return personDescriptors;
     }
 
     private PersonDescriptor getPerson(int id){
-        String query = "SELECT *  FROM "
+        String query = "SELECT * FROM "
                 + PersonDescriptor.DBTableName + " WHERE " + PersonDescriptor.DBFieldId
                 + "=" + id;
 
         PersonTableProcess process = new PersonTableProcess(query);
         this.executor.selectExecute(process);
-        return process.getPlayer();
+        List<DBTableDescriptor> personDescriptors = process.getPersonDescriptors();
+        return personDescriptors == null || personDescriptors.size() == 0?
+                null :
+                (PersonDescriptor) personDescriptors.get(0);
     }
 
     /**

@@ -1,23 +1,23 @@
 package com.story.modules.dbdata;
-
 import com.story.core.descriptor.IDescriptorFacade;
 import com.story.modules.dbWorker.IQueryExecutor;
 import com.story.modules.dbWorker.QueryExecutor;
+import com.story.modules.dbdata.descriptor.DBTableDescriptor;
 import com.story.modules.dbdata.managers.IManager;
 import com.story.modules.dbdata.managers.MapManager;
-import com.story.modules.dbdata.managers.ObjectsManager;
 import com.story.modules.dbdata.managers.PersonManager;
 import com.story.modules.dbdata.descriptor.MapDescriptor;
 import com.story.modules.dbdata.descriptor.PersonDescriptor;
-import com.story.modules.dbdata.descriptor.ObjectDescriptor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by alex on 29.03.16.
  */
 public class DBFacade implements IDescriptorFacade {
-    private enum Managers{MAP, PLAYER, OTHER_OBJECT}
+    private enum Managers{MAP, PERSON}
     private HashMap<Managers, IManager> managers;
     private IQueryExecutor queryExecutor;
 
@@ -38,20 +38,45 @@ public class DBFacade implements IDescriptorFacade {
 
     @Override
     public PersonDescriptor getPlayer(int id) {
-        if (!this.containsElement(Managers.PLAYER)){
-            this.managers.put(Managers.PLAYER, new PersonManager(this.queryExecutor));
+        if (!this.containsElement(Managers.PERSON)){
+            this.managers.put(Managers.PERSON, new PersonManager(this.queryExecutor));
         }
 
-        return (PersonDescriptor) (this.managers.get(Managers.PLAYER).getData(id));
+        return (PersonDescriptor) (this.managers.get(Managers.PERSON).getData(id));
     }
 
+    /**
+     * Create a list of the NPC descriptor
+     * @param descriptorIds id of descriptors
+     * @return NPC descriptor list
+     */
     @Override
-    public ObjectDescriptor getOtherObject() {
-        if (!this.containsElement(Managers.OTHER_OBJECT)){
-            this.managers.put(Managers.OTHER_OBJECT, new ObjectsManager());
+    public List<PersonDescriptor> getNPCDescriptor(int[] descriptorIds) {
+        if ((descriptorIds == null) || (descriptorIds.length == 0)){
+            return null;
         }
 
-        return (ObjectDescriptor) (this.managers.get(Managers.OTHER_OBJECT).getData(0));
+        if (!this.containsElement(Managers.PERSON)){
+            this.managers.put(Managers.PERSON, new PersonManager(this.queryExecutor));
+        }
+
+        ArrayList<PersonDescriptor> descriptors = new ArrayList<>();
+        try {
+            List<DBTableDescriptor> tabledescriptors = this.managers.get(Managers.PERSON).getData(descriptorIds);
+            if ((tabledescriptors == null) || (tabledescriptors.size() == 0)){
+                return null;
+            }
+
+            for (DBTableDescriptor d: tabledescriptors) {
+                descriptors.add((PersonDescriptor)d);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return descriptors;
+
+        //return (PersonDescriptor) (this.managers.get(Managers.PERSON).getData(0));
     }
 
     private boolean containsElement(Managers m){

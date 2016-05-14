@@ -9,9 +9,12 @@ import com.story.game.factories.DescriptorFacadeFactory;
 import com.story.game.factories.FrameStorageFactory;
 import com.story.game.mediators.BaseGameMediator;
 import com.story.game.mediators.IGameplaymediator;
+import com.story.modules.dbdata.descriptor.PersonDescriptor;
 import com.story.modules.global.GlobalVar;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
+
+import java.util.List;
 
 /**
  * Created by alex on 29.03.16.
@@ -23,8 +26,8 @@ public class Main {
             //Hardcode constants
             int mapDescriptorId = 1;
             int playerDescriptorId = 1;
+            int[] npcIds = new int[] {2, 3};
             //------------------
-
 
             GlobalVar.Width = 800;
             GlobalVar.Height = 600;
