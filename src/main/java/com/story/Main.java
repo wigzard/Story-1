@@ -3,15 +3,12 @@ package com.story;
 import com.story.core.Game;
 import com.story.core.IGameMediator;
 import com.story.core.customException.LoadSystemObjectException;
-import com.story.core.descriptor.IDescriptorFacade;
-import com.story.core.frames.IFrameStorage;
 import com.story.game.builders.GameplayFactory;
-import com.story.game.handlers.action.ActionHandler;
-import com.story.game.handlers.action.IActionHandler;
+import com.story.game.factories.ActionFactory;
+import com.story.game.factories.DescriptorFacadeFactory;
+import com.story.game.factories.FrameStorageFactory;
 import com.story.game.mediators.BaseGameMediator;
 import com.story.game.mediators.IGameplaymediator;
-import com.story.game.storages.QueueFrameStorage;
-import com.story.modules.dbdata.DBFacade;
 import com.story.modules.global.GlobalVar;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
@@ -26,17 +23,17 @@ public class Main {
             //Hardcode constants
             int mapDescriptorId = 1;
             int playerDescriptorId = 1;
-            IFrameStorage storage = new QueueFrameStorage();
-            IDescriptorFacade dbFacade = new DBFacade(GlobalVar.dbName);
-            IActionHandler handler = new ActionHandler();
             //------------------
 
 
             GlobalVar.Width = 800;
             GlobalVar.Height = 600;
 
-            IGameplaymediator gameplaymediator = GameplayFactory.createMediator(handler);
-            gameplaymediator.init(dbFacade, mapDescriptorId, playerDescriptorId, storage);
+            IGameplaymediator gameplaymediator = GameplayFactory.createMediator(ActionFactory.create());
+            gameplaymediator.init(DescriptorFacadeFactory.create(GlobalVar.dbName),
+                    mapDescriptorId,
+                    playerDescriptorId,
+                    FrameStorageFactory.create());
             IGameMediator mediator = new BaseGameMediator(gameplaymediator);
 
             AppGameContainer appgc;

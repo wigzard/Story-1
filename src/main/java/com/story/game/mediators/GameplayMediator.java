@@ -4,7 +4,7 @@ import com.story.core.customException.LoadSystemObjectException;
 import com.story.core.descriptor.IDescriptorFacade;
 import com.story.core.frames.IFrameStorage;
 import com.story.game.eventArgs.GameEventArgs;
-import com.story.game.handlers.action.IActionHandler;
+import com.story.game.handlers.IActionHandler;
 import com.story.game.storages.ProxyScope;
 import com.story.modules.global.ActionType;
 import org.newdawn.slick.Input;

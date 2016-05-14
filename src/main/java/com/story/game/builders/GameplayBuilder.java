@@ -1,8 +1,7 @@
 package com.story.game.builders;
 
 import com.story.core.coreHandlers.PlayerHandler;
-import com.story.core.descriptor.IDescriptorFacade;
-import com.story.game.handlers.action.IActionHandler;
+import com.story.game.handlers.IActionHandler;
 import com.story.game.handlers.action.KeyEventHandler;
 import com.story.game.mediators.GameplayMediator;
 import com.story.game.mediators.IGameplaymediator;

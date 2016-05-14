@@ -3,7 +3,7 @@ package com.story.game.mediators;
 import com.story.core.customException.LoadSystemObjectException;
 import com.story.core.descriptor.IDescriptorFacade;
 import com.story.core.frames.IFrameStorage;
-import com.story.game.handlers.action.IActionHandler;
+import com.story.game.handlers.IActionHandler;
 import com.story.game.storages.ProxyScope;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
