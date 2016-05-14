@@ -55,7 +55,7 @@ public class ProxyScope {
      * Create new the storage
      * @param storage new storage
      */
-    private void setFrameStorage(IFrameStorage storage){
+    public void setFrameStorage(IFrameStorage storage){
         this.currentScore.frameStorage = storage;
     }
 

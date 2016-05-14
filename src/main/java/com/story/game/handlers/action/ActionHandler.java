@@ -11,7 +11,8 @@ import com.story.modules.global.ActionType;
 public class ActionHandler implements IActionHandler {
     private KeyEventHandler keyEventHandler;
 
-    public void AddKeyEventListener(int keyCode, KeyEventHandler.KeyHandler handler){
+    @Override
+    public void addKeyEventListener(int keyCode, KeyEventHandler.KeyHandler handler){
         if (this.keyEventHandler == null){
             this.keyEventHandler = new KeyEventHandler();
         }
