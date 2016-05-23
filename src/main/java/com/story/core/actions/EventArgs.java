@@ -1,4 +1,4 @@
-package com.story.core.coreHandlers;
+package com.story.core.actions;
 
 import com.story.modules.global.ActionType;
 

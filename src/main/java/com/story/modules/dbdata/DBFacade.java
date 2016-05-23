@@ -46,9 +46,9 @@ public class DBFacade implements IDescriptorFacade {
     }
 
     /**
-     * Create a list of the NPC descriptor
+     * Create a list of the Npc descriptor
      * @param descriptorIds id of descriptors
-     * @return NPC descriptor list
+     * @return Npc descriptor list
      */
     @Override
     public List<PersonDescriptor> getNPCDescriptor(int[] descriptorIds) {
@@ -76,7 +76,7 @@ public class DBFacade implements IDescriptorFacade {
         }
         return descriptors;
 
-        //return (PersonDescriptor) (this.managers.get(Managers.PERSON).getData(0));
+        //return (PersonDescriptor) (this.components.get(Managers.PERSON).getData(0));
     }
 
     private boolean containsElement(Managers m){

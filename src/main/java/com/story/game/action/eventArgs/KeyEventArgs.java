@@ -1,7 +1,7 @@
-package com.story.game.eventArgs;
+package com.story.game.action.eventArgs;
 
-import com.story.core.coreHandlers.EventArgs;
-import com.story.game.handlers.action.KeyEventHandler;
+import com.story.core.actions.EventArgs;
+import com.story.game.action.KeyEventHandler;
 import com.story.game.storages.ProxyScope;
 import com.story.modules.global.ActionType;
 

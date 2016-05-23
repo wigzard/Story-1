@@ -1,6 +1,6 @@
-package com.story.game.eventArgs;
+package com.story.game.action.eventArgs;
 
-import com.story.core.coreHandlers.EventArgs;
+import com.story.core.actions.EventArgs;
 import com.story.game.storages.ProxyScope;
 import com.story.modules.global.ActionType;
 import org.newdawn.slick.Input;

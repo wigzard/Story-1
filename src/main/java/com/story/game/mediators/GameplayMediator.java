@@ -3,8 +3,8 @@ package com.story.game.mediators;
 import com.story.core.customException.LoadSystemObjectException;
 import com.story.core.descriptor.IDescriptorFacade;
 import com.story.core.frames.IFrameStorage;
-import com.story.game.eventArgs.GameEventArgs;
-import com.story.game.handlers.IActionHandler;
+import com.story.game.action.eventArgs.GameEventArgs;
+import com.story.game.action.IKeyAction;
 import com.story.game.storages.ProxyScope;
 import com.story.modules.global.ActionType;
 import org.newdawn.slick.Input;
@@ -15,7 +15,7 @@ import org.newdawn.slick.SlickException;
  */
 public class GameplayMediator implements IGameplaymediator{
     private ProxyScope proxyScope;
-    private IActionHandler handler;
+    private IKeyAction handler;
     private GameEventArgs keyPressArgs;
 
     public GameplayMediator(){
@@ -33,8 +33,8 @@ public class GameplayMediator implements IGameplaymediator{
     }
 
     @Override
-    public void setFrameStorage(IFrameStorage storage){
-        this.proxyScope.setFrameStorage(storage);
+    public void setCentralFrameStorage(IFrameStorage storage){
+        this.proxyScope.setCentralFrameStorage(storage);
     }
 
     /**
@@ -42,16 +42,20 @@ public class GameplayMediator implements IGameplaymediator{
      * @param descriptorFacade the descriptor facade
      * @param mapId the map descriptor id
      * @param playerId the player descriptor id
-     * @param storage the frame storage
      */
     @Override
-    public void init(IDescriptorFacade descriptorFacade, int mapId, int playerId, IFrameStorage storage) throws LoadSystemObjectException {
+    public void init(IDescriptorFacade descriptorFacade,
+                     int mapId,
+                     int playerId,
+                     int[] simpleNPCIds,
+                     IFrameStorage centralFrameStorage,
+                     IFrameStorage frameStorage) throws LoadSystemObjectException {
         if (descriptorFacade == null){
             throw new ExceptionInInitializerError("The descriptorFacade is null or empty.");
         }
 
         this.setDescriptorFacade(descriptorFacade);
-        this.proxyScope.init(mapId, playerId, storage);
+        this.proxyScope.init(mapId, playerId, simpleNPCIds, centralFrameStorage, frameStorage);
         this.keyPressArgs.setSystemObjectScope(this.getStorageScope());
     }
 
@@ -77,7 +81,7 @@ public class GameplayMediator implements IGameplaymediator{
     }
 
     @Override
-    public void setActionHandler(IActionHandler handler) {
+    public void setActionHandler(IKeyAction handler) {
         this.handler = handler;
     }
 }

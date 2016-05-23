@@ -1,7 +1,7 @@
 package com.story.game.factories;
 
-import com.story.game.handlers.IActionHandler;
-import com.story.game.handlers.action.ActionHandler;
+import com.story.game.action.IKeyAction;
+import com.story.game.action.KeyActionHandler;
 
 /**
  * Created by alex on 14.05.16.
@@ -9,10 +9,10 @@ import com.story.game.handlers.action.ActionHandler;
 public class ActionFactory {
 
     /**
-     * Create a instance of IActionHandler
-     * @return ActionHandler
+     * Create a instance of IKeyAction
+     * @return KeyActionHandler
      */
-    public static IActionHandler create(){
-        return new ActionHandler();
+    public static IKeyAction create(){
+        return new KeyActionHandler();
     }
 }

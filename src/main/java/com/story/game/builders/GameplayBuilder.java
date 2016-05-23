@@ -1,8 +1,8 @@
 package com.story.game.builders;
 
-import com.story.core.coreHandlers.PlayerHandler;
-import com.story.game.handlers.IActionHandler;
-import com.story.game.handlers.action.KeyEventHandler;
+import com.story.core.entities.Player;
+import com.story.game.action.IKeyAction;
+import com.story.game.action.KeyEventHandler;
 import com.story.game.mediators.GameplayMediator;
 import com.story.game.mediators.IGameplaymediator;
 import com.story.game.storages.ProxyScope;
@@ -20,7 +20,7 @@ class GameplayBuilder implements IGameplayBuilder {
     }
 
     @Override
-    public void createKeyEvents(IActionHandler handler){
+    public void createKeyEvents(IKeyAction handler){
         this.gameplaymediator.setActionHandler(handler);
         initKeysEvent(handler);
     }
@@ -30,33 +30,39 @@ class GameplayBuilder implements IGameplayBuilder {
         return this.gameplaymediator;
     }
 
-    private void initKeysEvent(IActionHandler handler){
+    private void initKeysEvent(IKeyAction handler){
         handler.addKeyEventListener(Input.KEY_LEFT, new KeyEventHandler.KeyHandler() {
             @Override
             public void execute(ProxyScope.ScopeStorage storage) {
-                storage.getPlayerHandler().move(PlayerHandler.Direction.LEFT,
-                        storage.getMapHandler(), storage.getFrameStorage());
+                storage.getMapComponent().getPlayerComponent().move(Player.Direction.LEFT,
+                        storage.getMapComponent(), storage.getCentralFrameStorage());
+
+                storage.getMapComponent().getNpcList().get(0).move(Player.Direction.LEFT,
+                        storage.getMapComponent(), storage.getFrameStorage());
             }
         });
         handler.addKeyEventListener(Input.KEY_RIGHT, new KeyEventHandler.KeyHandler() {
             @Override
             public void execute(ProxyScope.ScopeStorage storage) {
-                storage.getPlayerHandler().move(PlayerHandler.Direction.RIGHT,
-                        storage.getMapHandler(), storage.getFrameStorage());
+                storage.getMapComponent().getPlayerComponent().move(Player.Direction.RIGHT,
+                        storage.getMapComponent(), storage.getCentralFrameStorage());
+
+                //storage.getSimpleNPC().get(0).move(Player.Direction.RIGHT,
+                 //       storage.getMapHandler(), storage.getFrameStorage());
             }
         });
         handler.addKeyEventListener(Input.KEY_UP, new KeyEventHandler.KeyHandler() {
             @Override
             public void execute(ProxyScope.ScopeStorage storage) {
-                storage.getPlayerHandler().move(PlayerHandler.Direction.UP,
-                        storage.getMapHandler(), storage.getFrameStorage());
+                storage.getMapComponent().getPlayerComponent().move(Player.Direction.UP,
+                        storage.getMapComponent(), storage.getCentralFrameStorage());
             }
         });
         handler.addKeyEventListener(Input.KEY_DOWN, new KeyEventHandler.KeyHandler() {
             @Override
             public void execute(ProxyScope.ScopeStorage storage) {
-                storage.getPlayerHandler().move(PlayerHandler.Direction.DOWN,
-                        storage.getMapHandler(), storage.getFrameStorage());
+                storage.getMapComponent().getPlayerComponent().move(Player.Direction.DOWN,
+                        storage.getMapComponent(), storage.getCentralFrameStorage());
             }
         });
     }

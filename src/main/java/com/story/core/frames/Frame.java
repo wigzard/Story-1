@@ -5,10 +5,10 @@ import java.awt.*;
 /**
  * Created by alex on 28.04.16.
  */
-public class CentralObject {
+public class Frame {
     private Point position;
 
-    public CentralObject(Point position) {
+    public Frame(Point position) {
         this.position = position;
     }
 

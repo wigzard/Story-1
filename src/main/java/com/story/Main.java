@@ -36,6 +36,8 @@ public class Main {
             gameplaymediator.init(DescriptorFacadeFactory.create(GlobalVar.dbName),
                     mapDescriptorId,
                     playerDescriptorId,
+                    npcIds,
+                    FrameStorageFactory.create(),
                     FrameStorageFactory.create());
             IGameMediator mediator = new BaseGameMediator(gameplaymediator);
 

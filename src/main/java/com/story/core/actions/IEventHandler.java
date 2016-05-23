@@ -1,4 +1,4 @@
-package com.story.core.coreHandlers;
+package com.story.core.actions;
 
 /**
  * Created by alex on 05.05.16.

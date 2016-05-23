@@ -1,15 +1,14 @@
-package com.story.game.handlers.action;
+package com.story.game.action;
 
-import com.story.core.coreHandlers.EventArgs;
-import com.story.game.eventArgs.GameEventArgs;
-import com.story.game.eventArgs.KeyEventArgs;
-import com.story.game.handlers.IActionHandler;
+import com.story.core.actions.EventArgs;
+import com.story.game.action.eventArgs.GameEventArgs;
+import com.story.game.action.eventArgs.KeyEventArgs;
 import com.story.modules.global.ActionType;
 
 /**
  * Created by alex on 05.05.16.
  */
-public class ActionHandler implements IActionHandler {
+public class KeyActionHandler implements IKeyAction {
     private KeyEventHandler keyEventHandler;
 
     @Override

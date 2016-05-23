@@ -1,6 +1,6 @@
 package com.story.game.builders;
 
-import com.story.game.handlers.IActionHandler;
+import com.story.game.action.IKeyAction;
 import com.story.game.mediators.IGameplaymediator;
 
 /**
@@ -8,6 +8,6 @@ import com.story.game.mediators.IGameplaymediator;
  */
 public interface IGameplayBuilder {
     void createInstance();
-    void createKeyEvents(IActionHandler handler);
+    void createKeyEvents(IKeyAction handler);
     IGameplaymediator getInstance();
 }
