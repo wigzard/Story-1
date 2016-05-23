@@ -34,7 +34,7 @@ public class Map extends ImplementationLevel {
 
         //Init simple npc list
         List<Npc> npcComponents = this.getNpcList();
-        if ((npcComponents != null) || (npcComponents.size() > 0)){
+        if ((npcComponents != null) && (npcComponents.size() > 0)){
             for (Npc component: npcComponents) {
                 component.init();
             }

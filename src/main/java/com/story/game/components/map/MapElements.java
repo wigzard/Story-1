@@ -36,4 +36,16 @@ class MapElements {
 
         this.simpleNPC.add(component);
     }
+
+    public void addSimpleNPC(List<Npc> components) {
+        if (components == null){
+            return;
+        }
+
+        if (this.simpleNPC == null){
+            this.simpleNPC = new ArrayList<>();
+        }
+
+        this.simpleNPC.addAll(components);
+    }
 }

@@ -43,6 +43,14 @@ public abstract class AbstractMap extends MapEntity{
     }
 
     /**
+     * Add the simple npc components
+     * @param components
+     */
+    public void addSimpleNpc(List<Npc> components){
+        this.mapComponents.addSimpleNPC(components);
+    }
+
+    /**
      * Get the simple npc list
      * @return The simple npc list
      */

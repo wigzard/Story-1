@@ -16,8 +16,7 @@ public interface IGameplaymediator {
     void ExecuteAction(Input input);
     void setActionHandler(IKeyAction handler);
     void setDescriptorFacade(IDescriptorFacade descriptorFacade);
-    void loadMap(int mapDescriptorId) throws SlickException;
-    void loadPlayer(int playerDescriptorId) throws SlickException;
+    void loadMap(int mapDescriptorId, int playerDescriptorId, int[] simpleNpcIds) throws SlickException;
     void setCentralFrameStorage(IFrameStorage storage);
     void init(IDescriptorFacade descriptorFacade,
               int mapId,

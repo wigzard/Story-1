@@ -1,18 +1,11 @@
 package com.story.game.storages;
 
-import com.story.core.entities.map.MapEntity;
-import com.story.core.entities.Npc;
-import com.story.core.entities.Player;
 import com.story.core.customException.LoadSystemObjectException;
 import com.story.core.descriptor.IDescriptorFacade;
 import com.story.core.frames.IFrameStorage;
 import com.story.game.components.map.AbstractMap;
-import com.story.game.factories.HandlerFactory;
-import com.story.modules.dbdata.descriptor.PersonDescriptor;
+import com.story.game.factories.ComponentFactory;
 import org.newdawn.slick.SlickException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by alex on 04.05.16.
@@ -42,25 +35,12 @@ public class ProxyScope {
      * @param mapDescriptorId descriptor id
      * @throws SlickException
      */
-    public void setMapHandler(int mapDescriptorId) throws SlickException {
-        this.currentScore.mapHandler = HandlerFactory.createMapComponent(
-                this.descriptorFacade.getMap(mapDescriptorId));
-    }
-
-    /**
-     * Change the player descriptor and create new a player handler
-     * @param playerDescriptorId descriptor id
-     * @throws SlickException
-     */
-    public void setPlayerDescriptor(int playerDescriptorId) throws SlickException {
-        this.currentScore.mapHandler.setPlayerComponent(HandlerFactory.createPlayerComponent(
-                this.descriptorFacade.getPlayer(playerDescriptorId)));
-    }
-
-    public void setSimpleNPCDescriptor(int[] descriptorIds){
-        for (PersonDescriptor descriptor: this.descriptorFacade.getNPCDescriptor(descriptorIds)) {
-            this.currentScore.mapHandler.addSimpleNpc(HandlerFactory.createSimpleNPCComponent(descriptor));
-        }
+    public void setMapHandler(int mapDescriptorId, int playerDescriptorId, int[] npcIds) throws SlickException {
+        this.currentScore.mapHandler = ComponentFactory.createMapComponent(
+                this.descriptorFacade,
+                mapDescriptorId,
+                playerDescriptorId,
+                npcIds);
     }
 
     /**
@@ -96,10 +76,8 @@ public class ProxyScope {
                      IFrameStorage centralFrameStorage,
                      IFrameStorage frameStorage) throws LoadSystemObjectException {
         try {
-            this.setMapHandler(mapId);
-            this.setPlayerDescriptor(playerId);
+            this.setMapHandler(mapId, playerId, simpleNPCIds);
             this.setCentralFrameStorage(centralFrameStorage);
-            this.setSimpleNPCDescriptor(simpleNPCIds);
             this.setFrameStorage(frameStorage);
             this.isScopeInit = true;
         }

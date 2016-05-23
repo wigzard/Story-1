@@ -60,13 +60,8 @@ public class GameplayMediator implements IGameplaymediator{
     }
 
     @Override
-    public void loadMap(int mapDescriptorId) throws SlickException {
-        this.proxyScope.setMapHandler(mapDescriptorId);
-    }
-
-    @Override
-    public void loadPlayer(int playerDescriptorId) throws SlickException {
-        this.proxyScope.setPlayerDescriptor(playerDescriptorId);
+    public void loadMap(int mapDescriptorId, int playerDescriptorId, int[] simpleNpcIds) throws SlickException {
+        this.proxyScope.setMapHandler(mapDescriptorId, playerDescriptorId, simpleNpcIds);
     }
 
     @Override
