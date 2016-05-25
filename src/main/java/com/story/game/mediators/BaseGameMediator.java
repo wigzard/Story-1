@@ -3,6 +3,7 @@ package com.story.game.mediators;
 import com.story.core.IGameMediator;
 import com.story.core.entities.Npc;
 import com.story.core.frames.Frame;
+import com.story.game.storages.GlobalStorage;
 import com.story.modules.global.Converter;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -33,26 +34,28 @@ public class BaseGameMediator implements IGameMediator {
         this.gameplayMediator.ExecuteAction(gc.getInput());
 
         //If count of storage for central object > 0, then enable animate
-        if (this.gameplayMediator.getStorageScope().getCentralFrameStorage().hasNextFrame()) {
-            this.gameplayMediator.getStorageScope().getMapComponent()
+        if (GlobalStorage.getInstance().getScore().getCentralFrameStorage().hasNextFrame()) {
+            GlobalStorage.getInstance().getScore().getMapComponent()
                     .getPlayerComponent().getMoveAnimation().update(delta);
         }
         else {
-            this.gameplayMediator.getStorageScope().getMapComponent()
+            GlobalStorage.getInstance().getScore().getMapComponent()
                     .getPlayerComponent().getMoveAnimation().setCurrentFrame(0);
         }
     }
 
     @Override
     public void init(GameContainer gc) throws SlickException {
-        this.gameplayMediator.getStorageScope().getMapComponent().init();
+        GlobalStorage.ScopeStorage storage = GlobalStorage.getInstance().getScore();
+
+        storage.getMapComponent().init();
 
         Point mapCoordinates = Converter.ObjectPositionToMapPosition(
-                this.gameplayMediator.getStorageScope().getMapComponent().getPlayerComponent().getCurrentPosition(),
-                this.gameplayMediator.getStorageScope().getMapComponent().getTiledMap().getTileWidth(),
-                this.gameplayMediator.getStorageScope().getMapComponent().getTiledMap().getTileHeight(),
-                this.gameplayMediator.getStorageScope().getMapComponent().getMargin());
-        this.gameplayMediator.getStorageScope().getCentralFrameStorage().addFrame(
+                storage.getMapComponent().getPlayerComponent().getCurrentPosition(),
+                storage.getMapComponent().getTiledMap().getTileWidth(),
+                storage.getMapComponent().getTiledMap().getTileHeight(),
+                storage.getMapComponent().getMargin());
+        storage.getCentralFrameStorage().addFrame(
                 new Frame(mapCoordinates));
     }
 
@@ -60,40 +63,41 @@ public class BaseGameMediator implements IGameMediator {
      * Render the map
      */
     private void renderMap(){
+        GlobalStorage.ScopeStorage storage = GlobalStorage.getInstance().getScore();
+
         //Move map to central object
-        if (this.gameplayMediator.getStorageScope().getCentralFrameStorage().hasNextFrame()){
-            this.gameplayMediator.getStorageScope().getMapComponent().setCenterObject(
-                    this.gameplayMediator.getStorageScope().getCentralFrameStorage()
-                            .getNextFrame().getPosition());
+        if (storage.getCentralFrameStorage().hasNextFrame()){
+            storage.getMapComponent().setCenterObject(storage.getCentralFrameStorage()
+                    .getNextFrame().getPosition());
         }
 
-        this.gameplayMediator.getStorageScope().getMapComponent().getTiledMap().render(
-                this.gameplayMediator.getStorageScope().getMapComponent().getMapPosition().x,
-                this.gameplayMediator.getStorageScope().getMapComponent().getMapPosition().y);
+        storage.getMapComponent().getTiledMap().render(
+                storage.getMapComponent().getMapPosition().x,
+                storage.getMapComponent().getMapPosition().y);
     }
 
     /**
      * Render the player
      */
     private void renderPlayer(){
-        Point playerCoordinates = this.gameplayMediator.getStorageScope()
+        Point playerCoordinates = GlobalStorage.getInstance().getScore()
                 .getMapComponent().getPlayerComponent().calculateCoordinates(
-                        this.gameplayMediator.getStorageScope().getMapComponent(),
-                        this.gameplayMediator.getStorageScope().getMapComponent().getPlayerComponent().getCurrentPosition());
-        this.gameplayMediator.getStorageScope().getMapComponent().getPlayerComponent().getMoveAnimation()
+                        GlobalStorage.getInstance().getScore().getMapComponent(),
+                        GlobalStorage.getInstance().getScore().getMapComponent().getPlayerComponent().getCurrentPosition());
+        GlobalStorage.getInstance().getScore().getMapComponent().getPlayerComponent().getMoveAnimation()
                 .draw(playerCoordinates.x, playerCoordinates.y);
     }
 
     private void renderSimpleNPC(){
-        if ((this.gameplayMediator.getStorageScope().getMapComponent().getNpcList() == null) ||
-                (this.gameplayMediator.getStorageScope().getMapComponent().getNpcList().size() == 0)){
+        if ((GlobalStorage.getInstance().getScore().getMapComponent().getNpcList() == null) ||
+                (GlobalStorage.getInstance().getScore().getMapComponent().getNpcList().size() == 0)){
             return;
         }
 
         Point npcCoordinates;
-        for (Npc simpleNPC: this.gameplayMediator.getStorageScope().getMapComponent().getNpcList()) {
+        for (Npc simpleNPC: GlobalStorage.getInstance().getScore().getMapComponent().getNpcList()) {
             npcCoordinates = simpleNPC.calculateCoordinates(
-                            this.gameplayMediator.getStorageScope().getMapComponent(),
+                    GlobalStorage.getInstance().getScore().getMapComponent(),
                             simpleNPC.getCurrentPosition());
             simpleNPC.getMoveAnimation().draw(npcCoordinates.x, npcCoordinates.y);
         }

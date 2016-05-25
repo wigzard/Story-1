@@ -25,7 +25,7 @@ public class KeyActionHandler implements IKeyAction {
      * @param args the game event arguments
      */
     private void executeKeyEvent(GameEventArgs args){
-        if ((args.getInput() == null) || (args.getSystemObjectScope() == null)){
+        if (args.getInput() == null){
             throw new IllegalArgumentException("Incorrect GameEventArgs object");
         }
 
@@ -36,7 +36,6 @@ public class KeyActionHandler implements IKeyAction {
 
         KeyEventArgs params = new KeyEventArgs(ActionType.KEY_PRESSED);
         params.setHandler(handler);
-        params.setSystemObjectScope(args.getSystemObjectScope());
 
         this.keyEventHandler.onHandle(params);
     }

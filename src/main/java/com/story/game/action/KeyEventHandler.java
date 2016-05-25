@@ -3,7 +3,7 @@ package com.story.game.action;
 import com.story.core.actions.EventArgs;
 import com.story.core.actions.IEventHandler;
 import com.story.game.action.eventArgs.KeyEventArgs;
-import com.story.game.storages.ProxyScope;
+import com.story.game.storages.GlobalStorage;
 import org.newdawn.slick.Input;
 
 import java.util.HashMap;
@@ -44,15 +44,12 @@ public class KeyEventHandler implements IEventHandler{
     public void onHandle(EventArgs args) {
         try{
             KeyEventArgs params = (KeyEventArgs)args;
-            if (params.getSystemObjectScope() == null){
-                throw new IllegalArgumentException("Object scope doesn't exists");
-            }
 
             if (params.getHandler() == null){
                 return;
             }
 
-            params.getHandler().execute(params.getSystemObjectScope());
+            params.getHandler().execute(GlobalStorage.getInstance().getScore());
         }
         catch (Exception e){
             e.printStackTrace();
@@ -60,6 +57,6 @@ public class KeyEventHandler implements IEventHandler{
     }
 
     public interface KeyHandler{
-        void execute(ProxyScope.ScopeStorage storage);
+        void execute(GlobalStorage.ScopeStorage storage);
     }
 }

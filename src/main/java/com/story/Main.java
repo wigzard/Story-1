@@ -9,6 +9,8 @@ import com.story.game.factories.DescriptorFacadeFactory;
 import com.story.game.factories.FrameStorageFactory;
 import com.story.game.mediators.BaseGameMediator;
 import com.story.game.mediators.IGameplaymediator;
+import com.story.game.scenarion.Scenario;
+import com.story.modules.asyncTask.AsyncClass;
 import com.story.modules.dbdata.descriptor.PersonDescriptor;
 import com.story.modules.global.GlobalVar;
 import org.newdawn.slick.AppGameContainer;
@@ -24,9 +26,10 @@ public class Main {
         try
         {
             //Hardcode constants
-            int mapDescriptorId = 1;
-            int playerDescriptorId = 1;
-            int[] npcIds = new int[] {2, 3};
+            Scenario scenario = new Scenario();
+            scenario.mapId = 1;
+            scenario.playerId = 1;
+            scenario.simpleNpcIds = new int[] {2, 3};
             //------------------
 
             GlobalVar.Width = 800;
@@ -34,9 +37,7 @@ public class Main {
 
             IGameplaymediator gameplaymediator = GameplayFactory.createMediator(ActionFactory.create());
             gameplaymediator.init(DescriptorFacadeFactory.create(GlobalVar.dbName),
-                    mapDescriptorId,
-                    playerDescriptorId,
-                    npcIds,
+                    scenario,
                     FrameStorageFactory.create(),
                     FrameStorageFactory.create());
             IGameMediator mediator = new BaseGameMediator(gameplaymediator);

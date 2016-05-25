@@ -7,6 +7,7 @@ import com.story.game.components.PlayerComponent;
 import com.story.game.components.SimpleNpcComponent;
 import com.story.game.components.map.AbstractMap;
 import com.story.game.components.map.MapBuilder;
+import com.story.game.scenarion.Scenario;
 import com.story.modules.dbdata.descriptor.MapDescriptor;
 import com.story.modules.dbdata.descriptor.PersonDescriptor;
 import org.newdawn.slick.SlickException;
@@ -36,16 +37,11 @@ public class ComponentFactory {
     /**
      * Create the instance of AbstractMap
      * @param facade the facade for data
-     * @param mapDescriptorId the map descriptor id
-     * @param playerDescriptorId the player descriptor id
-     * @param npcDescriptorIds the npc descriptors id
      * @return instance of AbstractMap
      */
     public static AbstractMap createMapComponent(IDescriptorFacade facade,
-                                                 int mapDescriptorId,
-                                                 int playerDescriptorId,
-                                                 int[] npcDescriptorIds){
-        return MapBuilder.createMap(facade, mapDescriptorId, playerDescriptorId, npcDescriptorIds);
+                                                 Scenario scenario){
+        return MapBuilder.createMap(facade, scenario);
     }
 
     private static int x = 1;

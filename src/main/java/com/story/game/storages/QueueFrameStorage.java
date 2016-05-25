@@ -17,22 +17,22 @@ public class QueueFrameStorage implements IFrameStorage {
     }
 
     @Override
-    public Frame getNextFrame() {
+    public synchronized Frame getNextFrame() {
         return this.coQueue.size() == 0? null : this.coQueue.poll();
     }
 
     @Override
-    public void addFrame(Frame object) {
+    public synchronized void addFrame(Frame object) {
         this.coQueue.add(object);
     }
 
     @Override
-    public void addFrames(Queue<Frame> objects) {
+    public synchronized void addFrames(Queue<Frame> objects) {
         this.coQueue.addAll(objects);
     }
 
     @Override
-    public boolean hasNextFrame() {
+    public synchronized boolean hasNextFrame() {
         return this.coQueue.size() > 0;
     }
 }

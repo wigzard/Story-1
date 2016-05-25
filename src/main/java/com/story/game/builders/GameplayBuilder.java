@@ -5,7 +5,7 @@ import com.story.game.action.IKeyAction;
 import com.story.game.action.KeyEventHandler;
 import com.story.game.mediators.GameplayMediator;
 import com.story.game.mediators.IGameplaymediator;
-import com.story.game.storages.ProxyScope;
+import com.story.game.storages.GlobalStorage;
 import org.newdawn.slick.Input;
 
 /**
@@ -33,7 +33,7 @@ class GameplayBuilder implements IGameplayBuilder {
     private void initKeysEvent(IKeyAction handler){
         handler.addKeyEventListener(Input.KEY_LEFT, new KeyEventHandler.KeyHandler() {
             @Override
-            public void execute(ProxyScope.ScopeStorage storage) {
+            public void execute(GlobalStorage.ScopeStorage storage) {
                 storage.getMapComponent().getPlayerComponent().move(Player.Direction.LEFT,
                         storage.getMapComponent(), storage.getCentralFrameStorage());
 
@@ -43,7 +43,7 @@ class GameplayBuilder implements IGameplayBuilder {
         });
         handler.addKeyEventListener(Input.KEY_RIGHT, new KeyEventHandler.KeyHandler() {
             @Override
-            public void execute(ProxyScope.ScopeStorage storage) {
+            public void execute(GlobalStorage.ScopeStorage storage) {
                 storage.getMapComponent().getPlayerComponent().move(Player.Direction.RIGHT,
                         storage.getMapComponent(), storage.getCentralFrameStorage());
 
@@ -53,14 +53,14 @@ class GameplayBuilder implements IGameplayBuilder {
         });
         handler.addKeyEventListener(Input.KEY_UP, new KeyEventHandler.KeyHandler() {
             @Override
-            public void execute(ProxyScope.ScopeStorage storage) {
+            public void execute(GlobalStorage.ScopeStorage storage) {
                 storage.getMapComponent().getPlayerComponent().move(Player.Direction.UP,
                         storage.getMapComponent(), storage.getCentralFrameStorage());
             }
         });
         handler.addKeyEventListener(Input.KEY_DOWN, new KeyEventHandler.KeyHandler() {
             @Override
-            public void execute(ProxyScope.ScopeStorage storage) {
+            public void execute(GlobalStorage.ScopeStorage storage) {
                 storage.getMapComponent().getPlayerComponent().move(Player.Direction.DOWN,
                         storage.getMapComponent(), storage.getCentralFrameStorage());
             }

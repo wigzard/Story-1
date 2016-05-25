@@ -4,6 +4,7 @@ import com.story.core.descriptor.IDescriptorFacade;
 import com.story.core.entities.Npc;
 import com.story.core.entities.Player;
 import com.story.game.factories.ComponentFactory;
+import com.story.game.scenarion.Scenario;
 import com.story.modules.dbdata.descriptor.PersonDescriptor;
 import org.newdawn.slick.SlickException;
 
@@ -59,16 +60,14 @@ public class MapBuilder {
         return result;
     }
 
-    private AbstractMap createMapComponent(int mapDescriptorId,
-                                  int playerDescriptorId,
-                                  int[] npcDescriptorIds) throws SlickException {
+    private AbstractMap createMapComponent(Scenario scenario) throws SlickException {
         if (this.facade == null){
             return null;
         }
 
-        AbstractMap map = this.createMap(mapDescriptorId);
-        map.setPlayerComponent(this.createPlayer(playerDescriptorId));
-        map.addSimpleNpc(this.createSimpleNpc(npcDescriptorIds));
+        AbstractMap map = this.createMap(scenario.mapId);
+        map.setPlayerComponent(this.createPlayer(scenario.playerId));
+        map.addSimpleNpc(this.createSimpleNpc(scenario.simpleNpcIds));
 
         return map;
     }
@@ -76,17 +75,14 @@ public class MapBuilder {
     /**
      * Build the instance of abstract map
      */
-    public static AbstractMap createMap(IDescriptorFacade facade,
-                                        int mapDescriptorId,
-                                        int playerDescriptorId,
-                                        int[] npcDescriptorIds){
+    public static AbstractMap createMap(IDescriptorFacade facade, Scenario scenario){
         if (instance == null){
             instance = new MapBuilder();
         }
 
         instance.setFacade(facade);
         try {
-            return instance.createMapComponent(mapDescriptorId, playerDescriptorId, npcDescriptorIds);
+            return instance.createMapComponent(scenario);
         } catch (SlickException e) {
             e.printStackTrace();
         }
