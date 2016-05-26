@@ -6,7 +6,7 @@ import com.story.core.actions.IEventHandler;
 /**
  * Created by alex on 19.05.16.
  */
-public class MoveAction implements IEventHandler{
+public class MoveAction{
 
     public MoveAction(String name) {
     }
@@ -19,7 +19,6 @@ public class MoveAction implements IEventHandler{
         }
     }
 
-    @Override
     public void onHandle(EventArgs args) {
 
     }

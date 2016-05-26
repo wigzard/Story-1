@@ -2,7 +2,8 @@ package com.story.game.storages;
 
 import com.story.core.customException.LoadSystemObjectException;
 import com.story.core.descriptor.IDescriptorFacade;
-import com.story.core.frames.IFrameStorage;
+import com.story.utils.frames.FrameFactory;
+import com.story.utils.frames.IFrameStorage;
 import com.story.game.components.map.AbstractMap;
 import com.story.game.factories.ComponentFactory;
 import com.story.game.scenarion.Scenario;
@@ -21,8 +22,8 @@ public class GlobalStorage {
 
     private GlobalStorage(){
         this.currentScore = new ScopeStorage();
-        this.currentScore.centralFrameStorage = new QueueFrameStorage();
-        this.currentScore.frameStorage = new QueueFrameStorage();
+        this.currentScore.centralFrameStorage = FrameFactory.createFrameStorage();
+        this.currentScore.frameStorage = FrameFactory.createFrameStorage();
         this.isScopeInit = false;
     }
 
@@ -35,10 +36,6 @@ public class GlobalStorage {
         }
 
         return instance;
-    }
-
-    public static void initialize(IDescriptorFacade facade, Scenario scenario) throws LoadSystemObjectException {
-        getInstance().init(facade, scenario);
     }
 
     /**

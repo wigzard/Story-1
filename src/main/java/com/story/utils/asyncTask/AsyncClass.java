@@ -1,4 +1,4 @@
-package com.story.modules.asyncTask;
+package com.story.utils.asyncTask;
 
 /**
  * Created by alex on 24.05.16.

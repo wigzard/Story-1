@@ -1,4 +1,4 @@
-package com.story.core.frames;
+package com.story.utils.frames;
 
 import java.awt.*;
 

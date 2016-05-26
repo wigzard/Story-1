@@ -2,11 +2,11 @@ package com.story.game.components;
 
 import com.story.core.entities.map.MapEntity;
 import com.story.core.entities.Npc;
-import com.story.core.frames.*;
-import com.story.core.frames.Frame;
+import com.story.utils.frames.Frame;
 import com.story.game.factories.AnimationFactory;
 import com.story.modules.dbdata.descriptor.PersonDescriptor;
 import com.story.modules.global.Converter;
+import com.story.utils.frames.IFrameStorage;
 import org.newdawn.slick.SlickException;
 
 import java.awt.*;

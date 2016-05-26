@@ -33,7 +33,9 @@ class GameplayBuilder implements IGameplayBuilder {
     private void initKeysEvent(IKeyAction handler){
         handler.addKeyEventListener(Input.KEY_LEFT, new KeyEventHandler.KeyHandler() {
             @Override
-            public void execute(GlobalStorage.ScopeStorage storage) {
+            public void execute() {
+                GlobalStorage.ScopeStorage storage = GlobalStorage.getInstance().getScore();
+
                 storage.getMapComponent().getPlayerComponent().move(Player.Direction.LEFT,
                         storage.getMapComponent(), storage.getCentralFrameStorage());
 
@@ -43,7 +45,8 @@ class GameplayBuilder implements IGameplayBuilder {
         });
         handler.addKeyEventListener(Input.KEY_RIGHT, new KeyEventHandler.KeyHandler() {
             @Override
-            public void execute(GlobalStorage.ScopeStorage storage) {
+            public void execute() {
+                GlobalStorage.ScopeStorage storage = GlobalStorage.getInstance().getScore();
                 storage.getMapComponent().getPlayerComponent().move(Player.Direction.RIGHT,
                         storage.getMapComponent(), storage.getCentralFrameStorage());
 
@@ -53,14 +56,16 @@ class GameplayBuilder implements IGameplayBuilder {
         });
         handler.addKeyEventListener(Input.KEY_UP, new KeyEventHandler.KeyHandler() {
             @Override
-            public void execute(GlobalStorage.ScopeStorage storage) {
+            public void execute() {
+                GlobalStorage.ScopeStorage storage = GlobalStorage.getInstance().getScore();
                 storage.getMapComponent().getPlayerComponent().move(Player.Direction.UP,
                         storage.getMapComponent(), storage.getCentralFrameStorage());
             }
         });
         handler.addKeyEventListener(Input.KEY_DOWN, new KeyEventHandler.KeyHandler() {
             @Override
-            public void execute(GlobalStorage.ScopeStorage storage) {
+            public void execute() {
+                GlobalStorage.ScopeStorage storage = GlobalStorage.getInstance().getScore();
                 storage.getMapComponent().getPlayerComponent().move(Player.Direction.DOWN,
                         storage.getMapComponent(), storage.getCentralFrameStorage());
             }

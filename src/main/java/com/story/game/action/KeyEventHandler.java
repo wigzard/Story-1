@@ -49,7 +49,7 @@ public class KeyEventHandler implements IEventHandler{
                 return;
             }
 
-            params.getHandler().execute(GlobalStorage.getInstance().getScore());
+            params.getHandler().execute();
         }
         catch (Exception e){
             e.printStackTrace();
@@ -57,6 +57,6 @@ public class KeyEventHandler implements IEventHandler{
     }
 
     public interface KeyHandler{
-        void execute(GlobalStorage.ScopeStorage storage);
+        void execute();
     }
 }

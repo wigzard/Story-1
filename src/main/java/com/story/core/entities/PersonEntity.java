@@ -1,8 +1,9 @@
 package com.story.core.entities;
 
 import com.story.core.entities.map.MapEntity;
-import com.story.core.frames.*;
 import com.story.modules.dbdata.descriptor.PersonDescriptor;
+import com.story.utils.frames.IFrameBuilder;
+import com.story.utils.frames.IFrameStorage;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
 

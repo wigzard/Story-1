@@ -2,7 +2,7 @@ package com.story.game.mediators;
 
 import com.story.core.IGameMediator;
 import com.story.core.entities.Npc;
-import com.story.core.frames.Frame;
+import com.story.utils.frames.Frame;
 import com.story.game.storages.GlobalStorage;
 import com.story.modules.global.Converter;
 import org.newdawn.slick.GameContainer;
@@ -10,7 +10,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import java.awt.*;
-import java.util.List;
 
 /**
  * Created by alex on 09.04.16.

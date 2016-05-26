@@ -1,7 +1,4 @@
-package com.story.game.storages;
-
-import com.story.core.frames.Frame;
-import com.story.core.frames.IFrameStorage;
+package com.story.utils.frames;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -9,7 +6,7 @@ import java.util.Queue;
 /**
  * Created by alex on 28.04.16.
  */
-public class QueueFrameStorage implements IFrameStorage {
+class QueueFrameStorage implements IFrameStorage {
     private Queue<Frame> coQueue = null;
 
     public QueueFrameStorage(){
