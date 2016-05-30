@@ -30,22 +30,22 @@ public class BaseGameMediator implements IGameMediator {
 
     @Override
     public void update(GameContainer gc, int delta) {
-        this.gameplayMediator.ExecuteAction(gc.getInput());
+        this.gameplayMediator.onUpdate(gc.getInput());
 
         //If count of storage for central object > 0, then enable animate
-        if (GlobalStorage.getInstance().getScore().getCentralFrameStorage().hasNextFrame()) {
-            GlobalStorage.getInstance().getScore().getMapComponent()
+        if (GlobalStorage.getInstance().getScope().getCentralFrameStorage().hasNextFrame()) {
+            GlobalStorage.getInstance().getScope().getMapComponent()
                     .getPlayerComponent().getMoveAnimation().update(delta);
         }
         else {
-            GlobalStorage.getInstance().getScore().getMapComponent()
+            GlobalStorage.getInstance().getScope().getMapComponent()
                     .getPlayerComponent().getMoveAnimation().setCurrentFrame(0);
         }
     }
 
     @Override
     public void init(GameContainer gc) throws SlickException {
-        GlobalStorage.ScopeStorage storage = GlobalStorage.getInstance().getScore();
+        GlobalStorage.ScopeStorage storage = GlobalStorage.getInstance().getScope();
 
         storage.getMapComponent().init();
 
@@ -54,15 +54,14 @@ public class BaseGameMediator implements IGameMediator {
                 storage.getMapComponent().getTiledMap().getTileWidth(),
                 storage.getMapComponent().getTiledMap().getTileHeight(),
                 storage.getMapComponent().getMargin());
-        storage.getCentralFrameStorage().addFrame(
-                new Frame(mapCoordinates));
+        storage.getCentralFrameStorage().addFrame(new Frame(mapCoordinates));
     }
 
     /**
      * Render the map
      */
     private void renderMap(){
-        GlobalStorage.ScopeStorage storage = GlobalStorage.getInstance().getScore();
+        GlobalStorage.ScopeStorage storage = GlobalStorage.getInstance().getScope();
 
         //Move map to central object
         if (storage.getCentralFrameStorage().hasNextFrame()){
@@ -79,24 +78,24 @@ public class BaseGameMediator implements IGameMediator {
      * Render the player
      */
     private void renderPlayer(){
-        Point playerCoordinates = GlobalStorage.getInstance().getScore()
+        Point playerCoordinates = GlobalStorage.getInstance().getScope()
                 .getMapComponent().getPlayerComponent().calculateCoordinates(
-                        GlobalStorage.getInstance().getScore().getMapComponent(),
-                        GlobalStorage.getInstance().getScore().getMapComponent().getPlayerComponent().getCurrentPosition());
-        GlobalStorage.getInstance().getScore().getMapComponent().getPlayerComponent().getMoveAnimation()
+                        GlobalStorage.getInstance().getScope().getMapComponent(),
+                        GlobalStorage.getInstance().getScope().getMapComponent().getPlayerComponent().getCurrentPosition());
+        GlobalStorage.getInstance().getScope().getMapComponent().getPlayerComponent().getMoveAnimation()
                 .draw(playerCoordinates.x, playerCoordinates.y);
     }
 
     private void renderSimpleNPC(){
-        if ((GlobalStorage.getInstance().getScore().getMapComponent().getNpcList() == null) ||
-                (GlobalStorage.getInstance().getScore().getMapComponent().getNpcList().size() == 0)){
+        if ((GlobalStorage.getInstance().getScope().getMapComponent().getNpcList() == null) ||
+                (GlobalStorage.getInstance().getScope().getMapComponent().getNpcList().size() == 0)){
             return;
         }
 
         Point npcCoordinates;
-        for (Npc simpleNPC: GlobalStorage.getInstance().getScore().getMapComponent().getNpcList()) {
+        for (Npc simpleNPC: GlobalStorage.getInstance().getScope().getMapComponent().getNpcList()) {
             npcCoordinates = simpleNPC.calculateCoordinates(
-                    GlobalStorage.getInstance().getScore().getMapComponent(),
+                    GlobalStorage.getInstance().getScope().getMapComponent(),
                             simpleNPC.getCurrentPosition());
             simpleNPC.getMoveAnimation().draw(npcCoordinates.x, npcCoordinates.y);
         }

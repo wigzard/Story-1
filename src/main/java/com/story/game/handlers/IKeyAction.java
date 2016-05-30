@@ -1,4 +1,4 @@
-package com.story.game.action;
+package com.story.game.handlers;
 
 import com.story.core.actions.IEventHandler;
 

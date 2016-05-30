@@ -1,23 +1,27 @@
-package com.story.game.components;
+package com.story.game.components.npc;
 
 import com.story.core.entities.map.MapEntity;
-import com.story.core.entities.Npc;
-import com.story.utils.frames.Frame;
 import com.story.game.factories.AnimationFactory;
 import com.story.modules.dbdata.descriptor.PersonDescriptor;
-import com.story.modules.global.Converter;
-import com.story.utils.frames.IFrameStorage;
 import org.newdawn.slick.SlickException;
 
 import java.awt.*;
-import java.util.*;
+import java.util.HashMap;
 
 /**
  * Created by alex on 14.05.16.
  */
-public class SimpleNpcComponent extends Npc {
+public class SimpleNpcComponent extends AbstractNpc {
     public SimpleNpcComponent(PersonDescriptor person, Point startPoint) throws SlickException {
         super(person, startPoint);
+    }
+
+    /**
+     * The npc component will be updated
+     */
+    @Override
+    public void update() {
+
     }
 
     private Point move(Direction d, Point p) {
@@ -39,8 +43,9 @@ public class SimpleNpcComponent extends Npc {
     }
 
     @Override
-    public void move(Direction d, MapEntity mapHandler, IFrameStorage frameStorage) {
-        Point startPoint = this.getCurrentPosition();
+    public void move(Direction d) {
+        System.out.println("NPC move " + this.getName());
+        /*Point startPoint = this.getCurrentPosition();
         Point endPoint = this.move(d, this.getCurrentPosition());
         this.setCurrentDirection(d);
 
@@ -49,7 +54,7 @@ public class SimpleNpcComponent extends Npc {
         }
 
         this.currentPosition = this.move(d, this.currentPosition);
-        frameStorage.addFrames(this.buildFrames(mapHandler, startPoint, endPoint));
+        frameStorage.addFrames(this.buildFrames(mapHandler, startPoint, endPoint));*/
     }
 
     @Override
@@ -76,7 +81,7 @@ public class SimpleNpcComponent extends Npc {
      * @param end end position on the map
      * @return frame queue for render
      */
-    @Override
+    /*@Override
     public Queue<Frame> buildFrames(MapEntity map, Point start, Point end) {
         if (start.equals(end)){
             return new LinkedList<>();
@@ -104,7 +109,7 @@ public class SimpleNpcComponent extends Npc {
         framesQueue.add(new Frame(end));
 
         return framesQueue;
-    }
+    }*/
 
     /**
      * Calculate coordinate on the map

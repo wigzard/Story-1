@@ -16,14 +16,14 @@ import org.newdawn.slick.SlickException;
 public class GlobalStorage {
     private static GlobalStorage instance;
 
-    private ScopeStorage currentScore;
+    private ScopeStorage currentScope;
     private IDescriptorFacade descriptorFacade;
     private boolean isScopeInit;
 
     private GlobalStorage(){
-        this.currentScore = new ScopeStorage();
-        this.currentScore.centralFrameStorage = FrameFactory.createFrameStorage();
-        this.currentScore.frameStorage = FrameFactory.createFrameStorage();
+        this.currentScope = new ScopeStorage();
+        this.currentScope.centralFrameStorage = FrameFactory.createFrameStorage();
+        this.currentScope.frameStorage = FrameFactory.createFrameStorage();
         this.isScopeInit = false;
     }
 
@@ -58,7 +58,7 @@ public class GlobalStorage {
      * @throws SlickException
      */
     public void setMapHandler(Scenario scenario) throws SlickException {
-        this.currentScore.mapHandler = ComponentFactory.createMapComponent(
+        this.currentScope.mapHandler = ComponentFactory.createMapComponent(
                 this.descriptorFacade,
                 scenario);
     }
@@ -66,12 +66,12 @@ public class GlobalStorage {
      *
      * @return the currentScope object if the proxy object is initialized.
      */
-    public ScopeStorage getScore() {
+    public ScopeStorage getScope() {
         if (!this.isScopeInit){
             throw new ExceptionInInitializerError("The GlobalStorage was does't initialized.");
         }
 
-        return currentScore;
+        return currentScope;
     }
 
     /**

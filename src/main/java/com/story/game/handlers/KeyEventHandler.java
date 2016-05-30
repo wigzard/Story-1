@@ -1,9 +1,8 @@
-package com.story.game.action;
+package com.story.game.handlers;
 
 import com.story.core.actions.EventArgs;
 import com.story.core.actions.IEventHandler;
-import com.story.game.action.eventArgs.KeyEventArgs;
-import com.story.game.storages.GlobalStorage;
+import com.story.game.handlers.eventArgs.KeyEventArgs;
 import org.newdawn.slick.Input;
 
 import java.util.HashMap;

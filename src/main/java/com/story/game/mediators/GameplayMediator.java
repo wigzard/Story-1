@@ -2,9 +2,10 @@ package com.story.game.mediators;
 
 import com.story.core.customException.LoadSystemObjectException;
 import com.story.core.descriptor.IDescriptorFacade;
-import com.story.utils.frames.IFrameStorage;
-import com.story.game.action.eventArgs.GameEventArgs;
-import com.story.game.action.IKeyAction;
+import com.story.game.handlers.NpcMoveHandler;
+import com.story.game.handlers.eventArgs.GameEventArgs;
+import com.story.game.handlers.IKeyAction;
+import com.story.game.handlers.eventArgs.NpcMoveEventArgs;
 import com.story.game.scenarion.Scenario;
 import com.story.game.storages.GlobalStorage;
 import com.story.modules.global.ActionType;
@@ -17,8 +18,12 @@ public class GameplayMediator implements IGameplaymediator{
     private IKeyAction handler;
     private GameEventArgs keyPressArgs;
 
+    private NpcMoveHandler npcMoveHandler;
+    private NpcMoveEventArgs npcMoveEventArgs;
+
     public GameplayMediator(){
         this.keyPressArgs = new GameEventArgs(ActionType.KEY_PRESSED);
+        this.npcMoveHandler = new NpcMoveHandler();
     }
 
     /**
@@ -33,12 +38,16 @@ public class GameplayMediator implements IGameplaymediator{
         }
 
         GlobalStorage.getInstance().init(descriptorFacade, scenario);
+        this.npcMoveEventArgs = new NpcMoveEventArgs();
+        this.npcMoveEventArgs.listOfNpc = GlobalStorage.getInstance().getScope().getMapComponent().getNpcList();
     }
 
     @Override
-    public void ExecuteAction(Input input) {
+    public void onUpdate(Input input) {
         this.keyPressArgs.setInput(input);
         this.handler.onHandle(this.keyPressArgs);
+
+        this.npcMoveHandler.onHandle(this.npcMoveEventArgs);
     }
 
     @Override

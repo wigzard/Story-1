@@ -9,7 +9,7 @@ import java.util.Queue;
 class QueueFrameStorage implements IFrameStorage {
     private Queue<Frame> coQueue = null;
 
-    public QueueFrameStorage(){
+    QueueFrameStorage(){
         this.coQueue = new LinkedList<>();
     }
 

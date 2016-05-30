@@ -5,5 +5,6 @@ package com.story.modules.global;
  */
 public enum ActionType {
     KEY_PRESSED,
+    MOVE,
     NONE
 }

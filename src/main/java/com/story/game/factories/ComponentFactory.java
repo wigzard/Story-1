@@ -4,11 +4,10 @@ import com.story.core.descriptor.IDescriptorFacade;
 import com.story.core.entities.Npc;
 import com.story.core.entities.Player;
 import com.story.game.components.PlayerComponent;
-import com.story.game.components.SimpleNpcComponent;
+import com.story.game.components.npc.SimpleNpcComponent;
 import com.story.game.components.map.AbstractMap;
 import com.story.game.components.map.MapBuilder;
 import com.story.game.scenarion.Scenario;
-import com.story.modules.dbdata.descriptor.MapDescriptor;
 import com.story.modules.dbdata.descriptor.PersonDescriptor;
 import org.newdawn.slick.SlickException;
 

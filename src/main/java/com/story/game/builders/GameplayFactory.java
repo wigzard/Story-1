@@ -1,6 +1,6 @@
 package com.story.game.builders;
 
-import com.story.game.action.IKeyAction;
+import com.story.game.handlers.IKeyAction;
 import com.story.game.mediators.IGameplaymediator;
 
 /**

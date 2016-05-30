@@ -2,8 +2,6 @@ package com.story.core.entities;
 
 import com.story.core.entities.map.MapEntity;
 import com.story.modules.dbdata.descriptor.PersonDescriptor;
-import com.story.utils.frames.IFrameBuilder;
-import com.story.utils.frames.IFrameStorage;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
 
@@ -13,7 +11,7 @@ import java.util.*;
 /**
  * Created by alex on 14.05.16.
  */
-public abstract class PersonEntity implements IFrameBuilder, IEntity {
+public abstract class PersonEntity implements IEntity {
     public enum Direction{UP, LEFT, DOWN, RIGHT}
 
     protected PersonDescriptor descriptor = null;
@@ -35,7 +33,7 @@ public abstract class PersonEntity implements IFrameBuilder, IEntity {
         return this.moveAnimation.get(this.currentDirection);
     }
 
-    public abstract void move(Direction d, MapEntity mapHandler, IFrameStorage frameStorage);
+    public abstract void move(Direction d);
     public abstract void setCurrentDirection(Direction d);
     public abstract Point calculateCoordinates(MapEntity map, Point object);
 }

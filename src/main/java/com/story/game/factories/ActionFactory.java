@@ -1,7 +1,7 @@
 package com.story.game.factories;
 
-import com.story.game.action.IKeyAction;
-import com.story.game.action.KeyActionHandler;
+import com.story.game.handlers.IKeyAction;
+import com.story.game.handlers.KeyActionHandler;
 
 /**
  * Created by alex on 14.05.16.

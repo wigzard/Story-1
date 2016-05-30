@@ -1,4 +1,4 @@
-package com.story.game.action.eventArgs;
+package com.story.game.handlers.eventArgs;
 
 import com.story.core.actions.EventArgs;
 import com.story.modules.global.ActionType;

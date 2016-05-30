@@ -1,8 +1,8 @@
-package com.story.game.action;
+package com.story.game.handlers;
 
 import com.story.core.actions.EventArgs;
-import com.story.game.action.eventArgs.GameEventArgs;
-import com.story.game.action.eventArgs.KeyEventArgs;
+import com.story.game.handlers.eventArgs.GameEventArgs;
+import com.story.game.handlers.eventArgs.KeyEventArgs;
 import com.story.modules.global.ActionType;
 
 /**
