@@ -1,5 +1,6 @@
-package dbData;
+package dalTest;
 
+import dalTest.loadSettings.SettingsLoaderTest;
 import org.junit.runner.RunWith;
 
 /**
@@ -7,8 +8,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(org.junit.runners.Suite.class)
 @org.junit.runners.Suite.SuiteClasses({
-        LoadingMapDataTest.class,
-        LoadingPersonTest.class
+        SettingsLoaderTest.class,
 })
-public class DbDataSuite {
+public class DALTestSuite {
 }
