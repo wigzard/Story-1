@@ -2,11 +2,10 @@ package com.story.modules.dbdata.managers;
 
 import com.story.modules.dbWorker.IQueryExecutor;
 import com.story.modules.dbdata.descriptor.DBTableDescriptor;
+import com.story.modules.dbdata.descriptor.PersonDescriptor;
 import com.story.modules.dbdata.descriptor.PersonPictureDescriptor;
 import com.story.modules.dbdata.descriptor.PictureObjectDescriptor;
 import com.story.modules.dbdata.managers.queryProcesses.PersonTableProcess;
-import com.story.modules.dbdata.descriptor.PersonDescriptor;
-import com.story.modules.global.Converter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,7 @@ public class PersonManager implements IManager {
     private List<DBTableDescriptor> getPersonDescriptors(int[] ids){
         String query = "SELECT * FROM "
                 + PersonDescriptor.DBTableName + " WHERE " + PersonDescriptor.DBFieldId
-                + " IN(" + Converter.NumbersToString(ids) + ")";
+                + " IN(" + "Converter.NumbersToString(ids)" + ")";
 
         PersonTableProcess process = new PersonTableProcess(query);
         this.executor.selectExecute(process);

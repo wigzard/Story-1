@@ -1,13 +1,12 @@
 package com.story.modules.dbdata;
-import com.story.core.descriptor.IDescriptorFacade;
 import com.story.modules.dbWorker.IQueryExecutor;
 import com.story.modules.dbWorker.QueryExecutor;
 import com.story.modules.dbdata.descriptor.DBTableDescriptor;
+import com.story.modules.dbdata.descriptor.MapDescriptor;
+import com.story.modules.dbdata.descriptor.PersonDescriptor;
 import com.story.modules.dbdata.managers.IManager;
 import com.story.modules.dbdata.managers.MapManager;
 import com.story.modules.dbdata.managers.PersonManager;
-import com.story.modules.dbdata.descriptor.MapDescriptor;
-import com.story.modules.dbdata.descriptor.PersonDescriptor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +15,7 @@ import java.util.List;
 /**
  * Created by alex on 29.03.16.
  */
-public class DBFacade implements IDescriptorFacade {
+public class DBFacade{
     private enum Managers{MAP, PERSON}
     private HashMap<Managers, IManager> managers;
     private IQueryExecutor queryExecutor;
@@ -26,7 +25,6 @@ public class DBFacade implements IDescriptorFacade {
         this.queryExecutor = new QueryExecutor(url);
     }
 
-    @Override
     public MapDescriptor getMap(int mapId)
     {
         if (!this.containsElement(Managers.MAP)){
@@ -36,7 +34,6 @@ public class DBFacade implements IDescriptorFacade {
         return (MapDescriptor) (this.managers.get(Managers.MAP).getData(mapId));
     }
 
-    @Override
     public PersonDescriptor getPlayer(int id) {
         if (!this.containsElement(Managers.PERSON)){
             this.managers.put(Managers.PERSON, new PersonManager(this.queryExecutor));
@@ -50,7 +47,6 @@ public class DBFacade implements IDescriptorFacade {
      * @param descriptorIds id of descriptors
      * @return Npc descriptor list
      */
-    @Override
     public List<PersonDescriptor> getNPCDescriptor(int[] descriptorIds) {
         if ((descriptorIds == null) || (descriptorIds.length == 0)){
             return null;

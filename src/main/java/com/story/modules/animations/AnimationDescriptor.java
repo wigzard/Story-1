@@ -1,13 +1,11 @@
 package com.story.modules.animations;
 
-import com.story.core.descriptor.IDescriptor;
-
 import java.awt.*;
 
 /**
  * Created by alex on 29.04.16.
  */
-public class AnimationDescriptor implements IDescriptor {
+public class AnimationDescriptor{
     private String path;
     private int tileWidth = 32;
     private int tileHeight = 32;
