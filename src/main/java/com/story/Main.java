@@ -17,14 +17,16 @@ public class Main {
         ApplicationSettings setting = SettingsLoader.getSettings(
                 GlobalHelper.getResource(Constants.ApplicationSettingsFile).getPath());
 
-        /*try {
-            AppGameContainer container = new AppGameContainer(new Game(), 640, 480, false);
+        try {
+            AppGameContainer container = new AppGameContainer(new Game(),
+                    setting.getScreenWidth(),
+                    setting.getScreenHeight(),
+                    setting.isFullScreen());
             container.start();
         } catch (SlickException e) {
             e.printStackTrace();
         }
 
-        System.out.print("main");*/
         Trace.info("Application is finished");
     }
 }

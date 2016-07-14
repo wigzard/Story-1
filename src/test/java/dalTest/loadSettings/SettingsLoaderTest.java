@@ -14,12 +14,6 @@ import static org.junit.Assert.*;
 public class SettingsLoaderTest {
 
     @Test
-    public void fakePath(){
-        String fakeSettingsPath = "fake";
-        assertEquals(SettingsLoader.getSettings(fakeSettingsPath), null);
-    }
-
-    @Test
     public void checkApplicationSetting(){
         ApplicationSettings setting = SettingsLoader.getSettings(
                 GlobalHelper.getResource(Constants.ApplicationSettingsFile).getPath());

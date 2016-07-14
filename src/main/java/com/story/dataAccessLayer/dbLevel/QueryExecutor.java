@@ -1,4 +1,7 @@
-package com.story.modules.dbWorker;
+package com.story.dataAccessLayer.dbLevel;
+
+import com.story.utils.GlobalHelper;
+import com.story.utils.log.Trace;
 
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -21,8 +24,8 @@ public class QueryExecutor implements IQueryExecutor {
     }
 
     @Override
-    public void selectExecute(IQueryProcess args) {
-        if ((args.getQuery() == null) || (args.getQuery().isEmpty())){
+    public void selectExecute(QueryDescriptor descriptor) {
+        if (GlobalHelper.isNullOrEmpty(descriptor.getQuery())){
             throw new IllegalArgumentException("Incorrect query");
         }
 
@@ -30,26 +33,28 @@ public class QueryExecutor implements IQueryExecutor {
             this.connection.setAutoCommit(false);
 
             Statement statement = this.connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(args.getQuery());
+            ResultSet resultSet = statement.executeQuery(descriptor.getQuery());
 
-            args.processData(resultSet);
+            if (descriptor.getRespondHandler() != null) {
+                descriptor.getRespondHandler().apply(resultSet);
+            }
 
             resultSet.close();
             statement.close();
             //this.connection.close();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            Trace.error(e.getMessage(), e);
         }
     }
 
     @Override
-    public boolean updateExecute(IQueryProcess args) {
+    public boolean updateExecute(QueryDescriptor args) {
         return false;
     }
 
     @Override
-    public boolean insertExecute(IQueryProcess args) {
+    public boolean insertExecute(QueryDescriptor args) {
         return false;
     }
 }

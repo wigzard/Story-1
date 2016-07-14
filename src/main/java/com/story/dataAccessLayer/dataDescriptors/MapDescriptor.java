@@ -1,15 +1,9 @@
-package com.story.modules.dbdata.descriptor;
+package com.story.dataAccessLayer.dataDescriptors;
 
 /**
- * Created by alex on 29.03.16.
+ * Created by alex on 13.07.16.
  */
-public class MapDescriptor extends DBTableDescriptor {
-    public static final String DBTableName = "Maps";
-    public static final String DBFieldId = "Id";
-    public static final String DBFieldDescription = "Description";
-    public static final String DBFieldName = "Name";
-    public static final String DBFieldPathToFile = "PathToFile";
-
+public class MapDescriptor extends BaseDescriptor {
     private String description;
     private String name;
     private String pathToTMX;
@@ -40,5 +34,12 @@ public class MapDescriptor extends DBTableDescriptor {
 
     public void setPathToTMX(String pathToTMX) {
         this.pathToTMX = pathToTMX;
+    }
+
+    @Override
+    public void dispose() {
+        this.name = null;
+        this.pathToTMX = null;
+        this.description = null;
     }
 }

@@ -75,13 +75,13 @@ public class SettingsLoader {
         String height = property.getProperty(ScreenHeightPropertyName);
         String isFullScreen = property.getProperty(FullScreePropertyName);
 
-        settings.setScreenWidth(GlobalHelper.nullOrEmpty(width)? defaultSettings.getScreenWidth():
+        settings.setScreenWidth(GlobalHelper.isNullOrEmpty(width)? defaultSettings.getScreenWidth():
                 Converter.toInt(width));
 
-        settings.setScreenHeight(GlobalHelper.nullOrEmpty(height)? defaultSettings.getScreenHeight():
+        settings.setScreenHeight(GlobalHelper.isNullOrEmpty(height)? defaultSettings.getScreenHeight():
                 Converter.toInt(height));
 
-        settings.setFullScreen(GlobalHelper.nullOrEmpty(isFullScreen)? defaultSettings.isFullScreen():
+        settings.setFullScreen(GlobalHelper.isNullOrEmpty(isFullScreen)? defaultSettings.isFullScreen():
                 Converter.toBoolean(isFullScreen));
     }
 

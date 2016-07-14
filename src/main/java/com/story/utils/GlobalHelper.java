@@ -16,7 +16,7 @@ public class GlobalHelper {
      * @param value check value
      * @return true if value is null or empty
      */
-    public static boolean nullOrEmpty(String value){
+    public static boolean isNullOrEmpty(String value){
         return value == null || value.isEmpty();
     }
 
