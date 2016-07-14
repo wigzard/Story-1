@@ -2,6 +2,7 @@ package com.story.dataAccessLayer.dataActions;
 
 import com.story.application.Constants;
 import com.story.dataAccessLayer.dataDescriptors.MapDescriptor;
+import com.story.dataAccessLayer.dbLevel.QueryBuilder;
 import com.story.dataAccessLayer.dbLevel.QueryDescriptor;
 import com.story.dataAccessLayer.dbLevel.tables.MapsTable;
 import com.story.utils.log.Trace;
@@ -40,8 +41,11 @@ public class RetrieveMapsAction extends SingleRecordAction {
      * @return Instance of MapDescriptor
      */
     public MapDescriptor RetrieveObjectById(int id) {
-        String query = "SELECT * FROM " + MapsTable.TableName +
-                " WHERE " + MapsTable.IdFieldName + "=" + id;
+        QueryBuilder queryBuilder = new QueryBuilder();
+        String query = queryBuilder.selectAll()
+                .from(MapsTable.TableName)
+                .where()
+                .equals(MapsTable.IdFieldName, String.valueOf(id)).toString();
 
         QueryDescriptor descriptor = new QueryDescriptor(query);
 
