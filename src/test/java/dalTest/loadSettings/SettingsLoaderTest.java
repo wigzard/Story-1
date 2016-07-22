@@ -1,8 +1,8 @@
 package dalTest.loadSettings;
 
 import com.story.application.Constants;
-import com.story.dataAccessLayer.applicationSettings.ApplicationSettings;
-import com.story.dataAccessLayer.applicationSettings.SettingsLoader;
+import com.story.dataAccessLayer.settings.Settings;
+import com.story.dataAccessLayer.settings.SettingsLoader;
 import com.story.utils.GlobalHelper;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ public class SettingsLoaderTest {
 
     @Test
     public void checkApplicationSetting(){
-        ApplicationSettings setting = SettingsLoader.getSettings(
+        Settings setting = SettingsLoader.getSettings(
                 GlobalHelper.getResource(Constants.ApplicationSettingsFile).getPath());
 
         assertNotNull(setting);

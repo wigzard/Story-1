@@ -1,15 +1,15 @@
-package com.story.dataAccessLayer.applicationSettings;
+package com.story.dataAccessLayer.settings;
 
 /**
  * Created by alex on 12.07.16.
  * Class which stored settings of application
  */
-public class ApplicationSettings {
+public class Settings {
     private int screenWidth;
     private int screenHeight;
     private boolean isFullScreen;
 
-    public ApplicationSettings(){
+    public Settings(){
     }
 
     public int getScreenWidth() {

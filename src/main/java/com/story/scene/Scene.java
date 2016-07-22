@@ -1,6 +1,5 @@
 package com.story.scene;
 
-import com.story.scene.components.Component;
 import com.story.system.IDisposable;
 import com.story.utils.events.EventList;
 import com.story.utils.events.EventType;
@@ -8,7 +7,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-import java.util.ArrayList;
 import java.util.function.Function;
 
 /**
@@ -16,11 +14,6 @@ import java.util.function.Function;
  * Base class of scene type
  */
 public abstract class Scene implements IDisposable {
-    /**
-     * List of components which scene should be updated
-     */
-    protected ArrayList<Component> sceneComponents;
-
     /**
      * The list of event
      */
@@ -57,18 +50,9 @@ public abstract class Scene implements IDisposable {
     }
 
     /**
-     * Check on exists type in eventList
-     * @param type the type of event
-     * @return true, when type is present in eventList
-     */
-    public boolean containsEventType(EventType type){
-        return this.eventList.contains(type);
-    }
-
-    /**
      * Initialize the component
      */
-    public abstract void init() throws SlickException;
+    public abstract void init(GameContainer gameContainer) throws SlickException;
 
     /**
      * Update the game logic here. No rendering should take place in this method though it won't do any harm.
@@ -86,10 +70,10 @@ public abstract class Scene implements IDisposable {
 
     @Override
     public void dispose(){
-        if ((this.sceneComponents != null) && (this.sceneComponents.size() > 0)){
-            this.sceneComponents.forEach(IDisposable::dispose);
+        if (eventList.size() > 0){
+            this.eventList.dispose();
         }
 
-        this.sceneComponents = null;
+        this.eventList = null;
     }
 }

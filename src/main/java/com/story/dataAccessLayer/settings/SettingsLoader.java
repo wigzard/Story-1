@@ -1,6 +1,6 @@
-package com.story.dataAccessLayer.applicationSettings;
+package com.story.dataAccessLayer.settings;
 
-import com.story.application.DefaultApplicationSettings;
+import com.story.application.ApplicationSettings;
 import com.story.utils.Converter;
 import com.story.utils.GlobalHelper;
 import com.story.utils.log.Trace;
@@ -8,7 +8,6 @@ import com.story.utils.log.Trace;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -33,23 +32,23 @@ public class SettingsLoader {
     /**
      * Initiate loading the settings data
      * @param settingsFilePath the path to file
-     * @return ApplicationSettings object or null if was an error
+     * @return Settings object or null if was an error
      */
-    public static ApplicationSettings getSettings(String settingsFilePath){
+    public static Settings getSettings(String settingsFilePath){
         return new SettingsLoader(settingsFilePath).LoadSetting();
     }
 
     /**
      * Creates settings object
-     * @return instance of ApplicationSettings
+     * @return instance of Settings
      */
-    private ApplicationSettings LoadSetting(){
+    private Settings LoadSetting(){
         try{
             FileInputStream file = this.loadFile();
             if (file == null){
                 return null;
             }
-            ApplicationSettings settings = new ApplicationSettings();
+            Settings settings = new Settings();
             Properties property = new Properties();
             property.load(file);
 
@@ -68,21 +67,17 @@ public class SettingsLoader {
      * @param property the properties from file
      * @param settings object for which will loading data
      */
-    private void getPropertiesProcess(Properties property, ApplicationSettings settings){
-        ApplicationSettings defaultSettings = DefaultApplicationSettings.getDefaultSettings();
-
+    private void getPropertiesProcess(Properties property, Settings settings){
         String width = property.getProperty(ScreenWidthPropertyName);
         String height = property.getProperty(ScreenHeightPropertyName);
         String isFullScreen = property.getProperty(FullScreePropertyName);
 
-        settings.setScreenWidth(GlobalHelper.isNullOrEmpty(width)? defaultSettings.getScreenWidth():
-                Converter.toInt(width));
-
-        settings.setScreenHeight(GlobalHelper.isNullOrEmpty(height)? defaultSettings.getScreenHeight():
-                Converter.toInt(height));
-
-        settings.setFullScreen(GlobalHelper.isNullOrEmpty(isFullScreen)? defaultSettings.isFullScreen():
-                Converter.toBoolean(isFullScreen));
+        settings.setScreenWidth(GlobalHelper.isNullOrEmpty(width)?
+                ApplicationSettings.DefaultScreenWidth: Converter.toInt(width));
+        settings.setScreenHeight(GlobalHelper.isNullOrEmpty(height)?
+                ApplicationSettings.DefaultScreenHeight: Converter.toInt(height));
+        settings.setFullScreen(GlobalHelper.isNullOrEmpty(isFullScreen)?
+                ApplicationSettings.DefaultIsFullScreen: Converter.toBoolean(isFullScreen));
     }
 
     /**

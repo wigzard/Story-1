@@ -10,14 +10,14 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-import java.util.ArrayList;
-
 /**
  * Created by alex on 14.07.16.
- * Represent screen as map where player can be moved and execute something actions
+ * Represent screen as map where player can moved and execute something actions
  */
 class MapScene extends Scene {
     private static final String MapChangeEventName = "MapChange";
+
+    private MapComponent mapComponent;
 
     /**
      * Initialize new instance of MapScene
@@ -30,67 +30,68 @@ class MapScene extends Scene {
      * Initialize component
      */
     private void initialize(){
-        this.addComponents();
-        this.addEvents();
-        this.addSubscribe();
+        this.registerEvents();
     }
 
     /**
      * Create component which should be in scene
      */
-    private void addComponents(){
-        this.sceneComponents = new ArrayList<>();
+    private void loadComponents(){
+        if (this.mapComponent != null){
+            this.mapComponent.dispose();
+        }
+
         RetrieveMapsAction action = new RetrieveMapsAction();
-        this.sceneComponents.add(new MapComponent(action.RetrieveObjectById(1)));
+        this.mapComponent = new MapComponent(action.RetrieveObjectById(1));
+        this.mapComponent.addEventListener(EventType.MapRecreate, MapChangeEventName, this::onMapChange);
     }
 
     /**
      * Initialize the events
      */
-    private void addEvents(){
-        this.eventList.addEvent(EventType.SceneChanged, new Event(EventType.SceneChanged));
-    }
-
-    /**
-     * Initialize subscribe
-     */
-    private void addSubscribe(){
-        this.sceneComponents.forEach(component -> {
-            component.addEventListener(EventType.MapChange, MapChangeEventName, this::onMapChange);
-        });
+    private void registerEvents(){
+        this.eventList.addEvent(EventType.SceneReinit, new Event(EventType.SceneReinit));
+        this.eventList.addEvent(EventType.SceneRecreate, new Event(EventType.SceneRecreate));
     }
 
     /**
      * Method, which called when map change event happened
      */
     private Void onMapChange(Void v){
-        System.out.println("Called onMapChange");
-        this.eventList.get(EventType.SceneChanged).notifySubscribers();
+        System.out.println("Called onMapRecreate");
+        this.eventList.get(EventType.SceneReinit).notifySubscribers();
         return null;
     }
 
     @Override
-    public void init() throws SlickException {
-        this.sceneComponents.forEach(component -> {
-            try {
-                component.init();
-            } catch (Exception e) {
-                SceneException se = new SceneException(e);
-                Trace.error(se.getMessage(), se);
-            }
-        });
+    public void init(GameContainer gameContainer) throws SlickException {
+        this.loadComponents();
+        try {
+            this.mapComponent.init(gameContainer);
+        } catch (Exception e) {
+            SceneException se = new SceneException(e);
+            Trace.error(se.getMessage(), se);
+        }
     }
 
     @Override
     public void update(GameContainer gameContainer, int delta) {
-        this.sceneComponents.forEach(component -> component.update(gameContainer, delta));
+        this.mapComponent.update(gameContainer, delta);
     }
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) {
-        this.sceneComponents.forEach(component -> component.render(gameContainer, graphics));
+        this.mapComponent.render(gameContainer, graphics);
     }
 
     @Override
-    public void dispose(){}
+    public void dispose(){
+        super.dispose();
+
+        if (this.mapComponent != null){
+            this.mapComponent.dispose();
+        }
+
+        this.mapComponent = null;
+    }
 }

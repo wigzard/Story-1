@@ -1,7 +1,9 @@
 package com.story.scene.components;
 
 import com.story.dataAccessLayer.dataDescriptors.MapDescriptor;
+import com.story.scene.components.managers.TiledMapManager;
 import com.story.utils.GlobalHelper;
+import com.story.utils.Size;
 import com.story.utils.customException.InvalidDescriptor;
 import com.story.utils.events.Event;
 import com.story.utils.events.EventType;
@@ -11,6 +13,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
+import java.awt.*;
 import java.io.File;
 
 /**
@@ -19,7 +22,7 @@ import java.io.File;
  */
 public class MapComponent extends Component {
     private MapDescriptor mapDescriptor;
-    private TiledMap map;
+    private TiledMapManager mapManager;
 
     /**
      * Initialize new instance of MapComponent
@@ -28,26 +31,59 @@ public class MapComponent extends Component {
     public MapComponent(MapDescriptor descriptor){
         super();
         this.mapDescriptor = descriptor;
-
-        this.initializeEvents();
+        this.registerEvents();
     }
 
     @Override
-    public void init() throws SlickException, InvalidDescriptor {
+    public void init(GameContainer gameContainer) throws SlickException, InvalidDescriptor {
         this.validateDescriptor();
-        this.map = new TiledMap(this.mapDescriptor.getPathToTMX());
+        if (this.mapManager != null){
+            this.mapManager.dispose();
+        }
+        this.mapManager = new TiledMapManager(new TiledMap(this.mapDescriptor.getPathToTMX()),
+                new Size(gameContainer.getWidth(), gameContainer.getHeight()));
     }
 
     @Override
     public void update(GameContainer gameContainer, int delta) {
-        if (gameContainer.getInput().isKeyPressed(Input.KEY_RIGHT)){
-            this.eventList.get(EventType.MapChange).notifySubscribers();
+        //this.eventList.get(EventType.MapRecreate).notifySubscribers();
+
+        if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)){
+            this.mapManager.moveRight();
+        }
+        else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)){
+            this.mapManager.moveLeft();
+        }
+        else if (gameContainer.getInput().isKeyDown(Input.KEY_UP)){
+            this.mapManager.moveUp();
+        }
+        else if (gameContainer.getInput().isKeyDown(Input.KEY_DOWN)){
+            this.mapManager.moveDown();
         }
     }
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) {
-        this.map.render(0, 0);
+        this.mapManager.getMap().render(this.mapManager.getCurrentCoordinate().x,
+                this.mapManager.getCurrentCoordinate().y);
+    }
+
+    /**
+     * Check when coordinates of object with coordinates @coordinates, is visible in the viewer
+     * @param coordinates the object coordinates on tile map
+     * @return true, when coordinates is displayed on viewer
+     */
+    public boolean isVisibleOnViewer(Point coordinates){
+        return this.mapManager.isVisibleOnViewer(coordinates);
+    }
+
+    /**
+     * Check when object with @coordinates can be moved to tile with this @coordinates
+     * @param coordinates the object coordinates
+     * @return true when object with @coordinates can be set on this place
+     */
+    public boolean isFreeSpace(Point coordinates){
+        return this.mapManager.isFreeSpace(coordinates);
     }
 
     /**
@@ -71,8 +107,8 @@ public class MapComponent extends Component {
     /**
      * Initialize the events
      */
-    private void initializeEvents(){
-        this.eventList.addEvent(EventType.MapChange, new Event(EventType.MapChange));
+    private void registerEvents(){
+        this.eventList.addEvent(EventType.MapRecreate, new Event(EventType.MapRecreate));
     }
 
     /**
@@ -80,10 +116,17 @@ public class MapComponent extends Component {
      */
     @Override
     public void dispose() {
+        super.dispose();
+
         if (this.mapDescriptor != null){
             this.mapDescriptor.dispose();
         }
 
+        if (this.mapManager != null){
+            this.mapManager.dispose();
+        }
+
         this.mapDescriptor = null;
+        this.mapManager = null;
     }
 }

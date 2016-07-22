@@ -41,6 +41,9 @@ public class EventList implements IDisposable {
         return this.events.get(type);
     }
 
+    public int size(){
+        return this.events.size();
+    }
     /**
      * Remove from collection event by type
      * @param type the event type

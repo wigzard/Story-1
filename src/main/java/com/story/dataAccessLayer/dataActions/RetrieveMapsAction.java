@@ -87,6 +87,5 @@ public class RetrieveMapsAction extends SingleRecordAction {
     @Override
     public void dispose(){
         super.dispose();
-        this.mapDescriptor = null;
     }
 }
