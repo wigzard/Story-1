@@ -23,14 +23,16 @@ import java.io.File;
 public class MapComponent extends Component {
     private MapDescriptor mapDescriptor;
     private TiledMapManager mapManager;
+    private Point startPosition;
 
     /**
      * Initialize new instance of MapComponent
      * @param descriptor object, which stored data of map
      */
-    public MapComponent(MapDescriptor descriptor){
+    public MapComponent(MapDescriptor descriptor, Point startPosition){
         super();
         this.mapDescriptor = descriptor;
+        this.startPosition = startPosition;
         this.registerEvents();
     }
 
@@ -41,7 +43,8 @@ public class MapComponent extends Component {
             this.mapManager.dispose();
         }
         this.mapManager = new TiledMapManager(new TiledMap(this.mapDescriptor.getPathToTMX()),
-                new Size(gameContainer.getWidth(), gameContainer.getHeight()));
+                new Size(gameContainer.getWidth(), gameContainer.getHeight()),
+                this.startPosition);
     }
 
     @Override
@@ -78,12 +81,36 @@ public class MapComponent extends Component {
     }
 
     /**
+     * Check when all frames were been draw
+     * @return true, when count of frames for draw is 0
+     */
+    public boolean isFinishFramesDrawing(){
+        return this.mapManager.getCountFramesInViewer() == 0;
+    }
+
+    /**
      * Check when object with @coordinates can be moved to tile with this @coordinates
      * @param coordinates the object coordinates
      * @return true when object with @coordinates can be set on this place
      */
     public boolean isFreeSpace(Point coordinates){
         return this.mapManager.isFreeSpace(coordinates);
+    }
+
+    /**
+     * Gets coordinates of center tile
+     * @return the point of center
+     */
+    public Point getCentralCoordinate(){
+        return this.mapManager.getCenterTileAsGlobal();
+    }
+
+    /**
+     * Gets the size of tile
+     * @return instance of Size
+     */
+    public Size getTileSize(){
+        return this.mapManager.getTileSize();
     }
 
     /**

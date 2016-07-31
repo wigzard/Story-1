@@ -1,7 +1,7 @@
 package com.story.scene.components.managers;
 
 import com.story.scene.components.helpers.MapViewer;
-import com.story.scene.components.helpers.ViewerDescriptor;
+import com.story.scene.components.descriptors.ViewerDescriptor;
 import com.story.system.IDisposable;
 import com.story.utils.Converter;
 import com.story.utils.Size;
@@ -50,22 +50,27 @@ public class TiledMapManager implements IDisposable {
      */
     private Size screenSize;
 
-    public TiledMapManager(TiledMap map, Size screenSize){
+    /**
+     * The start position of viewer
+     */
+    private Point viewerStartPosition;
+
+    public TiledMapManager(TiledMap map, Size screenSize, Point startPosition){
         this.map = map;
         this.screenSize = screenSize;
+        this.viewerStartPosition = startPosition;
         this.loadViewer();
     }
 
     private void loadViewer(){
         int mapWidth = Converter.toInt(this.map.getMapProperty(WidthPropertyName, "0"));
         int mapHeight = Converter.toInt(this.map.getMapProperty(HeightPropertyName, "0"));
-        int inaccessibleTiles = Converter.toInt(this.map.getMapProperty(InaccessibleCountPropertyName, "0"));
-        Point centralPoint = new Point(inaccessibleTiles, inaccessibleTiles);
+        //int inaccessibleTiles = Converter.toInt(this.map.getMapProperty(InaccessibleCountPropertyName, "0"));
 
         ViewerDescriptor descriptor = new ViewerDescriptor();
         descriptor.setMapSize(new Size(mapWidth, mapHeight));
         descriptor.setScreenSize(this.screenSize);
-        descriptor.setStartCoordinates(this.calculateCoordinatesByCentralPoint(centralPoint));
+        descriptor.setStartCoordinates(this.calculateCoordinatesByCentralPoint(this.viewerStartPosition));
         descriptor.setTileSize(new Size(this.map.getTileWidth(), this.map.getTileHeight()));
         this.viewer = new MapViewer(descriptor);
     }
@@ -127,6 +132,29 @@ public class TiledMapManager implements IDisposable {
 
     public boolean isFreeSpace(Point p){
         return this.map.getTileId(p.x, p.y, this.map.getLayerIndex(BarrierLayerName)) == 0;
+    }
+
+    /**
+     * Gets center tile coordinate
+     * @return global point
+     */
+    public Point getCenterTileAsGlobal(){
+        return this.viewer.getViewerCenterPosition();
+    }
+
+    /**
+     * @return size of tile
+     */
+    public Size getTileSize(){
+        return new Size(this.map.getTileWidth(), this.map.getTileHeight());
+    }
+
+    /**
+     * Gets count of frames which should be draw
+     * @return count of frames
+     */
+    public int getCountFramesInViewer(){
+        return this.viewer.getCountFrames();
     }
 
     @Override

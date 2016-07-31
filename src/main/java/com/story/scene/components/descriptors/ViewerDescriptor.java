@@ -1,5 +1,6 @@
-package com.story.scene.components.helpers;
+package com.story.scene.components.descriptors;
 
+import com.story.scene.components.helpers.MapViewer;
 import com.story.system.IDisposable;
 import com.story.utils.Size;
 
