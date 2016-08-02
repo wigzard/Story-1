@@ -1,5 +1,6 @@
 package com.story.scene;
 
+import com.story.scene.sceneDescriptors.SceneDescriptor;
 import com.story.system.IDisposable;
 import com.story.utils.events.EventList;
 import com.story.utils.events.EventType;
@@ -20,10 +21,16 @@ public abstract class Scene implements IDisposable {
     protected EventList eventList;
 
     /**
+     * The descriptor of scene
+     */
+    protected SceneDescriptor sceneDescriptor;
+
+    /**
      * Initialize new instance of Scene
      */
-    public Scene(){
+    public Scene(SceneDescriptor sceneDescriptor){
         this.eventList = new EventList();
+        this.sceneDescriptor = sceneDescriptor;
     }
 
     /**
@@ -74,6 +81,11 @@ public abstract class Scene implements IDisposable {
             this.eventList.dispose();
         }
 
+        if (this.sceneDescriptor != null){
+            this.sceneDescriptor = null;
+        }
+
+        this.sceneDescriptor = null;
         this.eventList = null;
     }
 }

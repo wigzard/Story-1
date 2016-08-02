@@ -1,6 +1,7 @@
 package com.story.scene.components;
 
 import com.story.dataAccessLayer.dataDescriptors.MapDescriptor;
+import com.story.scene.components.helpers.ComponentAction;
 import com.story.scene.components.managers.TiledMapManager;
 import com.story.utils.GlobalHelper;
 import com.story.utils.Size;
@@ -50,25 +51,33 @@ public class MapComponent extends Component {
     @Override
     public void update(GameContainer gameContainer, int delta) {
         //this.eventList.get(EventType.MapRecreate).notifySubscribers();
-
-        if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)){
-            this.mapManager.moveRight();
-        }
-        else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)){
-            this.mapManager.moveLeft();
-        }
-        else if (gameContainer.getInput().isKeyDown(Input.KEY_UP)){
-            this.mapManager.moveUp();
-        }
-        else if (gameContainer.getInput().isKeyDown(Input.KEY_DOWN)){
-            this.mapManager.moveDown();
-        }
     }
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) {
         this.mapManager.getMap().render(this.mapManager.getCurrentCoordinate().x,
                 this.mapManager.getCurrentCoordinate().y);
+    }
+
+    /**
+     * Initiate the action by type {@link ComponentAction}
+     * @param action the type of action
+     */
+    public void executeAction(ComponentAction action){
+        switch (action){
+            case MOVE_DOWN:
+                this.mapManager.moveDown();
+                break;
+            case MOVE_UP:
+                this.mapManager.moveUp();
+                break;
+            case MOVE_LEFT:
+                this.mapManager.moveLeft();
+                break;
+            case MOVE_RIGHT:
+                this.mapManager.moveRight();
+                break;
+        }
     }
 
     /**
@@ -103,14 +112,6 @@ public class MapComponent extends Component {
      */
     public Point getCentralCoordinate(){
         return this.mapManager.getCenterTileAsGlobal();
-    }
-
-    /**
-     * Gets the size of tile
-     * @return instance of Size
-     */
-    public Size getTileSize(){
-        return this.mapManager.getTileSize();
     }
 
     /**

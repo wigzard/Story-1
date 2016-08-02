@@ -40,7 +40,7 @@ public class RetrieveMapsAction extends SingleRecordAction {
      * @param id the object Id
      * @return Instance of MapDescriptor
      */
-    public MapDescriptor RetrieveObjectById(int id) {
+    public MapDescriptor retrieveObjectById(int id) {
         QueryBuilder queryBuilder = new QueryBuilder();
         String query = queryBuilder.selectAll()
                 .from(MapsTable.TableName)

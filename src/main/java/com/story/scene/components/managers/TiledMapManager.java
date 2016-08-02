@@ -143,13 +143,6 @@ public class TiledMapManager implements IDisposable {
     }
 
     /**
-     * @return size of tile
-     */
-    public Size getTileSize(){
-        return new Size(this.map.getTileWidth(), this.map.getTileHeight());
-    }
-
-    /**
      * Gets count of frames which should be draw
      * @return count of frames
      */
