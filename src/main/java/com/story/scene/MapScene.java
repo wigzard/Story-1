@@ -61,7 +61,7 @@ class MapScene extends Scene {
     public void init(GameContainer gameContainer) throws SlickException {
         try {
             this.mapSceneManager.getMapComponent().init(gameContainer);
-            this.mapSceneManager.getPlayerComponent().addEventListener(EventType.MapRecreate, MapChangeEventName, this::onMapChange);
+            this.mapSceneManager.getMapComponent().addEventListener(EventType.MapRecreate, MapChangeEventName, this::onMapChange);
 
             this.mapSceneManager.getPlayerComponent().init(gameContainer);
         } catch (Exception e) {

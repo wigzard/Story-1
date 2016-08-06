@@ -1,6 +1,6 @@
 package com.story.utils;
 
-import java.io.InputStream;
+import java.io.File;
 import java.net.URL;
 
 /**
@@ -27,5 +27,14 @@ public class GlobalHelper {
      */
     public static URL getResource(String name){
         return ClassLoader.getSystemResource(name);
+    }
+
+    /**
+     * Check on file exists
+     * @param filePath the path to file
+     * @return true, when file is exists
+     */
+    public static boolean isFileExists(String filePath){
+        return new File(filePath).exists();
     }
 }

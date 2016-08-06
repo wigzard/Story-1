@@ -12,7 +12,7 @@ public class SceneFactory {
         MapSceneDescriptor sceneDescriptor = new MapSceneDescriptor();
         sceneDescriptor.mapId = 1;
         sceneDescriptor.playerStartPoint = new Point(12, 12);
-        sceneDescriptor.playerSpritePath = "resources/player_picture_set.png";
+        sceneDescriptor.playerId = 1;
 
         return new MapScene(sceneDescriptor);
     }

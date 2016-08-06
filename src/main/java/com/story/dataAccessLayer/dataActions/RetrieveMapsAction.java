@@ -66,6 +66,7 @@ public class RetrieveMapsAction extends SingleRecordAction {
         try {
             if ((resultSet == null) || (!resultSet.isBeforeFirst())){
                 this.mapDescriptor = null;
+                return;
             }
 
             if (resultSet.next()) {

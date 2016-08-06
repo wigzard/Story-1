@@ -43,22 +43,19 @@ public class MapSceneManager implements IDisposable{
 
     /**
      * Create the player component
-     * @param startPosition The start position of player on map
-     * @param pathToSprites The path to file, which stored sprites which describes the player animation
      * @return The player component
      */
-    private PlayerComponent createPlayerComponent(Point startPosition,
-                                                  String pathToSprites,
-                                                  Size tileSize,
-                                                  Point centralPoint){
+    private PlayerComponent createPlayerComponent(int playerId,
+            Point startPosition,
+            Size tileSize,
+            Point centralPoint){
         if (this.playerComponent != null){
             this.playerComponent.dispose();
         }
 
-        PlayerDescriptor playerDescriptor = new PlayerDescriptor();
+        PlayerDescriptor playerDescriptor = new PlayerDescriptor(playerId);
         playerDescriptor.setTileSize(tileSize);
         playerDescriptor.setCentralPoint(centralPoint);
-        playerDescriptor.setUrl(pathToSprites);
         playerDescriptor.setStartPosition(startPosition);
         return new PlayerComponent(playerDescriptor);
     }
@@ -126,8 +123,9 @@ public class MapSceneManager implements IDisposable{
         }
 
         if (this.playerComponent == null){
-            this.playerComponent = this.createPlayerComponent(this.sceneDescriptor.playerStartPoint,
-                    this.sceneDescriptor.playerSpritePath,
+            this.playerComponent = this.createPlayerComponent(
+                    this.sceneDescriptor.playerId,
+                    this.sceneDescriptor.playerStartPoint,
                     new Size(32, 32),
                     this.mapComponent.getCentralCoordinate());
         }

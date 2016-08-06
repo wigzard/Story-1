@@ -12,7 +12,7 @@ import com.story.utils.log.Trace;
  * Created by alex on 13.07.16.
  * Class should be contained logic for work with single record
  */
-public abstract class SingleRecordAction implements IDisposable {
+abstract class SingleRecordAction implements IDisposable {
     /**
      * The executor which handled queries
      */

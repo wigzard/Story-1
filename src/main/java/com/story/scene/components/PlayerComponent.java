@@ -1,9 +1,11 @@
 package com.story.scene.components;
 
 import com.story.scene.components.descriptors.PlayerDescriptor;
+import com.story.scene.components.managers.PlayerComponentManager;
 import com.story.utils.customException.InvalidDescriptor;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 import java.awt.*;
 
@@ -12,17 +14,17 @@ import java.awt.*;
  * Represent the player component
  */
 public class PlayerComponent extends ActorComponent {
-    private Animation playerAnimation;
-    private PlayerDescriptor descriptor;
-    private Point currentCoordinate;
+    /**
+     * The manager of player component
+     */
+    private PlayerComponentManager componentManager;
 
     /**
      * Initialize new instance of PlayerComponent
      * @param descriptor the descriptor of player
      */
     public PlayerComponent(PlayerDescriptor descriptor){
-        this.descriptor = descriptor;
-        this.currentCoordinate = this.descriptor.getStartPosition();
+        this.componentManager = new PlayerComponentManager(descriptor);
     }
 
     /**
@@ -30,40 +32,30 @@ public class PlayerComponent extends ActorComponent {
      * @param p the point with new coordinates
      */
     public void moveTo(Point p){
-        if (this.currentCoordinate.equals(p)){
-            return;
-        }
+        this.componentManager.moveTo(p);
+    }
 
-        this.currentCoordinate = p;
+    public Point getCurrentCoordinate() {
+        return this.componentManager.getCurrentPoint();
     }
 
     @Override
     public void init(GameContainer gameContainer) throws SlickException, InvalidDescriptor {
-        this.playerAnimation = new Animation(new SpriteSheet(
-                this.descriptor.getUrl(),
-                this.descriptor.getTileSize().getWidth(),
-                this.descriptor.getTileSize().getHeight()), 250);
     }
 
     @Override
     public void update(GameContainer gameContainer, int delta) {
-        this.playerAnimation.update(delta);
+        this.componentManager.getPlayerAnimation().update(delta);
     }
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) {
-        this.playerAnimation.draw(this.descriptor.getCenterPosition().x,
-                this.descriptor.getCenterPosition().y);
+        this.componentManager.getPlayerAnimation().draw(this.componentManager.getRenderPoint().x,
+                this.componentManager.getRenderPoint().y);
     }
 
     @Override
     public void dispose(){
         super.dispose();
-
-        this.playerAnimation = null;
-    }
-
-    public Point getCurrentCoordinate() {
-        return currentCoordinate;
     }
 }

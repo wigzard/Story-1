@@ -3,8 +3,6 @@ package com.story;
 import com.story.application.ApplicationSettings;
 import com.story.application.Constants;
 import com.story.dataAccessLayer.settings.Settings;
-import com.story.dataAccessLayer.settings.SettingsLoader;
-import com.story.utils.GlobalHelper;
 import com.story.utils.log.Trace;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;

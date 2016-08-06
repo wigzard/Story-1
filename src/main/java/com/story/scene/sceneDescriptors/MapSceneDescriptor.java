@@ -18,13 +18,12 @@ public class MapSceneDescriptor extends SceneDescriptor{
     public Point playerStartPoint;
 
     /**
-     * The file which contains sprites for the player component
+     * The id of player in database
      */
-    public String playerSpritePath;
+    public int playerId;
 
     @Override
     public void dispose() {
         this.playerStartPoint = null;
-        this.playerSpritePath = null;
     }
 }

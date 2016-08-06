@@ -1,7 +1,5 @@
 package com.story.dataAccessLayer.dataDescriptors;
 
-import java.awt.*;
-
 /**
  * Created by alex on 13.07.16.
  */
