@@ -10,7 +10,6 @@ import com.story.utils.events.Event;
 import com.story.utils.events.EventType;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -22,9 +21,20 @@ import java.io.File;
  * Represent component which should work with map
  */
 public class MapComponent extends Component {
+
+    /**
+     * Represent the move state of map component
+     */
+    private enum MoveState{Moved, Stoped};
+
     private MapDescriptor mapDescriptor;
     private TiledMapManager mapManager;
     private Point startPosition;
+
+    /**
+     * Current move state of the map component
+     */
+    private MoveState moveState = MoveState.Stoped;
 
     /**
      * Initialize new instance of MapComponent
@@ -50,7 +60,14 @@ public class MapComponent extends Component {
 
     @Override
     public void update(GameContainer gameContainer, int delta) {
-        //this.eventList.get(EventType.MapRecreate).notifySubscribers();
+        if ((this.moveState == MoveState.Stoped) && (this.mapManager.getCountFramesInViewer() > 0)){
+            this.moveState = MoveState.Moved;
+            this.eventList.get(EventType.MapMoveStart).notifySubscribers();
+        }
+        else if ((this.moveState == MoveState.Moved) && (this.mapManager.getCountFramesInViewer() == 0)){
+            this.moveState = MoveState.Stoped;
+            this.eventList.get(EventType.MapMoveStop).notifySubscribers();
+        }
     }
 
     @Override
@@ -137,6 +154,8 @@ public class MapComponent extends Component {
      */
     private void registerEvents(){
         this.eventList.addEvent(EventType.MapRecreate, new Event(EventType.MapRecreate));
+        this.eventList.addEvent(EventType.MapMoveStart, new Event(EventType.MapMoveStart));
+        this.eventList.addEvent(EventType.MapMoveStop, new Event(EventType.MapMoveStop));
     }
 
     /**

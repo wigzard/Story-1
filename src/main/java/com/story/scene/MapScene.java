@@ -1,5 +1,6 @@
 package com.story.scene;
 
+import com.story.scene.components.PlayerComponent;
 import com.story.scene.components.helpers.ComponentAction;
 import com.story.scene.managers.MapSceneManager;
 import com.story.scene.sceneDescriptors.MapSceneDescriptor;
@@ -99,6 +100,10 @@ class MapScene extends Scene {
     public void dispose(){
         super.dispose();
 
+        if (this.mapSceneManager != null){
+            this.mapSceneManager.dispose();
+        }
 
+        this.mapSceneManager = null;
     }
 }

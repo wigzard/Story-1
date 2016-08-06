@@ -1,28 +1,23 @@
 package com.story.scene.components.managers;
 
 import com.story.scene.components.descriptors.PlayerDescriptor;
+import com.story.scene.components.helpers.ActorAnimationHelper;
+import com.story.scene.components.helpers.ActorDirection;
 import com.story.system.IDisposable;
-import com.story.utils.GlobalHelper;
-import com.story.utils.Size;
-import com.story.utils.log.Trace;
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
 
 import java.awt.*;
-import java.io.FileNotFoundException;
 
 /**
  * Created by alex on 06.08.16.
  * Represent class for manage a component of player
  */
 public class PlayerComponentManager implements IDisposable {
-    private static final int PlayerAnimationDuration = 250;
+    private static final int PlayerAnimationDuration = 200;
 
     /**
      * The animation of player
      */
-    private Animation playerAnimation;
+    private ActorAnimationHelper playerAnimation;
 
     /**
      * The position of player, where he stay in every time
@@ -35,6 +30,11 @@ public class PlayerComponentManager implements IDisposable {
     private PlayerDescriptor playerDescriptor;
 
     /**
+     * The current direction of actor
+     */
+    private ActorDirection currentDirection;
+
+    /**
      * Initialize new instance of {@link PlayerComponentManager}
      * @param descriptor the descriptor of player
      */
@@ -45,6 +45,11 @@ public class PlayerComponentManager implements IDisposable {
 
         this.playerDescriptor = descriptor;
         this.currentCoordinate = this.playerDescriptor.getStartPosition();
+        this.currentDirection = ActorDirection.DOWN;
+
+        this.playerAnimation = new ActorAnimationHelper(this.playerDescriptor.getSpriteSheetPath(),
+                this.playerDescriptor.getTileSize(),
+                PlayerAnimationDuration);
     }
 
     /**
@@ -52,7 +57,7 @@ public class PlayerComponentManager implements IDisposable {
      * @param p the point with new coordinates
      */
     public void moveTo(Point p){
-        if (this.currentCoordinate.equals(p)){
+        if ((p == null) || (this.currentCoordinate.equals(p))){
             return;
         }
 
@@ -60,22 +65,33 @@ public class PlayerComponentManager implements IDisposable {
     }
 
     /**
-     * Gets the animation of player
-     * @return instance of {@link Animation}
+     * Sets direction of player
+     * @param direction selected direction
      */
-    public Animation getPlayerAnimation(){
-        if (this.playerAnimation == null){
-            try {
-                this.playerAnimation = this.createAnimation(this.playerDescriptor.getSpriteSheetPath(),
-                        this.playerDescriptor.getTileSize(),
-                        PlayerAnimationDuration);
-            } catch (FileNotFoundException | SlickException e) {
-                Trace.error(e);
-                return null;
-            }
-        }
+    public void setDirection(ActorDirection direction){
+        this.currentDirection = direction;
+    }
 
-        return this.playerAnimation;
+    public ActorDirection getDirection(){
+        return this.currentDirection;
+    }
+
+    /**
+     * Update the player animation
+     * @param delta the delta value
+     */
+    public void updatePlayerAnimation(int delta){
+        this.playerAnimation.update(this.currentDirection, delta);
+    }
+
+    /**
+     * Draw player component animation
+     */
+    public void drawPlayerAnimation(){
+        Point renderPoint = new Point(this.playerDescriptor.getCenterPosition().x,
+                this.playerDescriptor.getCenterPosition().y);
+
+        this.playerAnimation.draw(this.currentDirection, renderPoint.x, renderPoint.y);
     }
 
     /**
@@ -87,36 +103,20 @@ public class PlayerComponentManager implements IDisposable {
     }
 
     /**
-     * Gets current position of player as global coordinates
-     * @return instance of {@link Point}
+     * Change auto update status for player
      */
-    public Point getRenderPoint(){
-        return new Point(this.playerDescriptor.getCenterPosition().x,
-                this.playerDescriptor.getCenterPosition().y);
-    }
-
-    /**
-     * Creates the animation for player
-     * @param pathToSpriteSheet the path to file with sprites
-     * @param tileSize the size of tile
-     * @param duration the duration of animation
-     * @return instance of animation
-     */
-    private Animation createAnimation(String pathToSpriteSheet, Size tileSize, int duration) throws FileNotFoundException, SlickException {
-        if (!GlobalHelper.isFileExists(pathToSpriteSheet)){
-            throw  new FileNotFoundException("File " + pathToSpriteSheet + " doesn't exists");
-        }
-
-        return new Animation(new SpriteSheet(
-                pathToSpriteSheet,
-                tileSize.getWidth(),
-                tileSize.getHeight()), duration);
+    public void changeAutoUpdate(boolean value){
+       this.playerAnimation.setAutoUpdate(value);
     }
 
     @Override
     public void dispose() {
         if (this.playerDescriptor != null){
             this.playerDescriptor.dispose();
+        }
+
+        if (this.playerAnimation != null){
+            this.playerAnimation.dispose();
         }
 
         this.playerDescriptor = null;

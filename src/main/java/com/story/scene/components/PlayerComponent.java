@@ -1,11 +1,12 @@
 package com.story.scene.components;
 
 import com.story.scene.components.descriptors.PlayerDescriptor;
+import com.story.scene.components.helpers.ActorDirection;
 import com.story.scene.components.managers.PlayerComponentManager;
 import com.story.utils.customException.InvalidDescriptor;
-import org.newdawn.slick.*;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 import java.awt.*;
 
@@ -14,6 +15,9 @@ import java.awt.*;
  * Represent the player component
  */
 public class PlayerComponent extends ActorComponent {
+    public static final String PlayerMoveStopPropertyName = "PlayerStop";
+    public static final String PlayerMoveStartPropertyName = "PlayerStart";
+
     /**
      * The manager of player component
      */
@@ -35,8 +39,36 @@ public class PlayerComponent extends ActorComponent {
         this.componentManager.moveTo(p);
     }
 
+    /**
+     * Sets direction of player
+     * @param direction selected direction
+     */
+    public void setDirection(ActorDirection direction){
+        this.componentManager.setDirection(direction);
+    }
+
+    public ActorDirection getDirection(){
+        return this.componentManager.getDirection();
+    }
+
     public Point getCurrentCoordinate() {
         return this.componentManager.getCurrentPoint();
+    }
+
+    /**
+     * Stopped the player animation
+     */
+    public Void onStopMoveAnimation(Void v){
+        this.componentManager.changeAutoUpdate(false);
+        return null;
+    }
+
+    /**
+     * Started the player animation
+     */
+    public Void onStartMoveAnimation(Void v){
+        this.componentManager.changeAutoUpdate(true);
+        return null;
     }
 
     @Override
@@ -45,17 +77,22 @@ public class PlayerComponent extends ActorComponent {
 
     @Override
     public void update(GameContainer gameContainer, int delta) {
-        this.componentManager.getPlayerAnimation().update(delta);
+        this.componentManager.updatePlayerAnimation(delta);
     }
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) {
-        this.componentManager.getPlayerAnimation().draw(this.componentManager.getRenderPoint().x,
-                this.componentManager.getRenderPoint().y);
+        this.componentManager.drawPlayerAnimation();
     }
 
     @Override
     public void dispose(){
         super.dispose();
+
+        if (this.componentManager != null){
+            this.componentManager.dispose();
+        }
+
+        this.componentManager = null;
     }
 }

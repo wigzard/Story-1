@@ -7,8 +7,10 @@ import com.story.scene.components.descriptors.PlayerDescriptor;
 import com.story.scene.components.helpers.ComponentAction;
 import com.story.scene.sceneDescriptors.MapSceneDescriptor;
 import com.story.system.IDisposable;
+import com.story.utils.Converter;
 import com.story.utils.Size;
 import com.story.utils.customException.SceneException;
+import com.story.utils.events.EventType;
 import com.story.utils.log.Trace;
 
 import java.awt.*;
@@ -57,7 +59,17 @@ public class MapSceneManager implements IDisposable{
         playerDescriptor.setTileSize(tileSize);
         playerDescriptor.setCentralPoint(centralPoint);
         playerDescriptor.setStartPosition(startPosition);
-        return new PlayerComponent(playerDescriptor);
+
+        PlayerComponent playerComponent = new PlayerComponent(playerDescriptor);
+        this.mapComponent.addEventListener(EventType.MapMoveStart,
+                PlayerComponent.PlayerMoveStartPropertyName,
+                playerComponent::onStartMoveAnimation);
+
+        this.mapComponent.addEventListener(EventType.MapMoveStop,
+                PlayerComponent.PlayerMoveStopPropertyName,
+                playerComponent::onStopMoveAnimation);
+
+        return playerComponent;
     }
 
     /**
@@ -87,10 +99,11 @@ public class MapSceneManager implements IDisposable{
     }
 
     /**
-     * Move the player component to new place
+     * Move the components to new place
      * @param newPoint the new place on map
      */
-    private void movePlayer(Point newPoint, ComponentAction action){
+    private void moveComponents(Point newPoint, ComponentAction action){
+        this.playerComponent.setDirection(Converter.toActorDirection(action, this.playerComponent.getDirection()));
         if (this.playerCanMove(newPoint)){
             this.playerComponent.moveTo(newPoint);
             this.getMapComponent().executeAction(action);
@@ -140,19 +153,19 @@ public class MapSceneManager implements IDisposable{
         switch (action){
             case MOVE_DOWN:
                 Point moveDownPoint = new Point(this.playerComponent.getCurrentCoordinate().x, this.playerComponent.getCurrentCoordinate().y + 1);
-                this.movePlayer(moveDownPoint, action);
+                this.moveComponents(moveDownPoint, action);
                 break;
             case MOVE_UP:
                 Point moveUpPoint = new Point(this.playerComponent.getCurrentCoordinate().x, this.playerComponent.getCurrentCoordinate().y - 1);
-                this.movePlayer(moveUpPoint, action);
+                this.moveComponents(moveUpPoint, action);
                 break;
             case MOVE_LEFT:
                 Point moveLeftPoint = new Point(this.playerComponent.getCurrentCoordinate().x - 1, this.playerComponent.getCurrentCoordinate().y);
-                this.movePlayer(moveLeftPoint, action);
+                this.moveComponents(moveLeftPoint, action);
                 break;
             case MOVE_RIGHT:
                 Point moveRightPoint = new Point(this.playerComponent.getCurrentCoordinate().x + 1, this.playerComponent.getCurrentCoordinate().y);
-                this.movePlayer(moveRightPoint, action);
+                this.moveComponents(moveRightPoint, action);
                 break;
         }
     }

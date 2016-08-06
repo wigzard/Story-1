@@ -1,5 +1,7 @@
 package com.story.utils;
 
+import com.story.scene.components.helpers.ActorDirection;
+import com.story.scene.components.helpers.ComponentAction;
 import com.story.utils.log.Trace;
 
 /**
@@ -40,4 +42,25 @@ public class Converter {
         }
     }
 
+    /**
+     * Convert {@link ComponentAction} to {@link ActorDirection} if it possible
+     * @param componentAction the component action
+     * @param defaultDirection direction, which return if in componentAction doesn't exists values
+     * @return the actor direction
+     */
+    public static ActorDirection toActorDirection(ComponentAction componentAction,
+                                                  ActorDirection defaultDirection){
+        switch (componentAction){
+            case MOVE_DOWN:
+                return ActorDirection.DOWN;
+            case MOVE_LEFT:
+                return ActorDirection.LEFT;
+            case MOVE_RIGHT:
+                return ActorDirection.RIGHT;
+            case MOVE_UP:
+                return ActorDirection.UP;
+            default:
+                return defaultDirection;
+        }
+    }
 }

@@ -7,5 +7,7 @@ public enum  EventType {
     SceneReinit,
     SceneRecreate,
 
-    MapRecreate
+    MapRecreate,
+    MapMoveStart,
+    MapMoveStop
 }
