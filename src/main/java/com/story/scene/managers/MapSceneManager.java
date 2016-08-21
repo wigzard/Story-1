@@ -3,7 +3,9 @@ package com.story.scene.managers;
 import com.story.dataAccessLayer.dataActions.RetrieveMapsAction;
 import com.story.scene.components.MapComponent;
 import com.story.scene.components.PlayerComponent;
+import com.story.scene.components.SimpleNpcComponent;
 import com.story.scene.components.descriptors.PlayerDescriptor;
+import com.story.scene.components.descriptors.SimpleNpcDescriptor;
 import com.story.scene.components.helpers.ComponentAction;
 import com.story.scene.sceneDescriptors.MapSceneDescriptor;
 import com.story.system.IDisposable;
@@ -31,6 +33,11 @@ public class MapSceneManager implements IDisposable{
     private PlayerComponent playerComponent;
 
     /**
+     * List of npc on map
+     */
+    private SimpleNpcComponent[] npcList;
+
+    /**
      * The descriptor, which describe the scene
      */
     private MapSceneDescriptor sceneDescriptor;
@@ -49,14 +56,12 @@ public class MapSceneManager implements IDisposable{
      */
     private PlayerComponent createPlayerComponent(int playerId,
             Point startPosition,
-            Size tileSize,
             Point centralPoint){
         if (this.playerComponent != null){
             this.playerComponent.dispose();
         }
 
         PlayerDescriptor playerDescriptor = new PlayerDescriptor(playerId);
-        playerDescriptor.setTileSize(tileSize);
         playerDescriptor.setCentralPoint(centralPoint);
         playerDescriptor.setStartPosition(startPosition);
 
@@ -85,6 +90,24 @@ public class MapSceneManager implements IDisposable{
 
         RetrieveMapsAction action = new RetrieveMapsAction();
         return new MapComponent(action.retrieveObjectById(mapId), startPosition);
+    }
+
+    /**
+     * Creates new list of npc
+     * @param descriptors the descriptors of npc list
+     * @return list of npc
+     */
+    private SimpleNpcComponent[] createNpcList(SimpleNpcDescriptor[] descriptors){
+        if ((descriptors == null) || (descriptors.length == 0)){
+            return null;
+        }
+
+        SimpleNpcComponent[] components = new SimpleNpcComponent[descriptors.length];
+        for (int i = 0; i < descriptors.length; i++){
+            components[i] = new SimpleNpcComponent(descriptors[i]);
+        }
+
+        return components;
     }
 
     /**
@@ -139,11 +162,27 @@ public class MapSceneManager implements IDisposable{
             this.playerComponent = this.createPlayerComponent(
                     this.sceneDescriptor.playerId,
                     this.sceneDescriptor.playerStartPoint,
-                    new Size(32, 32),
                     this.mapComponent.getCentralCoordinate());
         }
 
         return playerComponent;
+    }
+
+    public SimpleNpcComponent[] getSimpleNpcList(){
+        if (this.mapComponent == null){
+            try {
+                throw new SceneException("The map should be initialized before loading npc");
+            } catch (SceneException e) {
+                Trace.error(e.getMessage(), e);
+                return null;
+            }
+        }
+
+        if ((this.npcList == null) || (this.npcList.length == 0)){
+            this.npcList = this.createNpcList(this.sceneDescriptor.npcDescriptors);
+        }
+
+        return this.npcList;
     }
 
     /**
@@ -184,8 +223,15 @@ public class MapSceneManager implements IDisposable{
             this.sceneDescriptor.dispose();
         }
 
+        if ((this.npcList != null) && (this.npcList.length > 0)){
+            for (SimpleNpcComponent component: this.npcList) {
+                component.dispose();
+            }
+        }
+
         this.sceneDescriptor = null;
         this.mapComponent = null;
         this.playerComponent = null;
+        this.npcList = null;
     }
 }

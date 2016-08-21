@@ -3,6 +3,7 @@ package com.story.scene.components.managers;
 import com.story.scene.components.descriptors.PlayerDescriptor;
 import com.story.scene.components.helpers.ActorAnimationHelper;
 import com.story.scene.components.helpers.ActorDirection;
+import com.story.scene.components.helpers.ComponentCommonVariable;
 import com.story.system.IDisposable;
 
 import java.awt.*;
@@ -48,7 +49,7 @@ public class PlayerComponentManager implements IDisposable {
         this.currentDirection = ActorDirection.DOWN;
 
         this.playerAnimation = new ActorAnimationHelper(this.playerDescriptor.getSpriteSheetPath(),
-                this.playerDescriptor.getTileSize(),
+                ComponentCommonVariable.getInstance().getTileSize(),
                 PlayerAnimationDuration);
     }
 

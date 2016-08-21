@@ -1,6 +1,6 @@
 package com.story.scene;
 
-import com.story.scene.components.PlayerComponent;
+import com.story.scene.components.SimpleNpcComponent;
 import com.story.scene.components.helpers.ComponentAction;
 import com.story.scene.managers.MapSceneManager;
 import com.story.scene.sceneDescriptors.MapSceneDescriptor;
@@ -65,6 +65,14 @@ class MapScene extends Scene {
             this.mapSceneManager.getMapComponent().addEventListener(EventType.MapRecreate, MapChangeEventName, this::onMapChange);
 
             this.mapSceneManager.getPlayerComponent().init(gameContainer);
+
+            for (SimpleNpcComponent component: this.mapSceneManager.getSimpleNpcList()){
+                component.init(gameContainer);
+            }
+
+            for (SimpleNpcComponent component: this.mapSceneManager.getSimpleNpcList()){
+                component.changePosition(this.mapSceneManager.getMapComponent().getGlobalPoint());
+            }
         } catch (Exception e) {
             SceneException se = new SceneException(e);
             Trace.error(se.getMessage(), se);
@@ -88,12 +96,20 @@ class MapScene extends Scene {
 
         this.mapSceneManager.getMapComponent().update(gameContainer, delta);
         this.mapSceneManager.getPlayerComponent().update(gameContainer, delta);
+        for (SimpleNpcComponent component: this.mapSceneManager.getSimpleNpcList()){
+            component.changePosition(this.mapSceneManager.getMapComponent().getGlobalPoint());
+            component.update(gameContainer, delta);
+        }
     }
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) {
         this.mapSceneManager.getMapComponent().render(gameContainer, graphics);
         this.mapSceneManager.getPlayerComponent().render(gameContainer, graphics);
+
+        for (SimpleNpcComponent component: this.mapSceneManager.getSimpleNpcList()){
+            component.render(gameContainer, graphics);
+        }
     }
 
     @Override

@@ -100,7 +100,15 @@ public class TiledMapManager implements IDisposable {
      * @return the point of global coordinates
      */
     public Point getCurrentCoordinate(){
-        return this.viewer.getGlobalCoordinates();
+        return this.viewer.getGlobalCoordinates(true);
+    }
+
+    /**
+     * Call method of gets global coordinates from viewer without remove element from queue of frames
+     * @return the point of global coordinates
+     */
+    public Point getCurrentCoordinateWithoutRemove(){
+        return this.viewer.getGlobalCoordinates(false);
     }
 
     /**

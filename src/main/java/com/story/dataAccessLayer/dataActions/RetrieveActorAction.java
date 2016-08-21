@@ -85,6 +85,6 @@ public class RetrieveActorAction extends SingleRecordAction {
 
     @Override
     public void dispose(){
-
+        super.dispose();
     }
 }

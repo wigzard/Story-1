@@ -2,6 +2,7 @@ package com.story.scene.components;
 
 import com.story.dataAccessLayer.dataDescriptors.MapDescriptor;
 import com.story.scene.components.helpers.ComponentAction;
+import com.story.scene.components.helpers.ComponentCommonVariable;
 import com.story.scene.components.managers.TiledMapManager;
 import com.story.utils.GlobalHelper;
 import com.story.utils.Size;
@@ -21,11 +22,10 @@ import java.io.File;
  * Represent component which should work with map
  */
 public class MapComponent extends Component {
-
     /**
      * Represent the move state of map component
      */
-    private enum MoveState{Moved, Stoped};
+    private enum MoveState{Moved, Stopped};
 
     private MapDescriptor mapDescriptor;
     private TiledMapManager mapManager;
@@ -34,7 +34,7 @@ public class MapComponent extends Component {
     /**
      * Current move state of the map component
      */
-    private MoveState moveState = MoveState.Stoped;
+    private MoveState moveState = MoveState.Stopped;
 
     /**
      * Initialize new instance of MapComponent
@@ -56,16 +56,18 @@ public class MapComponent extends Component {
         this.mapManager = new TiledMapManager(new TiledMap(this.mapDescriptor.getPathToTMX()),
                 new Size(gameContainer.getWidth(), gameContainer.getHeight()),
                 this.startPosition);
+        ComponentCommonVariable.getInstance().setTileSize(
+                new Size(this.mapManager.getMap().getTileWidth(), this.mapManager.getMap().getTileHeight()));
     }
 
     @Override
     public void update(GameContainer gameContainer, int delta) {
-        if ((this.moveState == MoveState.Stoped) && (this.mapManager.getCountFramesInViewer() > 0)){
+        if ((this.moveState == MoveState.Stopped) && (this.mapManager.getCountFramesInViewer() > 0)){
             this.moveState = MoveState.Moved;
             this.eventList.get(EventType.MapMoveStart).notifySubscribers();
         }
         else if ((this.moveState == MoveState.Moved) && (this.mapManager.getCountFramesInViewer() == 0)){
-            this.moveState = MoveState.Stoped;
+            this.moveState = MoveState.Stopped;
             this.eventList.get(EventType.MapMoveStop).notifySubscribers();
         }
     }
@@ -129,6 +131,15 @@ public class MapComponent extends Component {
      */
     public Point getCentralCoordinate(){
         return this.mapManager.getCenterTileAsGlobal();
+    }
+
+    /**
+     * Gets global point of map
+     * @return the global point coordinates
+     */
+    public Point getGlobalPoint(){
+        Point p = this.mapManager.getCurrentCoordinateWithoutRemove();
+        return new Point(-p.x, -p.y);
     }
 
     /**
