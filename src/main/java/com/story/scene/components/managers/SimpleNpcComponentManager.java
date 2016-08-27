@@ -1,12 +1,9 @@
 package com.story.scene.components.managers;
 
-import com.story.scene.components.MapComponent;
 import com.story.scene.components.descriptors.SimpleNpcDescriptor;
-import com.story.scene.components.helpers.ActorAnimationHelper;
-import com.story.scene.components.helpers.ActorDirection;
-import com.story.scene.components.helpers.ComponentCommonVariable;
-import com.story.scene.components.helpers.CoordinateCalculator;
+import com.story.scene.components.helpers.*;
 import com.story.system.IDisposable;
+import com.story.utils.asyncTask.TaskScheduler;
 
 import java.awt.*;
 
@@ -39,6 +36,16 @@ public class SimpleNpcComponentManager implements IDisposable {
     private Point currentGlobalCoordinate;
 
     /**
+     * The helper which formed steps of the npc actor
+     */
+    private SimpleNpcMoveHelper moveHelper;
+
+    /**
+     * The direction of actor.Default value is DOWN
+     */
+    private ActorDirection actorDirection = ActorDirection.DOWN;
+
+    /**
      * Initialize new instance of {@link SimpleNpcComponentManager}
      * @param descriptor the descriptor of npc
      */
@@ -49,10 +56,51 @@ public class SimpleNpcComponentManager implements IDisposable {
 
         this.descriptor = descriptor;
         this.currentCoordinate = this.descriptor.getStartPosition();
+        ComponentCommonHelper.getInstance().setActor(this.currentCoordinate);
         this.npcAnimation = new ActorAnimationHelper(this.descriptor.getSpriteSheetPath(),
-                ComponentCommonVariable.getInstance().getTileSize(),
+                ComponentCommonHelper.getInstance().getTileSize(),
                 NpcAnimationDuration);
         this.npcAnimation.setAutoUpdate(true);
+
+        this.initializeMovementBehavior();
+    }
+
+    /**
+     * Create async task and run it. Describe behavior of movement
+     */
+    private void initializeMovementBehavior(){
+        this.moveHelper = new SimpleNpcMoveHelper(ComponentCommonHelper.getInstance().getTileSize());
+
+        TaskScheduler.scheduleCycleTask("npc" + this.descriptor.getId(), () -> {
+            if (!this.moveHelper.isFramesEmpty()){
+                return;
+            }
+
+            Point startPoint = new Point(this.currentCoordinate);
+            Point endPoint = new Point(this.currentCoordinate);
+
+            this.actorDirection = ActorDirection.random();
+            switch (this.actorDirection){
+                case DOWN:
+                    endPoint.y++;
+                    break;
+                case UP:
+                    endPoint.y--;
+                    break;
+                case LEFT:
+                    endPoint.x--;
+                    break;
+                case RIGHT:
+                    endPoint.x++;
+                    break;
+            }
+
+            if (ComponentCommonHelper.getInstance().isCanBeMoved(endPoint)) {
+                this.moveHelper.createSteps(startPoint, endPoint);
+                this.currentCoordinate = endPoint;
+                ComponentCommonHelper.getInstance().moveActor(startPoint, endPoint);
+            }
+        }, this.descriptor.getMoveInterval());
     }
 
     /**
@@ -64,30 +112,36 @@ public class SimpleNpcComponentManager implements IDisposable {
     }
 
     /**
-     * Draw player component animation
+     * Draw animation of actor component
      */
     public void drawNpc(){
         if (this.currentGlobalCoordinate == null){
             return;
         }
 
-        this.npcAnimation.draw(ActorDirection.DOWN, this.currentGlobalCoordinate.x, this.currentGlobalCoordinate.y);
+        this.npcAnimation.draw(this.actorDirection, this.currentGlobalCoordinate.x, this.currentGlobalCoordinate.y);
     }
 
     /**
      * Calculate the global position of npc
      * @param globalViewerStartPoint the start point of viewer
      */
-    public void calculateGlobalPosition(Point globalViewerStartPoint){
-        Point renderPoint = new Point(
-                this.currentCoordinate.x * ComponentCommonVariable.getInstance().getTileSize().getWidth(),
-                this.currentCoordinate.y * ComponentCommonVariable.getInstance().getTileSize().getHeight());
+    public void updateGlobalPosition(Point globalViewerStartPoint){
+        Point renderPoint;
+        if (this.moveHelper.isFramesEmpty()) {
+            renderPoint = new Point(
+                    this.currentCoordinate.x * ComponentCommonHelper.getInstance().getTileSize().getWidth(),
+                    this.currentCoordinate.y * ComponentCommonHelper.getInstance().getTileSize().getHeight());
+        }
+        else {
+            renderPoint = this.moveHelper.getNextPoint(globalViewerStartPoint);
+        }
 
         //Area of the viewer should be increased, because on border of the viewer,
         //elements becomes invisible
         Point extendGlobalViewerStartPoint = new Point(
-                globalViewerStartPoint.x - ComponentCommonVariable.getInstance().getTileSize().getWidth(),
-                globalViewerStartPoint.y - ComponentCommonVariable.getInstance().getTileSize().getHeight());
+                globalViewerStartPoint.x - ComponentCommonHelper.getInstance().getTileSize().getWidth(),
+                globalViewerStartPoint.y - ComponentCommonHelper.getInstance().getTileSize().getHeight());
 
         if (!CoordinateCalculator.isVisibleOnViewer(renderPoint, extendGlobalViewerStartPoint)){
             this.currentGlobalCoordinate = null;
@@ -99,10 +153,17 @@ public class SimpleNpcComponentManager implements IDisposable {
 
     @Override
     public void dispose() {
+        TaskScheduler.terminate("npc" + this.descriptor.getId());
+
         if (this.descriptor != null){
             this.descriptor.dispose();
         }
 
+        if (this.moveHelper != null){
+            this.moveHelper.dispose();
+        }
+
+        this.moveHelper = null;
         this.descriptor = null;
     }
 }

@@ -29,7 +29,7 @@ public class SimpleNpcComponent extends ActorComponent {
     }
 
     public void changePosition(Point globalViewerStartPoint){
-        this.componentManager.calculateGlobalPosition(globalViewerStartPoint);
+        this.componentManager.updateGlobalPosition(globalViewerStartPoint);
     }
 
     @Override

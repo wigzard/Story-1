@@ -2,7 +2,7 @@ package com.story.scene.components;
 
 import com.story.dataAccessLayer.dataDescriptors.MapDescriptor;
 import com.story.scene.components.helpers.ComponentAction;
-import com.story.scene.components.helpers.ComponentCommonVariable;
+import com.story.scene.components.helpers.ComponentCommonHelper;
 import com.story.scene.components.managers.TiledMapManager;
 import com.story.utils.GlobalHelper;
 import com.story.utils.Size;
@@ -56,7 +56,7 @@ public class MapComponent extends Component {
         this.mapManager = new TiledMapManager(new TiledMap(this.mapDescriptor.getPathToTMX()),
                 new Size(gameContainer.getWidth(), gameContainer.getHeight()),
                 this.startPosition);
-        ComponentCommonVariable.getInstance().setTileSize(
+        ComponentCommonHelper.getInstance().setTileSize(
                 new Size(this.mapManager.getMap().getTileWidth(), this.mapManager.getMap().getTileHeight()));
     }
 
@@ -114,15 +114,6 @@ public class MapComponent extends Component {
      */
     public boolean isFinishFramesDrawing(){
         return this.mapManager.getCountFramesInViewer() == 0;
-    }
-
-    /**
-     * Check when object with @coordinates can be moved to tile with this @coordinates
-     * @param coordinates the object coordinates
-     * @return true when object with @coordinates can be set on this place
-     */
-    public boolean isFreeSpace(Point coordinates){
-        return this.mapManager.isFreeSpace(coordinates);
     }
 
     /**

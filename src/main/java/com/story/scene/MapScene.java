@@ -68,9 +68,6 @@ class MapScene extends Scene {
 
             for (SimpleNpcComponent component: this.mapSceneManager.getSimpleNpcList()){
                 component.init(gameContainer);
-            }
-
-            for (SimpleNpcComponent component: this.mapSceneManager.getSimpleNpcList()){
                 component.changePosition(this.mapSceneManager.getMapComponent().getGlobalPoint());
             }
         } catch (Exception e) {

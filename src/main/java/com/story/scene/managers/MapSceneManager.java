@@ -7,6 +7,7 @@ import com.story.scene.components.SimpleNpcComponent;
 import com.story.scene.components.descriptors.PlayerDescriptor;
 import com.story.scene.components.descriptors.SimpleNpcDescriptor;
 import com.story.scene.components.helpers.ComponentAction;
+import com.story.scene.components.helpers.ComponentCommonHelper;
 import com.story.scene.sceneDescriptors.MapSceneDescriptor;
 import com.story.system.IDisposable;
 import com.story.utils.Converter;
@@ -99,7 +100,7 @@ public class MapSceneManager implements IDisposable{
      */
     private SimpleNpcComponent[] createNpcList(SimpleNpcDescriptor[] descriptors){
         if ((descriptors == null) || (descriptors.length == 0)){
-            return null;
+            return new SimpleNpcComponent[0];
         }
 
         SimpleNpcComponent[] components = new SimpleNpcComponent[descriptors.length];
@@ -117,7 +118,7 @@ public class MapSceneManager implements IDisposable{
      */
     private boolean playerCanMove(Point point){
         return (this.mapComponent.isVisibleOnViewer(point))
-                && (this.mapComponent.isFreeSpace(point))
+                && ComponentCommonHelper.getInstance().isCanBeMoved(point)
                 && (this.mapComponent.isFinishFramesDrawing());
     }
 
@@ -128,6 +129,7 @@ public class MapSceneManager implements IDisposable{
     private void moveComponents(Point newPoint, ComponentAction action){
         this.playerComponent.setDirection(Converter.toActorDirection(action, this.playerComponent.getDirection()));
         if (this.playerCanMove(newPoint)){
+            ComponentCommonHelper.getInstance().moveActor(this.playerComponent.getCurrentCoordinate(), newPoint);
             this.playerComponent.moveTo(newPoint);
             this.getMapComponent().executeAction(action);
         }

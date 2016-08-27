@@ -1,5 +1,6 @@
 package com.story.scene.components.managers;
 
+import com.story.scene.components.helpers.ComponentCommonHelper;
 import com.story.scene.components.helpers.MapViewer;
 import com.story.scene.components.descriptors.ViewerDescriptor;
 import com.story.system.IDisposable;
@@ -60,6 +61,7 @@ public class TiledMapManager implements IDisposable {
         this.screenSize = screenSize;
         this.viewerStartPosition = startPosition;
         this.loadViewer();
+        this.initializeHeightsMap();
     }
 
     private void loadViewer(){
@@ -73,6 +75,24 @@ public class TiledMapManager implements IDisposable {
         descriptor.setStartCoordinates(this.calculateCoordinatesByCentralPoint(this.viewerStartPosition));
         descriptor.setTileSize(new Size(this.map.getTileWidth(), this.map.getTileHeight()));
         this.viewer = new MapViewer(descriptor);
+    }
+
+    /**
+     * Initialize the heights map in {@link ComponentCommonHelper}
+     */
+    private void initializeHeightsMap(){
+        if (this.map == null){
+            return;
+        }
+
+        boolean[][] heightsMap = new boolean[this.map.getWidth()][this.map.getHeight()];
+        for (int i = 0; i < this.map.getWidth(); i++){
+            for (int j = 0; j < this.map.getHeight(); j++){
+                heightsMap[i][j] = this.map.getTileId(i, j, this.map.getLayerIndex(BarrierLayerName)) == 0;
+            }
+        }
+
+        ComponentCommonHelper.getInstance().setHeightsMap(heightsMap);
     }
 
     public TiledMap getMap() {
@@ -136,10 +156,6 @@ public class TiledMapManager implements IDisposable {
 
     public boolean isVisibleOnViewer(Point p){
         return this.viewer.isVisibleOnViewer(p);
-    }
-
-    public boolean isFreeSpace(Point p){
-        return this.map.getTileId(p.x, p.y, this.map.getLayerIndex(BarrierLayerName)) == 0;
     }
 
     /**
