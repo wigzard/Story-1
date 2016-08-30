@@ -8,6 +8,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+import java.io.FileNotFoundException;
 import java.util.function.Function;
 
 /**
@@ -66,14 +67,14 @@ public abstract class Scene implements IDisposable {
      * @param gameContainer The container holing this game
      * @param delta The amount of time thats passed since last update in milliseconds
      */
-    public abstract void update(GameContainer gameContainer, int delta);
+    public abstract void update(GameContainer gameContainer, int delta) throws FileNotFoundException;
 
     /**
      * Render the game's scene here.
      * @param gameContainer The container holing this game
      * @param graphics The graphics context that can be used to render. However, normal rendering routines can also be used.
      */
-    public abstract void render(GameContainer gameContainer, Graphics graphics);
+    public abstract void render(GameContainer gameContainer, Graphics graphics) throws FileNotFoundException;
 
     @Override
     public void dispose(){

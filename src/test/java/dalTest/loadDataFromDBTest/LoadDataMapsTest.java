@@ -5,6 +5,8 @@ import com.story.dataAccessLayer.dataDescriptors.MapDescriptor;
 import org.junit.Test;
 
 
+import java.io.FileNotFoundException;
+
 import static  org.junit.Assert.*;
 /**
  * Created by Wigzard on 22.08.2016.
@@ -21,7 +23,7 @@ public class LoadDataMapsTest {
      * This method checks correctness of connection to the database
      **/
     @Test
-    public void SuccessConnectTest(){
+    public void SuccessConnectTest() throws FileNotFoundException {
         retrieveMapsAction = new RetrieveMapsAction("testDB.sqlite");
         assertNotNull(retrieveMapsAction);
     }
@@ -30,8 +32,12 @@ public class LoadDataMapsTest {
      * This method check the behavior of the object when transfer to him incorrect links
      **/
     @Test
-    public void UseIncorrectUrl(){
-        retrieveMapsAction = new RetrieveMapsAction("test.sqlite");
+    public void UseIncorrectUrl() {
+        try {
+            retrieveMapsAction = new RetrieveMapsAction("test");
+        } catch (FileNotFoundException e) {
+            retrieveMapsAction = null;
+        }
         assertNull(retrieveMapsAction);
     }
 
@@ -39,7 +45,7 @@ public class LoadDataMapsTest {
      * This method checks correctness of the data obtained from the database
      **/
     @Test
-    public void DataBaseTest() {
+    public void DataBaseTest() throws FileNotFoundException {
         retrieveMapsAction = new RetrieveMapsAction("testDB.sqlite");
 
         MapDescriptor mapDescriptor = retrieveMapsAction.retrieveObjectById(1);
@@ -53,7 +59,7 @@ public class LoadDataMapsTest {
      * This method check the behavior of the object mapDescriptor in assigning incorrect data
      **/
     @Test
-    public void UseIncorrectId(){
+    public void UseIncorrectId() throws FileNotFoundException {
         retrieveMapsAction = new RetrieveMapsAction("testDB.sqlite");
 
         MapDescriptor mapDescriptor = retrieveMapsAction.retrieveObjectById(3);

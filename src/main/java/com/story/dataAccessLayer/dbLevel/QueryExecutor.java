@@ -15,11 +15,12 @@ import java.sql.Statement;
 public class QueryExecutor implements IQueryExecutor {
     private Connection connection;
 
-    public QueryExecutor(String url){
+    public QueryExecutor(String url) throws FileNotFoundException {
         try {
             this.connection = DbConnector.getInstance(url);
         } catch (FileNotFoundException e) {
             this.connection = null;
+            throw e;
         }
     }
 

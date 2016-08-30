@@ -4,13 +4,14 @@ import com.story.scene.components.descriptors.SimpleNpcDescriptor;
 import com.story.scene.sceneDescriptors.MapSceneDescriptor;
 
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.util.Random;
 
 /**
  * Created by alex on 14.07.16.
  */
 public class SceneFactory {
-    public static Scene CreateScene(){
+    public static Scene CreateScene() throws FileNotFoundException {
         MapSceneDescriptor sceneDescriptor = new MapSceneDescriptor();
         sceneDescriptor.mapId = 1;
         sceneDescriptor.playerStartPoint = new Point(12, 12);

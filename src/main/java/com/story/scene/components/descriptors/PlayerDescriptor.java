@@ -3,6 +3,7 @@ package com.story.scene.components.descriptors;
 import com.story.utils.Size;
 
 import java.awt.*;
+import java.io.FileNotFoundException;
 
 /**
  * Created by alex on 23.07.16.
@@ -11,7 +12,7 @@ public class PlayerDescriptor extends BaseActorDescriptor {
     private Point centerPosition;
     private Point startPosition;
 
-    public PlayerDescriptor(int playerId) {
+    public PlayerDescriptor(int playerId) throws FileNotFoundException {
         super(playerId);
     }
 

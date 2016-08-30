@@ -8,6 +8,8 @@ import com.story.utils.GlobalHelper;
 import com.story.utils.customException.InvalidDescriptor;
 import com.story.utils.log.Trace;
 
+import java.io.FileNotFoundException;
+
 /**
  * Created by alex on 13.07.16.
  * Class should be contained logic for work with single record
@@ -22,8 +24,13 @@ abstract class SingleRecordAction implements IDisposable {
      * Initialize new instance of SingleRecordAction and set url
      * @param url path to database
      */
-    protected SingleRecordAction(String url){
-        this.queryExecutor = new QueryExecutor(url);
+    protected SingleRecordAction(String url) throws FileNotFoundException {
+        try {
+            this.queryExecutor = new QueryExecutor(url);
+        } catch (FileNotFoundException e) {
+            this.queryExecutor = null;
+            throw e;
+        }
     }
 
     /**

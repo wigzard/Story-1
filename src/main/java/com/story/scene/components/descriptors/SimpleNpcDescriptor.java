@@ -1,6 +1,7 @@
 package com.story.scene.components.descriptors;
 
 import java.awt.*;
+import java.io.FileNotFoundException;
 
 /**
  * Created by alex on 06.08.16.
@@ -23,7 +24,7 @@ public class SimpleNpcDescriptor extends BaseActorDescriptor {
      * Initialize new instance of {@link SimpleNpcDescriptor}
      * @param id the id of npc
      */
-    public SimpleNpcDescriptor(int id) {
+    public SimpleNpcDescriptor(int id) throws FileNotFoundException {
         super(id);
         this.moveInterval = DefaultMoveInterval;
     }

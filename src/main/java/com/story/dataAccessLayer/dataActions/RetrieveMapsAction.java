@@ -7,6 +7,7 @@ import com.story.dataAccessLayer.dbLevel.QueryDescriptor;
 import com.story.dataAccessLayer.dbLevel.tables.MapsTable;
 import com.story.utils.log.Trace;
 
+import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -23,7 +24,7 @@ public class RetrieveMapsAction extends SingleRecordAction {
     /**
      * Create new instance of RetrieveMapsAction
      */
-    public RetrieveMapsAction(String path){
+    public RetrieveMapsAction(String path) throws FileNotFoundException {
         super(path);
         this.mapDescriptor = null;
     }
@@ -31,7 +32,7 @@ public class RetrieveMapsAction extends SingleRecordAction {
     /**
      * Create new instance of RetrieveMapsAction with default path to database
      */
-    public RetrieveMapsAction(){
+    public RetrieveMapsAction() throws FileNotFoundException {
         this(Constants.SystemDatabasePath);
     }
 

@@ -4,6 +4,8 @@ import com.story.dataAccessLayer.dataActions.RetrieveActorAction;
 import com.story.dataAccessLayer.dataDescriptors.ActorDescriptor;
 import com.story.dataAccessLayer.dataDescriptors.BaseDescriptor;
 
+import java.io.FileNotFoundException;
+
 /**
  * Created by alex on 06.08.16.
  * Represent common data for actors (player, npc)
@@ -11,7 +13,7 @@ import com.story.dataAccessLayer.dataDescriptors.BaseDescriptor;
 abstract class BaseActorDescriptor extends BaseDescriptor {
     private ActorDescriptor actorDescriptor;
 
-    BaseActorDescriptor(int id) {
+    BaseActorDescriptor(int id) throws FileNotFoundException {
         super(id);
         this.actorDescriptor = new RetrieveActorAction().retrievePersonById(id);
     }

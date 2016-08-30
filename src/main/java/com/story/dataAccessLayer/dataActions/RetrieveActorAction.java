@@ -7,6 +7,7 @@ import com.story.dataAccessLayer.dbLevel.QueryDescriptor;
 import com.story.dataAccessLayer.dbLevel.tables.ActorTable;
 import com.story.utils.log.Trace;
 
+import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -26,14 +27,14 @@ public class RetrieveActorAction extends SingleRecordAction {
      *
      * @param url path to database
      */
-    public RetrieveActorAction(String url) {
+    public RetrieveActorAction(String url) throws FileNotFoundException {
         super(url);
     }
 
     /**
      * Initialize new instance of SingleRecordAction
      */
-    public RetrieveActorAction() {
+    public RetrieveActorAction() throws FileNotFoundException {
         super(Constants.SystemDatabasePath);
     }
 

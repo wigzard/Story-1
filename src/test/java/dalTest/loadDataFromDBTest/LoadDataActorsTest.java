@@ -4,6 +4,8 @@ import com.story.dataAccessLayer.dataActions.RetrieveActorAction;
 import com.story.dataAccessLayer.dataDescriptors.ActorDescriptor;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
+
 import static org.junit.Assert.*;
 
 /**
@@ -22,7 +24,7 @@ public class LoadDataActorsTest {
     *  This method checks correctness of connection to the database
     **/
     @Test
-    public void SuccessConnectTest(){
+    public void SuccessConnectTest() throws FileNotFoundException {
         retrieveActorAction = new RetrieveActorAction("testDB.sqlite");
         assertNotNull(retrieveActorAction);
     }
@@ -31,8 +33,12 @@ public class LoadDataActorsTest {
      * This method check the behavior of the object when transfer to him incorrect links
      **/
     @Test
-    public void UseIncorrectUrl(){
-        retrieveActorAction = new RetrieveActorAction("test.sqlite");
+    public void UseIncorrectUrl()  {
+        try {
+            retrieveActorAction = new RetrieveActorAction("test.sqlite");
+        } catch (FileNotFoundException e) {
+            retrieveActorAction = null;
+        }
         assertNull(retrieveActorAction);
     }
 
@@ -40,20 +46,20 @@ public class LoadDataActorsTest {
      * This method checks correctness of the data obtained from the database
      **/
     @Test
-    public void DataBaseTest() {
+    public void DataBaseTest() throws FileNotFoundException {
         retrieveActorAction = new RetrieveActorAction("testDB.sqlite");
 
         ActorDescriptor actorDescriptor = retrieveActorAction.retrievePersonById(1);
         assertNotNull(actorDescriptor);
-        assertEquals("First map", actorDescriptor.getName());
-        assertEquals("resources/faces.tmx", actorDescriptor.getSpriteSheetPath());
+        assertEquals("Player", actorDescriptor.getName());
+        assertEquals("resources/player_picture_set.png", actorDescriptor.getSpriteSheetPath());
     }
 
     /**
      * This method check the behavior of the object ActorDescriptor in assigning incorrect data
      **/
     @Test
-    public void UseIncorrectId(){
+    public void UseIncorrectId() throws FileNotFoundException {
         retrieveActorAction = new RetrieveActorAction("testDB.sqlite");
 
         ActorDescriptor actorDescriptor = retrieveActorAction.retrievePersonById(4);

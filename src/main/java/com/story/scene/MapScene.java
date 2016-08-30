@@ -14,6 +14,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+import java.io.FileNotFoundException;
+
 /**
  * Created by alex on 14.07.16.
  * Represent screen as map where player can moved and execute something actions
@@ -77,7 +79,7 @@ class MapScene extends Scene {
     }
 
     @Override
-    public void update(GameContainer gameContainer, int delta) {
+    public void update(GameContainer gameContainer, int delta) throws FileNotFoundException {
         if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)){
             this.mapSceneManager.executeKeyAction(ComponentAction.MOVE_RIGHT);
         }
@@ -100,7 +102,7 @@ class MapScene extends Scene {
     }
 
     @Override
-    public void render(GameContainer gameContainer, Graphics graphics) {
+    public void render(GameContainer gameContainer, Graphics graphics) throws FileNotFoundException {
         this.mapSceneManager.getMapComponent().render(gameContainer, graphics);
         this.mapSceneManager.getPlayerComponent().render(gameContainer, graphics);
 
