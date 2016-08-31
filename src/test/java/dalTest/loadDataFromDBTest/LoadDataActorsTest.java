@@ -24,7 +24,7 @@ public class LoadDataActorsTest {
     *  This method checks correctness of connection to the database
     **/
     @Test
-    public void SuccessConnectTest() throws FileNotFoundException {
+    public void SuccessConnectTest() throws Exception {
         retrieveActorAction = new RetrieveActorAction("testDB.sqlite");
         assertNotNull(retrieveActorAction);
     }
@@ -36,7 +36,7 @@ public class LoadDataActorsTest {
     public void UseIncorrectUrl()  {
         try {
             retrieveActorAction = new RetrieveActorAction("test.sqlite");
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             retrieveActorAction = null;
         }
         assertNull(retrieveActorAction);
@@ -46,8 +46,12 @@ public class LoadDataActorsTest {
      * This method checks correctness of the data obtained from the database
      **/
     @Test
-    public void DataBaseTest() throws FileNotFoundException {
-        retrieveActorAction = new RetrieveActorAction("testDB.sqlite");
+    public void DataBaseTest() {
+        try {
+            retrieveActorAction = new RetrieveActorAction("testDB.sqlite");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         ActorDescriptor actorDescriptor = retrieveActorAction.retrievePersonById(1);
         assertNotNull(actorDescriptor);
@@ -59,8 +63,12 @@ public class LoadDataActorsTest {
      * This method check the behavior of the object ActorDescriptor in assigning incorrect data
      **/
     @Test
-    public void UseIncorrectId() throws FileNotFoundException {
-        retrieveActorAction = new RetrieveActorAction("testDB.sqlite");
+    public void UseIncorrectId() {
+        try {
+            retrieveActorAction = new RetrieveActorAction("testDB.sqlite");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         ActorDescriptor actorDescriptor = retrieveActorAction.retrievePersonById(4);
         assertNull(actorDescriptor);

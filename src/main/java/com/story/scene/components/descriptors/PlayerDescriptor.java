@@ -12,7 +12,7 @@ public class PlayerDescriptor extends BaseActorDescriptor {
     private Point centerPosition;
     private Point startPosition;
 
-    public PlayerDescriptor(int playerId) throws FileNotFoundException {
+    public PlayerDescriptor(int playerId)  {
         super(playerId);
     }
 

@@ -24,13 +24,8 @@ abstract class SingleRecordAction implements IDisposable {
      * Initialize new instance of SingleRecordAction and set url
      * @param url path to database
      */
-    protected SingleRecordAction(String url) throws FileNotFoundException {
-        try {
-            this.queryExecutor = new QueryExecutor(url);
-        } catch (FileNotFoundException e) {
-            this.queryExecutor = null;
-            throw e;
-        }
+    protected SingleRecordAction(String url) throws Exception {
+        this.queryExecutor = new QueryExecutor(url);
     }
 
     /**

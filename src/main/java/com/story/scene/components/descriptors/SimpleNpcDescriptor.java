@@ -24,7 +24,7 @@ public class SimpleNpcDescriptor extends BaseActorDescriptor {
      * Initialize new instance of {@link SimpleNpcDescriptor}
      * @param id the id of npc
      */
-    public SimpleNpcDescriptor(int id) throws FileNotFoundException {
+    public SimpleNpcDescriptor(int id)  {
         super(id);
         this.moveInterval = DefaultMoveInterval;
     }

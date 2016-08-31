@@ -15,7 +15,7 @@ import java.sql.Statement;
 public class QueryExecutor implements IQueryExecutor {
     private Connection connection;
 
-    public QueryExecutor(String url) throws FileNotFoundException {
+    public QueryExecutor(String url) throws Exception {
         try {
             this.connection = DbConnector.getInstance(url);
         } catch (FileNotFoundException e) {

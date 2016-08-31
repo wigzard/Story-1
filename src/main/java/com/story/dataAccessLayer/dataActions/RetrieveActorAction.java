@@ -27,14 +27,14 @@ public class RetrieveActorAction extends SingleRecordAction {
      *
      * @param url path to database
      */
-    public RetrieveActorAction(String url) throws FileNotFoundException {
+    public RetrieveActorAction(String url) throws Exception {
         super(url);
     }
 
     /**
      * Initialize new instance of SingleRecordAction
      */
-    public RetrieveActorAction() throws FileNotFoundException {
+    public RetrieveActorAction() throws Exception {
         super(Constants.SystemDatabasePath);
     }
 

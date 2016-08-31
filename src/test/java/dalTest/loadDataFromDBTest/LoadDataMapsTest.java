@@ -23,8 +23,12 @@ public class LoadDataMapsTest {
      * This method checks correctness of connection to the database
      **/
     @Test
-    public void SuccessConnectTest() throws FileNotFoundException {
-        retrieveMapsAction = new RetrieveMapsAction("testDB.sqlite");
+    public void SuccessConnectTest() {
+        try {
+            retrieveMapsAction = new RetrieveMapsAction("testDB.sqlite");
+        } catch (Exception e) {
+            retrieveMapsAction = null;
+        }
         assertNotNull(retrieveMapsAction);
     }
 
@@ -35,7 +39,7 @@ public class LoadDataMapsTest {
     public void UseIncorrectUrl() {
         try {
             retrieveMapsAction = new RetrieveMapsAction("test");
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             retrieveMapsAction = null;
         }
         assertNull(retrieveMapsAction);
@@ -45,8 +49,12 @@ public class LoadDataMapsTest {
      * This method checks correctness of the data obtained from the database
      **/
     @Test
-    public void DataBaseTest() throws FileNotFoundException {
-        retrieveMapsAction = new RetrieveMapsAction("testDB.sqlite");
+    public void DataBaseTest() {
+        try {
+            retrieveMapsAction = new RetrieveMapsAction("testDB.sqlite");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         MapDescriptor mapDescriptor = retrieveMapsAction.retrieveObjectById(1);
         assertNotNull(mapDescriptor);
@@ -59,8 +67,12 @@ public class LoadDataMapsTest {
      * This method check the behavior of the object mapDescriptor in assigning incorrect data
      **/
     @Test
-    public void UseIncorrectId() throws FileNotFoundException {
-        retrieveMapsAction = new RetrieveMapsAction("testDB.sqlite");
+    public void UseIncorrectId() {
+        try {
+            retrieveMapsAction = new RetrieveMapsAction("testDB.sqlite");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         MapDescriptor mapDescriptor = retrieveMapsAction.retrieveObjectById(3);
         assertNull(mapDescriptor);

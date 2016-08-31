@@ -24,15 +24,15 @@ public class RetrieveMapsAction extends SingleRecordAction {
     /**
      * Create new instance of RetrieveMapsAction
      */
-    public RetrieveMapsAction(String path) throws FileNotFoundException {
-        super(path);
-        this.mapDescriptor = null;
+    public RetrieveMapsAction(String path) throws Exception {
+           super(path);
+           this.mapDescriptor = null;
     }
 
     /**
      * Create new instance of RetrieveMapsAction with default path to database
      */
-    public RetrieveMapsAction() throws FileNotFoundException {
+    public RetrieveMapsAction() throws Exception {
         this(Constants.SystemDatabasePath);
     }
 

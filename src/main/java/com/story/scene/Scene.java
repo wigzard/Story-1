@@ -67,14 +67,14 @@ public abstract class Scene implements IDisposable {
      * @param gameContainer The container holing this game
      * @param delta The amount of time thats passed since last update in milliseconds
      */
-    public abstract void update(GameContainer gameContainer, int delta) throws FileNotFoundException;
+    public abstract void update(GameContainer gameContainer, int delta);
 
     /**
      * Render the game's scene here.
      * @param gameContainer The container holing this game
      * @param graphics The graphics context that can be used to render. However, normal rendering routines can also be used.
      */
-    public abstract void render(GameContainer gameContainer, Graphics graphics) throws FileNotFoundException;
+    public abstract void render(GameContainer gameContainer, Graphics graphics) ;
 
     @Override
     public void dispose(){

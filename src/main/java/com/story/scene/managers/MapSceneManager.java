@@ -58,7 +58,7 @@ public class MapSceneManager implements IDisposable{
      */
     private PlayerComponent createPlayerComponent(int playerId,
             Point startPosition,
-            Point centralPoint) throws FileNotFoundException {
+            Point centralPoint) {
         if (this.playerComponent != null){
             this.playerComponent.dispose();
         }
@@ -85,12 +85,17 @@ public class MapSceneManager implements IDisposable{
      * @param startPosition the start position for map
      * @return the map component
      */
-    private MapComponent createMapComponent(int mapId, Point startPosition) throws FileNotFoundException {
+    private MapComponent createMapComponent(int mapId, Point startPosition) {
         if (this.mapComponent != null){
             this.mapComponent.dispose();
         }
 
-        RetrieveMapsAction action = new RetrieveMapsAction();
+        RetrieveMapsAction action = null;
+        try {
+            action = new RetrieveMapsAction();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return new MapComponent(action.retrieveObjectById(mapId), startPosition);
     }
 
@@ -127,7 +132,7 @@ public class MapSceneManager implements IDisposable{
      * Move the components to new place
      * @param newPoint the new place on map
      */
-    private void moveComponents(Point newPoint, ComponentAction action) throws FileNotFoundException {
+    private void moveComponents(Point newPoint, ComponentAction action) {
         this.playerComponent.setDirection(Converter.toActorDirection(action, this.playerComponent.getDirection()));
         if (this.playerCanMove(newPoint)){
             ComponentCommonHelper.getInstance().moveActor(this.playerComponent.getCurrentCoordinate(), newPoint);
@@ -139,7 +144,7 @@ public class MapSceneManager implements IDisposable{
     /**
      * @return the map component
      */
-    public MapComponent getMapComponent() throws FileNotFoundException {
+    public MapComponent getMapComponent() {
         if (this.mapComponent == null){
             this.mapComponent = this.createMapComponent(this.sceneDescriptor.mapId, this.sceneDescriptor.playerStartPoint);
         }
@@ -151,7 +156,7 @@ public class MapSceneManager implements IDisposable{
      * Create and return the player component
      * @return the player component
      */
-    public PlayerComponent getPlayerComponent() throws FileNotFoundException {
+    public PlayerComponent getPlayerComponent() {
         if (this.mapComponent == null){
             try {
                 throw new SceneException("The map should be initialized before loading player");
@@ -191,7 +196,7 @@ public class MapSceneManager implements IDisposable{
     /**
      * The player component should be moved to other ways
      */
-    public void executeKeyAction(ComponentAction action) throws FileNotFoundException {
+    public void executeKeyAction(ComponentAction action){
         switch (action){
             case MOVE_DOWN:
                 Point moveDownPoint = new Point(this.playerComponent.getCurrentCoordinate().x, this.playerComponent.getCurrentCoordinate().y + 1);

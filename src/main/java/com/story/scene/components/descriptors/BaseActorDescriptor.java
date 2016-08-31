@@ -13,9 +13,13 @@ import java.io.FileNotFoundException;
 abstract class BaseActorDescriptor extends BaseDescriptor {
     private ActorDescriptor actorDescriptor;
 
-    BaseActorDescriptor(int id) throws FileNotFoundException {
+    BaseActorDescriptor(int id) {
         super(id);
-        this.actorDescriptor = new RetrieveActorAction().retrievePersonById(id);
+        try {
+            this.actorDescriptor = new RetrieveActorAction().retrievePersonById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String getName(){

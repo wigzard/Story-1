@@ -79,30 +79,27 @@ class MapScene extends Scene {
     }
 
     @Override
-    public void update(GameContainer gameContainer, int delta) throws FileNotFoundException {
-        if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)){
-            this.mapSceneManager.executeKeyAction(ComponentAction.MOVE_RIGHT);
-        }
-        else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)){
-            this.mapSceneManager.executeKeyAction(ComponentAction.MOVE_LEFT);
-        }
-        else if (gameContainer.getInput().isKeyDown(Input.KEY_UP)){
-            this.mapSceneManager.executeKeyAction(ComponentAction.MOVE_UP);
-        }
-        else if (gameContainer.getInput().isKeyDown(Input.KEY_DOWN)){
-            this.mapSceneManager.executeKeyAction(ComponentAction.MOVE_DOWN);
-        }
+    public void update(GameContainer gameContainer, int delta) {
+            if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)) {
+                this.mapSceneManager.executeKeyAction(ComponentAction.MOVE_RIGHT);
+            } else if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT)) {
+                this.mapSceneManager.executeKeyAction(ComponentAction.MOVE_LEFT);
+            } else if (gameContainer.getInput().isKeyDown(Input.KEY_UP)) {
+                this.mapSceneManager.executeKeyAction(ComponentAction.MOVE_UP);
+            } else if (gameContainer.getInput().isKeyDown(Input.KEY_DOWN)) {
+                this.mapSceneManager.executeKeyAction(ComponentAction.MOVE_DOWN);
+            }
 
-        this.mapSceneManager.getMapComponent().update(gameContainer, delta);
-        this.mapSceneManager.getPlayerComponent().update(gameContainer, delta);
-        for (SimpleNpcComponent component: this.mapSceneManager.getSimpleNpcList()){
-            component.changePosition(this.mapSceneManager.getMapComponent().getGlobalPoint());
-            component.update(gameContainer, delta);
-        }
+            this.mapSceneManager.getMapComponent().update(gameContainer, delta);
+            this.mapSceneManager.getPlayerComponent().update(gameContainer, delta);
+            for (SimpleNpcComponent component : this.mapSceneManager.getSimpleNpcList()) {
+                component.changePosition(this.mapSceneManager.getMapComponent().getGlobalPoint());
+                component.update(gameContainer, delta);
+            }
     }
 
     @Override
-    public void render(GameContainer gameContainer, Graphics graphics) throws FileNotFoundException {
+    public void render(GameContainer gameContainer, Graphics graphics) {
         this.mapSceneManager.getMapComponent().render(gameContainer, graphics);
         this.mapSceneManager.getPlayerComponent().render(gameContainer, graphics);
 

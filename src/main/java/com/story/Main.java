@@ -8,12 +8,13 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 
 /**
  * Created by alex on 29.03.16.
  */
 public class Main {
-    public static void main(String [] args) throws FileNotFoundException {
+    public static void main(String [] args)  {
         Settings setting = ApplicationSettings.getSettings();
 
         try {
